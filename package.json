@@ -1,0 +1,60 @@
+{
+  "name": "vue-time-date-range-picker",
+  "version": "1.0.0",
+  "description": "a vue time date range picker",
+  "keywords": [
+    "vue",
+    "date-time-range-picker"
+  ],
+  "main": "/dist/index.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "prebuild": "npm run clean",
+    "build": "webpack",
+    "preserve": "rimraf demo",
+    "serve": "webpack-dev-server --config=./webpack-serve.config.js --open",
+    "lint": "eslint --fix --ext .js,.vue src example"
+  },
+  "pre-commit": [
+    "lint"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/limbara/vue-time-date-range-picker.git"
+  },
+  "author": "Nico Limbara",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/limbara/vue-time-date-range-picker/issues"
+  },
+  "homepage": "https://github.com/limbara/vue-time-date-range-picker#readme",
+  "peerDependencies": {
+    "vue": "^2.6.11"
+  },
+  "dependencies": {
+    "moment": "^2.27.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^3.6.0",
+    "eslint": "^7.3.1",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-vue": "^6.2.2",
+    "html-webpack-plugin": "^4.3.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.14.1",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^6.7.0",
+    "rimraf": "^3.0.2",
+    "sass-loader": "^8.0.2",
+    "vue": "^2.6.11",
+    "vue-loader": "^15.9.2",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
