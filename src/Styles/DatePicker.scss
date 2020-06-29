@@ -42,7 +42,7 @@
       white-space: nowrap;
       overflow: hidden;
       color: #333;
-      padding: 8px;
+      padding: 4px;
       line-height: 28px;
     }
 
@@ -57,7 +57,15 @@
 
       &:hover {
         cursor: pointer;
-        background-color: darken(#ddd, 10%);
+        background-color: darken(#ddd, 5%);
+      }
+    }
+
+    .highlighted {
+      background-color: #3a86ff;
+
+      &:hover {
+        background-color: darken(#3a86ff, 5%);
       }
     }
   }
