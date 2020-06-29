@@ -1,6 +1,6 @@
 <template>
   <div>
-    <date-picker />
+    <date-picker></date-picker>
   </div>
 </template>
 
@@ -11,5 +11,9 @@ export default {
   components: {
     DatePicker,
   },
+  data() {
+    return {};
+  },
+  mounted() {},
 };
 </script>

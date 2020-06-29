@@ -1,0 +1,64 @@
+.vdpr-datepicker {
+  position: relative;
+
+  &__calendar-dialog {
+    position: absolute;
+    margin-top: 2px;
+
+    &--show {
+      display: block;
+    }
+
+    &--hide {
+      display: none;
+    }
+  }
+}
+
+.vdpr-datepicker__calendar {
+  box-sizing: border-box;
+  width: 300px;
+  background-color: white;
+  border: 1px solid gray;
+
+  &-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 1px;
+
+    > * {
+      margin: 0;
+      padding: 0;
+    }
+
+    thead {
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    th {
+      white-space: nowrap;
+      overflow: hidden;
+      color: #333;
+      padding: 8px;
+      line-height: 28px;
+    }
+
+    td {
+      white-space: nowrap;
+      overflow: hidden;
+      line-height: 33px;
+      text-align: center;
+      background-color: #ddd;
+      color: #333;
+      font-size: 14px;
+
+      &:hover {
+        cursor: pointer;
+        background-color: darken(#ddd, 10%);
+      }
+    }
+  }
+}
