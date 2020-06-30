@@ -1,5 +1,22 @@
 <template>
   <div class="vdpr-datepicker__calendar">
+    <div class="vdpr-datepicker__calendar-control">
+      <span
+        class="vdpr-datepicker__calendar-control-prev"
+        :class="{
+          'vdpr-datepicker__calendar-control-disabled' : isPrevDisabled
+        }"
+        @click="onPrevClick"
+      ></span>
+      <span class="vdpr-datepicker__calendar-month-year">{{ monthYear }}</span>
+      <span
+        class="vdpr-datepicker__calendar-control-next"
+        :class="{
+          'vdpr-datepicker__calendar-control-disabled' : isNextDisabled
+        }"
+        @click="onNextClick"
+      ></span>
+    </div>
     <table class="vdpr-datepicker__calendar-table">
       <thead>
         <tr>
@@ -12,11 +29,11 @@
             v-for="day in getRowDays(row)"
             :key="day.timestamp"
             :class="{
-              highlighted: day.isInRange || day.isStartDate || day.isEndDate,
+              'highlighted' : day.isBetween || day.isStartDate || day.isEndDate,
+              'disabled' : day.isDisabled
             }"
-          >
-            {{ day.dateNumber }}
-          </td>
+            @click="selectDate(day)"
+          >{{ day.dateNumber }}</td>
         </tr>
       </tbody>
     </table>
@@ -27,11 +44,11 @@
 import DateUtil from '../Utils/DateUtil';
 
 class Day {
-  constructor(date, isInRange, isStartDate, isEndDate, isDisabled) {
+  constructor(date, isBetween, isStartDate, isEndDate, isDisabled) {
     this.date = date;
     this.timestamp = date.getTime();
     this.dateNumber = date.getDate();
-    this.isInRange = isInRange;
+    this.isBetween = isBetween;
     this.isStartDate = isStartDate;
     this.isEndDate = isEndDate;
     this.isDisabled = isDisabled;
@@ -60,6 +77,11 @@ export default {
     dayNames() {
       return this.dateUtil.getAbbrDayNames();
     },
+    monthYear() {
+      const pageDate = this.dateUtil.fromUnix(this.pageTimestamp);
+
+      return this.dateUtil.formatDate(pageDate, 'MMM YYYY');
+    },
     days() {
       let pageDate = this.dateUtil.fromUnix(this.pageTimestamp);
       const daysInMonth = this.dateUtil.daysInMonth(pageDate);
@@ -76,7 +98,7 @@ export default {
 
       for (let j = this.dateUtil.weekday(firstDay); j > 0; j -= 1) {
         firstDay = this.dateUtil.subtract(firstDay, 1, 'd');
-        preDays.push(this.constructDay(firstDay));
+        preDays.unshift(this.constructDay(firstDay));
       }
 
       let lastDay = days[days.length - 1].date;
@@ -87,6 +109,16 @@ export default {
       }
 
       return [...preDays, ...days, ...postDays];
+    },
+    isNextDisabled() {
+      const nextDate = this.days[this.days.length - 1].date;
+
+      return this.isDisabledDate(nextDate);
+    },
+    isPrevDisabled() {
+      const prevDate = this.days[0].date;
+
+      return this.isDisabledDate(prevDate);
     },
   },
   methods: {
@@ -99,7 +131,7 @@ export default {
     constructDay(date) {
       return new Day(
         date,
-        this.dateUtil.isInRange(
+        this.dateUtil.isBetween(
           date,
           this.selectedStartDate,
           this.selectedEndDate,
@@ -133,7 +165,7 @@ export default {
             this.dateUtil.isValidDate(range.from)
             && this.dateUtil.isValidDate(range.to)
           ) {
-            if (this.dateUtil.isInRange(date, range.from, range.to)) {
+            if (this.dateUtil.isSameOrBetween(date, range.from, range.to)) {
               disabled = true;
             }
           }
@@ -158,6 +190,30 @@ export default {
 
       return disabled;
     },
+    selectDate(day) {
+      if (day.isDisabled) return false;
+
+      return this.$emit('selectDate', day.date);
+    },
+    onPrevClick() {
+      const pageDate = this.dateUtil.subtract(
+        this.dateUtil.fromUnix(this.pageTimestamp),
+        1,
+        'month',
+      );
+
+      this.pageTimestamp = this.dateUtil.toUnix(pageDate);
+    },
+    onNextClick() {
+      const pageDate = this.dateUtil.add(
+        this.dateUtil.fromUnix(this.pageTimestamp),
+        1,
+        'month',
+      );
+
+      this.pageTimestamp = this.dateUtil.toUnix(pageDate);
+    },
   },
+  mounted() {},
 };
 </script>

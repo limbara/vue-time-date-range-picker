@@ -4,13 +4,19 @@
   &__calendar-dialog {
     position: absolute;
     margin-top: 2px;
+    padding: 10px;
+    z-index: 1000;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    display: flex;
+    flex-direction: row;
+  }
 
-    &--show {
-      display: block;
-    }
+  &__calendar-button-helper {
+    width: 140px;
+    padding: 5px 10px;
 
-    &--hide {
-      display: none;
+    >:not(:first-child) {
+      margin-top: 5px;
     }
   }
 }
@@ -19,7 +25,50 @@
   box-sizing: border-box;
   width: 300px;
   background-color: white;
-  border: 1px solid gray;
+
+  &-month-year {
+    font-size: 24px;
+    text-transform: uppercase;
+    text-align: center;
+    flex-basis: 70%;
+  }
+
+  &-control {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+
+    &-prev,
+    &-next {
+      cursor: pointer;
+      position: relative;
+      border-radius: 50%;
+      border: 1px solid #333;
+      color: #333;
+      padding: 12px;
+
+      &:before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    &-prev:before {
+      content: "\003c";
+    }
+
+    &-next:before {
+      content: "\003e";
+    }
+
+    &-disabled {
+      cursor: not-allowed;
+      background-color: #ccc;
+    }
+  }
 
   &-table {
     width: 100%;
@@ -51,22 +100,133 @@
       overflow: hidden;
       line-height: 33px;
       text-align: center;
-      background-color: #ddd;
+      background-color: #ccc;
       color: #333;
       font-size: 14px;
 
       &:hover {
         cursor: pointer;
-        background-color: darken(#ddd, 5%);
+        background-color: darken(#ccc, 5%);
       }
     }
 
     .highlighted {
       background-color: #3a86ff;
+      color: white;
 
       &:hover {
         background-color: darken(#3a86ff, 5%);
       }
+    }
+
+    .disabled {
+      background-color: darken(#ccc, 10%);
+      cursor: not-allowed;
+
+      &:hover {
+        cursor: not-allowed;
+        background-color: darken(#ccc, 10%);
+      }
+    }
+  }
+}
+
+.vdpr-datepicker__switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+
+  > input {
+    display: none;
+
+    &:checked {
+      + .vdpr-datepicker__switch-slider {
+        background-color: #3a86ff;
+      }
+
+      + .vdpr-datepicker__switch-slider::before {
+        transform: translateX(26px);
+      }
+
+      + .vdpr-datepicker__switch-slider::after {
+        content: "ON";
+        left: 25%;
+      }
+    }
+  }
+
+  &-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+
+    &:before {
+      position: absolute;
+      content: "";
+      height: 24px;
+      width: 24px;
+      left: 5px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    &:after {
+      content: "OFF";
+      position: absolute;
+      font-size: 11px;
+      top: 50%;
+      left: 75%;
+      transform: translate(-50%, -50%);
+      color: white;
+    }
+  }
+}
+
+.vdpr-datepicker__button {
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  text-transform: capitalize;
+  padding: 6px 12px;
+  line-height: 1.5;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: 4px;
+
+  &--block {
+    width: 100%;
+    display: block;
+  }
+
+  &-default {
+    color: #333;
+    background-color: white;
+    border-color: #ccc;
+
+    &:hover {
+      background-color: darken(white, 10%);
+    }
+  }
+
+  &-submit {
+    color: white;
+    background-color: #3a86ff;
+    border-color: darken(#3a86ff, 10%);
+
+    &:hover {
+      background-color: darken(#3a86ff, 10%);
     }
   }
 }

@@ -2,41 +2,62 @@
   <div class="vdpr-datepicker">
     <date-input
       :language="language"
+      :format="format"
       :selectedStartDate="selectedStartDate"
       :selectedEndDate="selectedEndDate"
     />
-    <div class="vdpr-datepicker__calendar-dialog">
-      <calendar
-        :language="language"
-        :selectedStartDate="selectedStartDate"
-        :selectedEndDate="selectedEndDate"
-      />
-    </div>
+    <calendar-dialog
+      :language="language"
+      :disabledDates="disabledDates"
+      :initialDates="initialDates"
+    />
   </div>
 </template>
 
 <script>
+import DateUtil from '../Utils/DateUtil';
 import DateInput from './DateInput.vue';
-import Calendar from './Calendar.vue';
+import CalendarDialog from './CalendarDialog.vue';
 
 export default {
   components: {
     DateInput,
-    Calendar,
+    CalendarDialog,
   },
   props: {
+    initialDates: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
     language: {
       type: String,
       default: 'en',
     },
+    format: {
+      type: String,
+      default: 'DD MM yyyy',
+    },
   },
   data() {
+    const dateUtil = new DateUtil(this.language);
+    const [fromDate, toDate] = this.initialDates;
+
     return {
-      selectedStartDate: new Date('2020-06-28'),
-      selectedEndDate: new Date('2020-06-29'),
+      selectedStartDate: fromDate ?? null,
+      selectedEndDate: toDate ?? null,
+      dateUtil,
+      disabledDates: {
+        ranges: [
+          {
+            from: new Date('2020 05 01'),
+            to: new Date('2020 05 31'),
+          },
+        ],
+      },
     };
   },
-  mounted() {},
 };
 </script>
 

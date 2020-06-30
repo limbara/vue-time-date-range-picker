@@ -72,19 +72,6 @@ export default class {
   }
 
   /**
-   * check if a date is between 2 date
-   *
-   * @param {Date} date
-   * @param {Date} fromDate
-   * @param {Date} toDate
-   * @returns {Boolean}
-   */
-  // eslint-disable-next-line class-methods-use-this
-  isInRange(date, fromDate, toDate) {
-    return moment(date).isBetween(fromDate, toDate);
-  }
-
-  /**
    * check if date is valid
    *
    * @param {Date} date
@@ -170,6 +157,32 @@ export default class {
   // eslint-disable-next-line class-methods-use-this
   isAfter(date, beforeDate) {
     return moment(date).isAfter(beforeDate);
+  }
+
+  /**
+   * Check if a date is between fromDate and toDate
+   * @param {Date} date
+   * @param {Date} fromDate
+   * @param {Date} toDate
+   */
+  // eslint-disable-next-line class-methods-use-this
+  isBetween(date, fromDate, toDate) {
+    return moment(date).isBetween(fromDate, toDate);
+  }
+
+  /**
+   * Check if a date is same or between as fromDate and toDate
+   *
+   * @param {Date} date
+   * @param {Date} fromDate
+   * @param {Date} toDate
+   * @returns {Boolean}
+   */
+  // eslint-disable-next-line class-methods-use-this
+  isSameOrBetween(date, fromDate, toDate) {
+    const theDate = moment(date);
+
+    return theDate.isSameOrAfter(fromDate) && theDate.isSameOrBefore(toDate);
   }
 
   /**
