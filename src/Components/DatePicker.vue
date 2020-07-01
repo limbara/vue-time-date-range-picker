@@ -10,6 +10,7 @@
       :language="language"
       :disabledDates="disabledDates"
       :initialDates="initialDates"
+      @onApply="onApply"
     />
   </div>
 </template>
@@ -57,6 +58,12 @@ export default {
         ],
       },
     };
+  },
+  methods: {
+    onApply(date1, date2) {
+      // eslint-disable-next-line no-console
+      console.log(date1, date2);
+    },
   },
 };
 </script>

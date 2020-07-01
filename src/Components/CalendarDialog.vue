@@ -26,36 +26,64 @@
       @selectDate="selectDate"
     />
     <div class="vdpr-datepicker__calendar-actions">
-      <div class="vdpr-datepicker__calendar-input">
+      <div class="vdpr-datepicker__calendar-input-wrapper">
         <span>All Days</span>
         <switch-button :checked="isAllDay" @onCheckChange="onCheckChange" />
       </div>
-      <calendar-input-date
-        :id="startInput.label"
-        :name="startInput.label"
-        :format="format"
-        :timestamp="unixSelectedStartDate"
-        :language="language"
-        @onSubmit="onStartInputDateSubmit"
-      />
-      <calendar-input-time
-        id="time_start"
-        name="time_start"
-        :timestamp="unixSelectedStartDate"
-      />
-      <calendar-input-date
-        :id="endInput.label"
-        :name="endInput.label"
-        :format="format"
-        :timestamp="unixSelectedEndDate"
-        :language="language"
-        @onSubmit="onEndDateInputDateSubmit"
-      />
-      <calendar-input-time
-        id="time_end"
-        name="time_end"
-        :timestamp="unixSelectedEndDate"
-      />
+      <div class="vdpr-datepicker__calendar-input-wrapper">
+        <span>Starts</span>
+        <calendar-input-date
+          :id="startInput.label"
+          :name="startInput.label"
+          :format="startInput.format"
+          :timestamp="unixSelectedStartDate"
+          :language="language"
+          @onChange="onStartInputDateChange"
+        />
+      </div>
+      <div
+        class="vdpr-datepicker__calendar-input-wrapper vdpr-datepicker__calendar-input-wrapper--end"
+      >
+        <calendar-input-time
+          v-show="isVisibleTimeInput"
+          id="time_start"
+          name="time_start"
+          :timestamp="unixSelectedStartDate"
+          @onChange="onTimeStartInputChange"
+        />
+      </div>
+      <div class="vdpr-datepicker__calendar-input-wrapper">
+        <span>Ends</span>
+        <calendar-input-date
+          :id="endInput.label"
+          :name="endInput.label"
+          :format="endInput.format"
+          :timestamp="unixSelectedEndDate"
+          :language="language"
+          @onChange="onEndDateInputDateChange"
+        />
+      </div>
+      <div
+        class="vdpr-datepicker__calendar-input-wrapper vdpr-datepicker__calendar-input-wrapper--end"
+      >
+        <calendar-input-time
+          v-show="isVisibleTimeInput"
+          id="time_end"
+          name="time_end"
+          :timestamp="unixSelectedEndDate"
+          @onChange="onTimeEndInputChange"
+        />
+      </div>
+      <button
+        :class="[
+          'vdpr-datepicker__button',
+          'vdpr-datepicker__button--block',
+          'vdpr-datepicker__button-submit',
+        ]"
+        @click="onClickButtonApply"
+      >
+        Apply
+      </button>
     </div>
   </div>
 </template>
@@ -83,10 +111,6 @@ export default {
         return [];
       },
     },
-    format: {
-      type: String,
-      default: 'DD/MM/yyyy',
-    },
     language: String,
     disabledDates: {
       type: Object,
@@ -113,6 +137,7 @@ export default {
         return {
           label: 'Starts',
           inputClass: '',
+          format: 'DD/MM/yyyy',
         };
       },
     },
@@ -123,18 +148,24 @@ export default {
         return {
           label: 'Ends',
           inputClass: '',
+          format: 'DD/MM/yyyy',
         };
       },
     },
   },
   data() {
     const dateUtil = new DateUtil(this.language);
-    const [from, to] = this.initialDates;
+    let [from, to] = this.initialDates;
+
+    if (this.isAllDay) {
+      from = this.dateUtil.startOf(from, 'd');
+      to = this.dateUtil.endOf(to, 'd');
+    }
 
     return {
       selectedStartDate: from ?? null,
       selectedEndDate: to ?? null,
-      isAllDay: false,
+      isAllDay: true,
       dateUtil,
     };
   },
@@ -160,22 +191,56 @@ export default {
 
       return this.dateUtil.toUnix(this.selectedEndDate);
     },
+    isVisibleTimeInput() {
+      return !this.isAllDay;
+    },
   },
   methods: {
     onCheckChange(check) {
       this.isAllDay = check;
+      if (!this.selectedStartDate || !this.selectedEndDate) return;
+
+      this.selectedStartDate = this.dateUtil.startOf(
+        this.selectedStartDate,
+        'd',
+      );
+      if (check) {
+        this.selectedEndDate = this.dateUtil.endOf(this.selectedEndDate, 'd');
+      } else {
+        this.selectedEndDate = this.dateUtil.startOf(this.selectedEndDate, 'd');
+      }
     },
-    onStartInputDateSubmit(value) {
-      // eslint-disable-next-line no-console
-      console.log(value);
+    onStartInputDateChange(value) {
+      this.selectedStartDate = value;
+      this.checkAndSwap();
     },
-    onEndDateInputDateSubmit(value) {
-      // eslint-disable-next-line no-console
-      console.log(value);
+    onEndDateInputDateChange(value) {
+      this.selectedEndDate = value;
+      this.checkAndSwap();
+    },
+    onTimeStartInputChange(value) {
+      this.selectedStartDate = value;
+      this.checkAndSwap();
+    },
+    onTimeEndInputChange(value) {
+      this.selectedEndDate = value;
+      this.checkAndSwap();
     },
     onHelperClick(fromDate, toDate) {
-      // eslint-disable-next-line no-console
-      console.log(fromDate, toDate);
+      if (
+        this.dateUtil.isSame(fromDate, this.dateUtil.startOf(fromDate, 'd'))
+        && this.dateUtil.isSame(toDate, this.dateUtil.endOf(toDate, 'd'))
+      ) {
+        this.isAllDay = true;
+      } else {
+        this.isAllDay = false;
+      }
+
+      this.selectedStartDate = fromDate;
+      this.selectedEndDate = toDate;
+    },
+    onClickButtonApply() {
+      this.$emit('onApply', this.selectedStartDate, this.selectedEndDate);
     },
     selectDate(date) {
       if (
@@ -188,7 +253,16 @@ export default {
         this.selectedStartDate = date;
         this.selectedEndDate = date;
       }
+
       this.checkAndSwap();
+
+      if (this.isAllDay) {
+        this.selectedStartDate = this.dateUtil.startOf(
+          this.selectedStartDate,
+          'd',
+        );
+        this.selectedEndDate = this.dateUtil.endOf(this.selectedEndDate, 'd');
+      }
     },
     clearSelectedDate() {
       this.selectedStartDate = null;

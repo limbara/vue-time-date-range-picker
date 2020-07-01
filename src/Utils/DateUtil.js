@@ -69,7 +69,7 @@ export default class {
   }
 
   /**
-   * check for same date
+   * check for same date only
    *
    * @param {Date} date1
    * @param {Date} date2
@@ -80,6 +80,18 @@ export default class {
     return (
       moment(date1).format('DD MM yyyy') === moment(date2).format('DD MM yyyy')
     );
+  }
+
+  /**
+   * check for date time similarity
+   *
+   * @param {Date} date1
+   * @param {Date} date2
+   * @returns {Boolean}
+   */
+  // eslint-disable-next-line class-methods-use-this
+  isSame(date1, date2) {
+    return moment(date1).isSame(date2);
   }
 
   /**

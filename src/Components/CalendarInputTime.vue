@@ -7,16 +7,19 @@
       :name="name"
       :class="inputClass"
       :value="formattedValue"
+      readonly
     />
     <div class="vdpr-datepicker__calendar-input-time-control">
       <span
         class="vdpr-datepicker__calendar-input-time-control-up"
-        @click="onClickUp">
+        @click="onClickUp"
+      >
         &#9652;
       </span>
       <span
         class="vdpr-datepicker__calendar-input-time-control-down"
-        @click="onClickDown">
+        @click="onClickDown"
+      >
         &#9662;
       </span>
     </div>
@@ -44,7 +47,10 @@ export default {
     formattedValue() {
       if (this.copyTimestamp === 0) return '';
 
-      return this.dateUtil.formatDate(this.dateUtil.fromUnix(this.copyTimestamp), 'HH:mm');
+      return this.dateUtil.formatDate(
+        this.dateUtil.fromUnix(this.copyTimestamp),
+        'HH:mm',
+      );
     },
   },
   watch: {
@@ -55,12 +61,15 @@ export default {
   methods: {
     onClickUp() {
       this.copyTimestamp += 3600;
+
+      this.$emit('onChange', this.dateUtil.fromUnix(this.copyTimestamp));
     },
     onClickDown() {
       this.copyTimestamp -= 3600;
+
+      this.$emit('onChange', this.dateUtil.fromUnix(this.copyTimestamp));
     },
   },
-  mounted() {
-  },
+  mounted() {},
 };
 </script>
