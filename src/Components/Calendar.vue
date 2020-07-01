@@ -30,6 +30,7 @@
             :key="day.timestamp"
             :class="{
               'highlighted' : day.isBetween || day.isStartDate || day.isEndDate,
+              'faded' : day.isFaded,
               'disabled' : day.isDisabled
             }"
             @click="selectDate(day)"
@@ -44,7 +45,7 @@
 import DateUtil from '../Utils/DateUtil';
 
 class Day {
-  constructor(date, isBetween, isStartDate, isEndDate, isDisabled) {
+  constructor(date, isBetween, isStartDate, isEndDate, isDisabled, isFaded) {
     this.date = date;
     this.timestamp = date.getTime();
     this.dateNumber = date.getDate();
@@ -52,6 +53,7 @@ class Day {
     this.isStartDate = isStartDate;
     this.isEndDate = isEndDate;
     this.isDisabled = isDisabled;
+    this.isFaded = isFaded;
   }
 }
 
@@ -90,7 +92,7 @@ export default {
       const postDays = [];
 
       for (let i = 0; i < daysInMonth; i += 1) {
-        days.push(this.constructDay(pageDate));
+        days.push(this.constructDay(pageDate, false));
         pageDate = this.dateUtil.add(pageDate, 1, 'd');
       }
 
@@ -98,14 +100,14 @@ export default {
 
       for (let j = this.dateUtil.weekday(firstDay); j > 0; j -= 1) {
         firstDay = this.dateUtil.subtract(firstDay, 1, 'd');
-        preDays.unshift(this.constructDay(firstDay));
+        preDays.unshift(this.constructDay(firstDay, true));
       }
 
       let lastDay = days[days.length - 1].date;
 
       for (let k = preDays.length + days.length; k < 42; k += 1) {
         lastDay = this.dateUtil.add(lastDay, 1, 'd');
-        postDays.push(this.constructDay(lastDay));
+        postDays.push(this.constructDay(lastDay, true));
       }
 
       return [...preDays, ...days, ...postDays];
@@ -128,7 +130,7 @@ export default {
 
       return this.days.slice(startIndex, endIndex);
     },
-    constructDay(date) {
+    constructDay(date, isFaded) {
       return new Day(
         date,
         this.dateUtil.isBetween(
@@ -139,6 +141,7 @@ export default {
         this.dateUtil.isSameDate(date, this.selectedStartDate),
         this.dateUtil.isSameDate(date, this.selectedEndDate),
         this.isDisabledDate(date),
+        isFaded,
       );
     },
     isDisabledDate(date) {
