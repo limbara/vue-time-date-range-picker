@@ -1,3 +1,9 @@
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .vdpr-datepicker {
   position: relative;
 
@@ -14,6 +20,16 @@
   &__calendar-button-helper {
     width: 140px;
     padding: 5px 10px;
+
+    > :not(:first-child) {
+      margin-top: 5px;
+    }
+  }
+
+  &__calendar-actions {
+    width: 160px;
+    padding: 5px 10px;
+    font-size: 13px;
 
     > :not(:first-child) {
       margin-top: 5px;
@@ -231,6 +247,58 @@
 
     &:hover {
       background-color: darken(#3a86ff, 10%);
+    }
+  }
+}
+
+.vdpr-datepicker__calendar-input-date {
+  box-sizing: border-box;
+  padding: 5px;
+  height: 30px;
+  background-color: #eee;
+
+  &-elem {
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+  }
+}
+
+.vdpr-datepicker__calendar-input-time {
+  position: relative;
+  box-sizing: border-box;
+  background-color: #eee;
+  height: 30px;
+  padding: 5px;
+
+  &-elem {
+    border: none;
+    outline: none;
+    height: 100%;
+    width: 80%;
+    background-color: transparent;
+  }
+
+  &-control {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 20%;
+    flex-direction: column;
+    @include flex-center;
+
+    &-up,
+    &-down {
+      cursor: pointer;
+      color: #999;
+      @include flex-center;
+
+      &:hover {
+        color: black;
+      }
     }
   }
 }

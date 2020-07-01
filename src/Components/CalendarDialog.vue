@@ -1,12 +1,12 @@
 <template>
   <div class="vdpr-datepicker__calendar-dialog">
-    <div class="vdpr-datepicker__calendar-button-helper">
+    <div class="vdpr-datepicker__calendar-button-helper" v-if="helpers.length">
       <button
         v-for="btn in helpers"
         :key="'btn' + btn.name"
         :class="[
-          'vdpr-datepicker__button' ,
-          'vdpr-datepicker__button--block' ,
+          'vdpr-datepicker__button',
+          'vdpr-datepicker__button--block',
           'vdpr-datepicker__button-default'
         ]"
         @click="() => { onHelperClick(btn.from, btn.to) } "
@@ -20,64 +20,146 @@
       @selectDate="selectDate"
     />
     <div class="vdpr-datepicker__calendar-actions">
-      <switch-button :checked="isAllDay" @onCheckChange="onCheckChange" />
+      <div class="vdpr-datepicker__calendar-input">
+        <span>All Days</span>
+        <switch-button :checked="isAllDay" @onCheckChange="onCheckChange" />
+      </div>
+      <calendar-input-date
+        :id="startInput.label"
+        :name="startInput.label"
+        :format="format"
+        :timestamp="unixSelectedStartDate"
+        :language="language"
+        @onSubmit="onStartInputDateSubmit"
+      />
+      <calendar-input-time
+        id="time_start"
+        name="time_start"
+        :timestamp="unixSelectedStartDate"
+      />
+      <calendar-input-date
+        :id="endInput.label"
+        :name="endInput.label"
+        :format="format"
+        :timestamp="unixSelectedEndDate"
+        :language="language"
+        @onSubmit="onEndDateInputDateSubmit"
+      />
+      <calendar-input-time
+        id="time_end"
+        name="time_end"
+        :timestamp="unixSelectedEndDate"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import PropsValidator from '../Utils/PropsValidator';
 import DateUtil from '../Utils/DateUtil';
 import Calendar from './Calendar.vue';
 import SwitchButton from './SwitchButton.vue';
+import CalendarInputDate from './CalendarInputDate.vue';
+import CalendarInputTime from './CalendarInputTime.vue';
 
 export default {
   components: {
     Calendar,
+    CalendarInputDate,
+    CalendarInputTime,
     SwitchButton,
   },
   props: {
-    initialDates: Array,
-    language: String,
-    disabledDates: Object,
-    helperButtons: {
+    initialDates: {
       type: Array,
+      validator: PropsValidator.isValidInitialDate,
       default() {
         return [];
+      },
+    },
+    format: {
+      type: String,
+      default: 'DD/MM/yyyy',
+    },
+    language: String,
+    disabledDates: Object,
+    showHelperButtons: {
+      type: Boolean,
+      default: true,
+    },
+    helperButtons: {
+      type: Array,
+      validator: PropsValidator.isValidHelperButtons,
+      default() {
+        return [];
+      },
+    },
+    startInput: {
+      type: Object,
+      validator: PropsValidator.isValidCalendarInput,
+      default() {
+        return {
+          label: 'Starts',
+          inputClass: '',
+        };
+      },
+    },
+    endInput: {
+      type: Object,
+      validator: PropsValidator.isValidCalendarInput,
+      default() {
+        return {
+          label: 'Ends',
+          inputClass: '',
+        };
       },
     },
   },
   data() {
     const dateUtil = new DateUtil(this.language);
-    const [fromDate, toDate] = this.initialDates;
+    const [from, to] = this.initialDates;
 
     return {
-      selectedStartDate: fromDate ?? null,
-      selectedEndDate: toDate ?? null,
+      selectedStartDate: from ?? null,
+      selectedEndDate: to ?? null,
       isAllDay: false,
       dateUtil,
     };
   },
   computed: {
-    validHelperButtons() {
-      return this.helperButtons.filter((button) => {
-        const isButtonNameValid = typeof button.name === 'string' && button.name !== '';
-        const isButtonFromDateValid = this.dateUtil.isValidDate(button.from);
-        const isButtonToDateValid = this.dateUtil.isValidDate(button.to);
-
-        return (
-          isButtonNameValid && isButtonFromDateValid && isButtonToDateValid
-        );
-      });
-    },
     helpers() {
-      if (this.validHelperButtons.length) return this.validHelperButtons;
+      if (!this.showHelperButtons) return [];
+
+      if (this.helperButtons.length) return this.helperButtons;
 
       return this.getDefaultHelpers();
+    },
+    unixSelectedStartDate() {
+      if (!this.selectedStartDate) {
+        return 0;
+      }
+
+      return this.dateUtil.toUnix(this.selectedStartDate);
+    },
+    unixSelectedEndDate() {
+      if (!this.selectedEndDate) {
+        return 0;
+      }
+
+      return this.dateUtil.toUnix(this.selectedEndDate);
     },
   },
   methods: {
     onCheckChange(check) {
       this.isAllDay = check;
+    },
+    onStartInputDateSubmit(value) {
+      // eslint-disable-next-line no-console
+      console.log(value);
+    },
+    onEndDateInputDateSubmit(value) {
+      // eslint-disable-next-line no-console
+      console.log(value);
     },
     onHelperClick(fromDate, toDate) {
       // eslint-disable-next-line no-console
@@ -110,8 +192,8 @@ export default {
     },
     getDefaultHelpers() {
       const now = new Date();
-      const todayFrom = this.dateUtil.startOf(now, 'day');
-      const todayTo = this.dateUtil.endOf(now, 'day');
+      const todayFrom = this.dateUtil.startOf(now, 'd');
+      const todayTo = this.dateUtil.endOf(now, 'd');
       const yesterdayFrom = this.dateUtil.subtract(todayFrom, 1, 'd');
       const yesterdayTo = this.dateUtil.subtract(todayTo, 1, 'd');
       const thisWeekFrom = this.dateUtil.startOf(now, 'week');
@@ -134,7 +216,7 @@ export default {
           to: todayTo,
         },
         {
-          name: 'Yesterfay',
+          name: 'Yesterday',
           from: yesterdayFrom,
           to: yesterdayTo,
         },
@@ -170,10 +252,6 @@ export default {
         },
       ];
     },
-  },
-  mounted() {
-    // eslint-disable-next-line no-console
-    console.table(this.getDefaultHelpers());
   },
 };
 </script>

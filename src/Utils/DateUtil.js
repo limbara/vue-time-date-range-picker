@@ -1,4 +1,5 @@
 import moment from 'moment';
+import Util from './Util';
 
 export default class {
   /**
@@ -7,6 +8,14 @@ export default class {
   constructor(lang = '') {
     this.lang = lang;
     this.localMoment = moment().locale(lang);
+  }
+
+  /**
+   * Create Date
+   * @returns {Date}
+  */
+  createDate(...param) {
+    return moment(...param).locale(this.lang).toDate();
   }
 
   /**
@@ -80,7 +89,7 @@ export default class {
   // eslint-disable-next-line class-methods-use-this
   isValidDate(date) {
     return (
-      Object.prototype.toString.call(date) === '[object Date]'
+      Util.isObjectDate(date)
       && moment(date).isValid()
     );
   }
