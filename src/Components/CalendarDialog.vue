@@ -7,10 +7,16 @@
         :class="[
           'vdpr-datepicker__button',
           'vdpr-datepicker__button--block',
-          'vdpr-datepicker__button-default'
+          'vdpr-datepicker__button-default',
         ]"
-        @click="() => { onHelperClick(btn.from, btn.to) } "
-      >{{ btn.name }}</button>
+        @click="
+          () => {
+            onHelperClick(btn.from, btn.to);
+          }
+        "
+      >
+        {{ btn.name }}
+      </button>
     </div>
     <calendar
       :language="language"
@@ -82,7 +88,13 @@ export default {
       default: 'DD/MM/yyyy',
     },
     language: String,
-    disabledDates: Object,
+    disabledDates: {
+      type: Object,
+      validator: PropsValidator.isValidDisabledDates,
+      default() {
+        return {};
+      },
+    },
     showHelperButtons: {
       type: Boolean,
       default: true,

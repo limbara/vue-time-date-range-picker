@@ -13,9 +13,11 @@ export default class {
   /**
    * Create Date
    * @returns {Date}
-  */
+   */
   createDate(...param) {
-    return moment(...param).locale(this.lang).toDate();
+    return moment(...param)
+      .locale(this.lang)
+      .toDate();
   }
 
   /**
@@ -88,10 +90,7 @@ export default class {
    */
   // eslint-disable-next-line class-methods-use-this
   isValidDate(date) {
-    return (
-      Util.isObjectDate(date)
-      && moment(date).isValid()
-    );
+    return Util.isObjectDate(date) && moment(date).isValid();
   }
 
   /**
@@ -145,7 +144,7 @@ export default class {
   }
 
   /**
-   * Check if date is before a date
+   * Check if date is before a beforeDate
    *
    * @param {Date} date
    * @param {Date} beforeDate
@@ -157,15 +156,37 @@ export default class {
   }
 
   /**
-   * Check if date is after a date
+   * Check if date is same or before a beforeDate
+   * @param {Date} date
+   * @param {Date} beforeDate
+   * @returns {Boolean}
+   */
+  // eslint-disable-next-line class-methods-use-this
+  isSameOrBefore(date, beforeDate) {
+    return moment(date).isSameOrBefore(beforeDate);
+  }
+
+  /**
+   * Check if date is after a afterDate
    *
    * @param {Date} date
    * @param {Date} beforeDate
    * @returns {Boolean}
    */
   // eslint-disable-next-line class-methods-use-this
-  isAfter(date, beforeDate) {
-    return moment(date).isAfter(beforeDate);
+  isAfter(date, afterDate) {
+    return moment(date).isAfter(afterDate);
+  }
+
+  /**
+   * Check if date is same or after a afterDate
+   * @param {Date} date
+   * @param {Date} afterDate
+   * @returns {Boolean}
+   */
+  // eslint-disable-next-line class-methods-use-this
+  isSameOrAfter(date, afterDate) {
+    return moment(date).isSameOrAfter(afterDate);
   }
 
   /**
@@ -225,7 +246,7 @@ export default class {
   }
 
   /**
-   * Get Number of Day in A month from date
+   * Get Number of Day in A month from A Date
    *
    * @param {Date} date
    * @returns {Number}
@@ -245,5 +266,26 @@ export default class {
     return moment(date)
       .locale(this.lang)
       .weekday();
+  }
+
+  /**
+   * Get Month 0 - 11 from A Date
+   *
+   * @param {Date} date
+   * @returns {Number}
+   */
+  // eslint-disable-next-line class-methods-use-this
+  month(date) {
+    return moment(date).month();
+  }
+
+  /**
+   * Get Year from A Date
+   * @param {Date} date
+   * @returns {Number}
+   */
+  // eslint-disable-next-line class-methods-use-this
+  year(date) {
+    return moment(date).year();
   }
 }

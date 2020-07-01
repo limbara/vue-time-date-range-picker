@@ -4,7 +4,7 @@
       <span
         class="vdpr-datepicker__calendar-control-prev"
         :class="{
-          'vdpr-datepicker__calendar-control-disabled' : isPrevDisabled
+          'vdpr-datepicker__calendar-control-disabled': isPrevDisabled,
         }"
         @click="onPrevClick"
       ></span>
@@ -12,7 +12,7 @@
       <span
         class="vdpr-datepicker__calendar-control-next"
         :class="{
-          'vdpr-datepicker__calendar-control-disabled' : isNextDisabled
+          'vdpr-datepicker__calendar-control-disabled': isNextDisabled,
         }"
         @click="onNextClick"
       ></span>
@@ -29,12 +29,14 @@
             v-for="day in getRowDays(row)"
             :key="day.timestamp"
             :class="{
-              'highlighted' : day.isBetween || day.isStartDate || day.isEndDate,
-              'faded' : day.isFaded,
-              'disabled' : day.isDisabled
+              highlighted: day.isBetween || day.isStartDate || day.isEndDate,
+              faded: day.isFaded,
+              disabled: day.isDisabled,
             }"
             @click="selectDate(day)"
-          >{{ day.dateNumber }}</td>
+          >
+            {{ day.dateNumber }}
+          </td>
         </tr>
       </tbody>
     </table>
@@ -113,14 +115,27 @@ export default {
       return [...preDays, ...days, ...postDays];
     },
     isNextDisabled() {
-      const nextDate = this.days[this.days.length - 1].date;
+      if (!this.disabledDates || !this.disabledDates.from) return false;
 
-      return this.isDisabledDate(nextDate);
+      const pageDate = this.dateUtil.fromUnix(this.pageTimestamp);
+
+      return (
+        this.dateUtil.month(this.disabledDates.from)
+          <= this.dateUtil.month(pageDate)
+        && this.dateUtil.year(this.disabledDates.from)
+          <= this.dateUtil.year(pageDate)
+      );
     },
     isPrevDisabled() {
-      const prevDate = this.days[0].date;
+      if (!this.disabledDates || !this.disabledDates.to) return false;
 
-      return this.isDisabledDate(prevDate);
+      const pageDate = this.dateUtil.fromUnix(this.pageTimestamp);
+      return (
+        this.dateUtil.month(this.disabledDates.to)
+          >= this.dateUtil.month(pageDate)
+        && this.dateUtil.year(this.disabledDates.to)
+          >= this.dateUtil.year(pageDate)
+      );
     },
   },
   methods: {
@@ -145,7 +160,7 @@ export default {
       );
     },
     isDisabledDate(date) {
-      if (typeof this.disabledDates === 'undefined') {
+      if (!this.disabledDates) {
         return false;
       }
       let disabled = false;
@@ -176,13 +191,16 @@ export default {
         if (disabled) return true;
       }
 
-      if (this.dateUtil.isValidDate(to) && this.dateUtil.isBefore(date, to)) {
+      if (
+        this.dateUtil.isValidDate(to)
+        && this.dateUtil.isBefore(date, to)
+      ) {
         disabled = true;
       }
 
       if (
         this.dateUtil.isValidDate(from)
-        && this.dateUtil.isAfter(date, from)
+        && this.dateUtil.isSameOrAfter(date, from)
       ) {
         disabled = true;
       }
@@ -199,6 +217,8 @@ export default {
       return this.$emit('selectDate', day.date);
     },
     onPrevClick() {
+      if (this.isPrevDisabled) return;
+
       const pageDate = this.dateUtil.subtract(
         this.dateUtil.fromUnix(this.pageTimestamp),
         1,
@@ -208,6 +228,8 @@ export default {
       this.pageTimestamp = this.dateUtil.toUnix(pageDate);
     },
     onNextClick() {
+      if (this.isNextDisabled) return;
+
       const pageDate = this.dateUtil.add(
         this.dateUtil.fromUnix(this.pageTimestamp),
         1,

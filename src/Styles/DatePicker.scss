@@ -141,6 +141,7 @@
 
     .disabled {
       background-color: darken(#ccc, 10%);
+      color: #ccc;
       cursor: not-allowed;
 
       &:hover {
