@@ -2,20 +2,32 @@
   <div class="vdpr-datepicker">
     <date-input
       :language="language"
-      :format="format"
       :selectedStartDate="selectedStartDate"
       :selectedEndDate="selectedEndDate"
+      :format="format"
+      :inputClass="dateInput.inputClass"
+      :name="dateInput.name"
+      :id="dateInput.id"
+      :placeholder="dateInput.placeholder"
+      :required="dateInput.required"
+      @onClick="onClickDateInput"
     />
     <calendar-dialog
+      v-show="showCalendarDialog"
       :language="language"
-      :disabledDates="disabledDates"
       :initialDates="initialDates"
+      :disabledDates="disabledDates"
+      :showHelperButtons="showHelperButtons"
+      :helperButtons="helperButtons"
+      :startInput="startInput"
+      :endInput="endInput"
       @onApply="onApply"
     />
   </div>
 </template>
 
 <script>
+import PropsValidator from '../Utils/PropsValidator';
 import DateUtil from '../Utils/DateUtil';
 import DateInput from './DateInput.vue';
 import CalendarDialog from './CalendarDialog.vue';
@@ -28,6 +40,7 @@ export default {
   props: {
     initialDates: {
       type: Array,
+      validator: PropsValidator.isValidInitialDate,
       default() {
         return [];
       },
@@ -38,8 +51,19 @@ export default {
     },
     format: {
       type: String,
-      default: 'DD MM yyyy',
+      default: 'DD/MM/yyyy, HH:mm',
     },
+    dateInput: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+    disabledDates: Object,
+    showHelperButtons: Boolean,
+    helperButtons: Array,
+    startInput: Object,
+    endInput: Object,
   },
   data() {
     const dateUtil = new DateUtil(this.language);
@@ -49,20 +73,16 @@ export default {
       selectedStartDate: fromDate ?? null,
       selectedEndDate: toDate ?? null,
       dateUtil,
-      disabledDates: {
-        ranges: [
-          {
-            from: new Date('2020 05 01'),
-            to: new Date('2020 05 31'),
-          },
-        ],
-      },
+      showCalendarDialog: false,
     };
   },
   methods: {
     onApply(date1, date2) {
-      // eslint-disable-next-line no-console
-      console.log(date1, date2);
+      this.selectedStartDate = date1;
+      this.selectedEndDate = date2;
+    },
+    onClickDateInput() {
+      this.showCalendarDialog = !this.showCalendarDialog;
     },
   },
 };

@@ -35,28 +35,6 @@ export default {
    * @param {Object} value
    * @returns {Boolean}
    */
-  isValidCalendarInput(value) {
-    if (Util.getObjectLength(value) === 0) return true;
-
-    const { label, inputClass } = value;
-
-    if (
-      typeof label === 'string'
-      && label !== ''
-      && (typeof inputClass === 'object'
-        || typeof inputClass === 'string'
-        || Array.isArray(inputClass))
-    ) {
-      return true;
-    }
-
-    return false;
-  },
-
-  /**
-   * @param {Object} value
-   * @returns {Boolean}
-   */
   isValidDisabledDates(value) {
     if (Util.getObjectLength(value) === 0) return true;
 

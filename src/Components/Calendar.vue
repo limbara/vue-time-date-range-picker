@@ -34,9 +34,7 @@
               disabled: day.isDisabled,
             }"
             @click="selectDate(day)"
-          >
-            {{ day.dateNumber }}
-          </td>
+          >{{ day.dateNumber }}</td>
         </tr>
       </tbody>
     </table>
@@ -177,7 +175,7 @@ export default {
         if (disabled) return true;
       }
 
-      if (ranges !== 'undefined') {
+      if (ranges !== 'undefined' && Array.isArray(ranges)) {
         ranges.forEach((range) => {
           if (
             this.dateUtil.isValidDate(range.from)
@@ -191,10 +189,7 @@ export default {
         if (disabled) return true;
       }
 
-      if (
-        this.dateUtil.isValidDate(to)
-        && this.dateUtil.isBefore(date, to)
-      ) {
+      if (this.dateUtil.isValidDate(to) && this.dateUtil.isBefore(date, to)) {
         disabled = true;
       }
 

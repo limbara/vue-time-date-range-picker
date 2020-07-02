@@ -3,11 +3,12 @@
     <input
       :id="id"
       :name="name"
-      :type="inputType"
       :placeholder="placeholder"
       :required="required"
       :value="formattedValue"
       :class="inputClass"
+      @click="onClick"
+      type="text"
       ref="dateinput"
       readonly
     />
@@ -19,19 +20,12 @@ import DateUtil from '../Utils/DateUtil';
 
 export default {
   props: {
-    inputType: {
-      type: String,
-      default: 'text',
-    },
     inputClass: [String, Object, Array],
     name: String,
     placeholder: String,
     id: String,
     required: Boolean,
-    format: {
-      type: String,
-      default: 'DD MM yyyy',
-    },
+    format: String,
     language: String,
     selectedStartDate: Date,
     selectedEndDate: Date,
@@ -58,6 +52,11 @@ export default {
       const date2 = dateUtil.formatDate(selectedEndDate, format);
 
       return `${date1} - ${date2}`;
+    },
+  },
+  methods: {
+    onClick() {
+      this.$emit('onClick', true);
     },
   },
   mounted() {

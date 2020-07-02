@@ -132,22 +132,18 @@ export default {
     },
     startInput: {
       type: Object,
-      validator: PropsValidator.isValidCalendarInput,
       default() {
         return {
           label: 'Starts',
-          inputClass: '',
           format: 'DD/MM/yyyy',
         };
       },
     },
     endInput: {
       type: Object,
-      validator: PropsValidator.isValidCalendarInput,
       default() {
         return {
           label: 'Ends',
-          inputClass: '',
           format: 'DD/MM/yyyy',
         };
       },
