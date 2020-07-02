@@ -183,7 +183,7 @@ export default {
 
       if (typeof dates !== 'undefined' && Array.isArray(dates)) {
         dates.forEach((d) => {
-          if (this.DateUtil.isSameDate(d, date)) {
+          if (this.dateUtil.isSameDate(d, date)) {
             disabled = true;
           }
         });
