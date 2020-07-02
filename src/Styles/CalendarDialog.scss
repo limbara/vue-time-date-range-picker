@@ -1,0 +1,59 @@
+@import "./mixins";
+@import "./Calendar.scss";
+@import "./Button.scss";
+@import "./InputDate.scss";
+@import "./InputTime.scss";
+@import "./Switch.scss";
+
+.vdpr-datepicker {
+  &__calendar-dialog {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    position: absolute;
+    margin-top: 2px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    z-index: 1000;
+  }
+
+  &__calendar-button-helper {
+    width: 140px;
+    padding: 5px 10px;
+
+    > :not(:first-child) {
+      margin-top: 5px;
+    }
+  }
+
+  &__calendar-actions {
+    width: 160px;
+    padding: 5px 10px;
+    font-size: 13px;
+
+    > :not(:first-child) {
+      margin-top: 5px;
+    }
+  }
+
+  &__calendar-input-wrapper {
+    @include flex-sb-c;
+    width: 100%;
+
+    &--end {
+      justify-content: flex-end;
+    }
+
+    &:not(:first-child) {
+      margin-top: 10px;
+    }
+
+    > span {
+      flex-basis: 35%;
+    }
+
+    > .vdpr-datepicker__calendar-input-date,
+    .vdpr-datepicker__calendar-input-time {
+      flex-basis: 65%;
+    }
+  }
+}

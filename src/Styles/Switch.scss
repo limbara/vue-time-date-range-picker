@@ -1,0 +1,64 @@
+$bg-switch-check: #3a86ff;
+$bg-switch-uncheck: #ccc;
+$color-switch-button: white;
+$color-switch-text: white;
+
+.vdpr-datepicker__switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+
+  > input {
+    display: none;
+
+    &:checked {
+      + .vdpr-datepicker__switch-slider {
+        background-color: $bg-switch-check;
+      }
+
+      + .vdpr-datepicker__switch-slider::before {
+        transform: translateX(26px);
+      }
+
+      + .vdpr-datepicker__switch-slider::after {
+        content: "ON";
+        left: 25%;
+      }
+    }
+  }
+
+  &-slider {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $bg-switch-uncheck;
+    transition: 0.4s;
+    border-radius: 34px;
+
+    &:before {
+      content: "";
+      height: 24px;
+      width: 24px;
+      position: absolute;
+      left: 5px;
+      bottom: 3px;
+      background-color: $color-switch-button;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    &:after {
+      content: "OFF";
+      position: absolute;
+      top: 50%;
+      left: 75%;
+      transform: translate(-50%, -50%);
+      color: $color-switch-text;
+      font-size: 11px;
+    }
+  }
+}

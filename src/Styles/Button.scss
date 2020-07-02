@@ -1,0 +1,44 @@
+$bg-button-default: white;
+$color-button-default: #333;
+$bg-button-submit: #3a86ff;
+$color-button-submit: white;
+
+.vdpr-datepicker__button {
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  text-transform: capitalize;
+  padding: 6px 12px;
+  line-height: 1.5;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: 4px;
+
+  &--block {
+    width: 100%;
+    display: block;
+  }
+
+  &-default {
+    color: $color-button-default;
+    background-color: $bg-button-default;
+    border-color: darken($bg-button-default, 10%);
+
+    &:hover {
+      background-color: darken($bg-button-default, 10%);
+    }
+  }
+
+  &-submit {
+    color: $color-button-submit;
+    background-color: $bg-button-submit;
+    border-color: darken($bg-button-submit, 10%);
+
+    &:hover {
+      background-color: darken($bg-button-submit, 10%);
+    }
+  }
+}

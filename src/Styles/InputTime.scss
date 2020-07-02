@@ -1,0 +1,38 @@
+@import "mixins";
+
+.vdpr-datepicker__calendar-input-time {
+  position: relative;
+  height: 30px;
+  background-color: #eee;
+
+  &-elem {
+    border: none;
+    outline: none;
+    height: 100%;
+    width: 80%;
+    background-color: transparent;
+    box-sizing: border-box;
+    padding-left: 5px;
+  }
+
+  &-control {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 20%;
+    flex-direction: column;
+    @include flex-c-c;
+
+    &-up,
+    &-down {
+      cursor: pointer;
+      color: #999;
+      @include flex-c-c;
+
+      &:hover {
+        color: black;
+      }
+    }
+  }
+}
