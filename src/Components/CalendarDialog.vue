@@ -24,6 +24,9 @@
       :selectedEndDate="selectedEndDate"
       :disabledDates="disabledDates"
       @selectDate="selectDate"
+      @selectDisabledDate="selectDisabledDate"
+      @onPrevCalendar="onPrevCalendar"
+      @onNextCalendar="onNextCalendar"
     />
     <div class="vdpr-datepicker__calendar-actions">
       <div class="vdpr-datepicker__calendar-input-wrapper">
@@ -279,6 +282,11 @@ export default {
         );
         this.selectedEndDate = this.dateUtil.endOf(this.selectedEndDate, 'd');
       }
+
+      this.$emit('selectDate', this.selectedStartDate, this.selectedEndDate);
+    },
+    selectDisabledDate(date) {
+      this.$emit('selectDisabledDate', date);
     },
     clearSelectedDate() {
       this.selectedStartDate = null;
@@ -353,6 +361,12 @@ export default {
           to: lastYearTo,
         },
       ];
+    },
+    onPrevCalendar() {
+      this.$emit('onPrevCalendar');
+    },
+    onNextCalendar() {
+      this.$emit('onNextCalendar');
     },
   },
 };

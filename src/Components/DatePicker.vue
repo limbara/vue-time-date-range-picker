@@ -23,6 +23,10 @@
       :dateInput="calendarDateInput"
       :timeInput="calendarTimeInput"
       @onApply="onApply"
+      @selectDate="selectDate"
+      @selectDisabledDate="selectDisabledDate"
+      @onPrevCalendar="onPrevCalendar"
+      @onNextCalendar="onNextCalendar"
     />
   </div>
 </template>
@@ -91,9 +95,29 @@ export default {
     onApply(date1, date2) {
       this.selectedStartDate = date1;
       this.selectedEndDate = date2;
+      this.showCalendarDialog = false;
+      this.$emit('dateApplied', date1, date2);
     },
     onClickDateInput() {
       this.showCalendarDialog = !this.showCalendarDialog;
+
+      if (this.showCalendarDialog) {
+        this.$emit('datepickerOpened');
+      } else {
+        this.$emit('datepickerClosed');
+      }
+    },
+    onPrevCalendar() {
+      this.$emit('onPrevCalendar');
+    },
+    onNextCalendar() {
+      this.$emit('onNextCalendar');
+    },
+    selectDate(date1, date2) {
+      this.$emit('selectDate', date1, date2);
+    },
+    selectDisabledDate(date) {
+      this.$emit('selectDisabledDate', date);
     },
   },
 };
