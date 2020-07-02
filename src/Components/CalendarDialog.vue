@@ -140,7 +140,7 @@ export default {
           name: null,
           label: 'Starts',
           step: 60,
-          format: 'DD/MM/yyyy',
+          format: 'DD/MM/YYYY',
         };
       },
     },
@@ -152,7 +152,7 @@ export default {
           name: null,
           label: 'Ends',
           step: 60,
-          format: 'DD/MM/yyyy',
+          format: 'DD/MM/YYYY',
         };
       },
     },

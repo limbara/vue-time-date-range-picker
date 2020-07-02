@@ -89,7 +89,7 @@ export default class {
   // eslint-disable-next-line class-methods-use-this
   isSameDate(date1, date2) {
     return (
-      moment(date1).format('DD MM yyyy') === moment(date2).format('DD MM yyyy')
+      moment(date1).format('DD MM YYYY') === moment(date2).format('DD MM YYYY')
     );
   }
 
