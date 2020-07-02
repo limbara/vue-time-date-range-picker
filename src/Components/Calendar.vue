@@ -34,7 +34,9 @@
               disabled: day.isDisabled,
             }"
             @click="selectDate(day)"
-          >{{ day.dateNumber }}</td>
+          >
+            {{ day.dateNumber }}
+          </td>
         </tr>
       </tbody>
     </table>
@@ -77,7 +79,15 @@ export default {
   },
   computed: {
     dayNames() {
-      return this.dateUtil.getAbbrDayNames();
+      const dayNames = this.dateUtil.getAbbrDayNames();
+
+      if (this.dateUtil.isMondayFirst()) {
+        const [sunday, ...restOfDays] = dayNames;
+
+        return [...restOfDays, sunday];
+      }
+
+      return dayNames;
     },
     monthYear() {
       const pageDate = this.dateUtil.fromUnix(this.pageTimestamp);
@@ -97,8 +107,13 @@ export default {
       }
 
       let firstDay = days[0].date;
-
-      for (let j = firstDay.getDay(); j > 0; j -= 1) {
+      const SUNDAY = 0;
+      const MONDAY = 1;
+      for (
+        let j = firstDay.getDay();
+        j > this.dateUtil.isMondayFirst() ? MONDAY : SUNDAY;
+        j -= 1
+      ) {
         firstDay = this.dateUtil.subtract(firstDay, 1, 'd');
         preDays.unshift(this.constructDay(firstDay, true));
       }

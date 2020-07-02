@@ -64,8 +64,19 @@ export default class {
    */
   // eslint-disable-next-line class-methods-use-this
   formatDate(date, format) {
-    return moment(date)
-      .format(format);
+    return moment(date).format(format);
+  }
+
+  /**
+   * Check if a locale first weekday is monday
+   */
+  isMondayFirst() {
+    return (
+      moment()
+        .locale(this.lang)
+        .weekday(0)
+        .format('E') === '1'
+    );
   }
 
   /**
