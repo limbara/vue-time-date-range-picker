@@ -74,4 +74,20 @@ export default {
 
     return true;
   },
+
+  /**
+   * @param {Object} value
+   * @returns {Boolean}
+   */
+  isValidSameDateFormat(value) {
+    if (Util.getObjectLength(value) === 0) return true;
+
+    const { from, to } = value;
+
+    if (typeof from !== 'string' && typeof to !== 'string') {
+      return false;
+    }
+
+    return true;
+  },
 };

@@ -62,9 +62,9 @@ export default class {
    * @param {String} format
    * @returns {String}
    */
+  // eslint-disable-next-line class-methods-use-this
   formatDate(date, format) {
     return moment(date)
-      .locale(this.lang)
       .format(format);
   }
 
@@ -266,18 +266,6 @@ export default class {
   // eslint-disable-next-line class-methods-use-this
   daysInMonth(date) {
     return moment(date).daysInMonth();
-  }
-
-  /**
-   * Get Day Number 0 - 6 from A Date
-   *
-   * @param {Date} date
-   * @returns {Number}
-   */
-  weekday(date) {
-    return moment(date)
-      .locale(this.lang)
-      .weekday();
   }
 
   /**

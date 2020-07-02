@@ -36,6 +36,7 @@ export default {
     inputClass: [String, Object, Array],
     timestamp: Number,
     language: String,
+    step: Number,
   },
   data() {
     return {
@@ -60,12 +61,12 @@ export default {
   },
   methods: {
     onClickUp() {
-      this.copyTimestamp += 3600;
+      this.copyTimestamp += this.step * 60;
 
       this.$emit('onChange', this.dateUtil.fromUnix(this.copyTimestamp));
     },
     onClickDown() {
-      this.copyTimestamp -= 3600;
+      this.copyTimestamp -= this.step * 60;
 
       this.$emit('onChange', this.dateUtil.fromUnix(this.copyTimestamp));
     },

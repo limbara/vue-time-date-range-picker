@@ -5,6 +5,7 @@
       :selectedStartDate="selectedStartDate"
       :selectedEndDate="selectedEndDate"
       :format="format"
+      :sameDateFormat="sameDateFormat"
       :inputClass="dateInput.inputClass"
       :name="dateInput.name"
       :id="dateInput.id"
@@ -47,11 +48,21 @@ export default {
     },
     language: {
       type: String,
-      default: 'en',
+      default: 'fr',
     },
     format: {
       type: String,
-      default: 'DD/MM/yyyy, HH:mm',
+      default: 'DD/MM/YYYY HH:mm',
+    },
+    sameDateFormat: {
+      type: Object,
+      validator: PropsValidator.isValidSameDateFormat,
+      default() {
+        return {
+          from: 'DD/MM/YYYY, HH:mm',
+          to: 'HH:mm',
+        };
+      },
     },
     dateInput: {
       type: Object,

@@ -1,6 +1,10 @@
 <template>
   <div>
-    <date-picker></date-picker>
+    <date-picker
+      :initialDates="initialDates"
+      :showHelperButtons="showHelperButtons"
+      :dateInput="dateInput"
+    />
   </div>
 </template>
 
@@ -12,8 +16,19 @@ export default {
     DatePicker,
   },
   data() {
-    return {};
+    return {
+      initialDates: [new Date(), new Date()],
+      dateInput: {
+        placeholder: 'Select Date',
+        id: 'date_picker_1',
+        name: 'date_picker_1',
+        required: true,
+      },
+      showHelperButtons: true,
+    };
   },
-  mounted() {},
 };
 </script>
+
+<style lang="scss" scoped>
+</style>

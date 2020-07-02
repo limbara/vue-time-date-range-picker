@@ -9,7 +9,6 @@
       :class="inputClass"
       @click="onClick"
       type="text"
-      ref="dateinput"
       readonly
     />
   </div>
@@ -26,30 +25,42 @@ export default {
     id: String,
     required: Boolean,
     format: String,
+    sameDateFormat: Object,
     language: String,
     selectedStartDate: Date,
     selectedEndDate: Date,
   },
   data() {
     return {
-      inputElem: null,
       dateUtil: new DateUtil(this.language),
     };
   },
   computed: {
     formattedValue() {
-      const {
-        selectedStartDate, selectedEndDate, format, dateUtil,
-      } = this;
+      if (!this.selectedStartDate || !this.selectedEndDate) return '';
 
-      if (!selectedStartDate || !selectedEndDate) return '';
+      if (
+        this.dateUtil.isSameDate(this.selectedStartDate, this.selectedEndDate)
+      ) {
+        const date1 = this.dateUtil.formatDate(
+          this.selectedStartDate,
+          this.sameDateFormat.from,
+        );
 
-      if (dateUtil.isSameDate(selectedStartDate, selectedEndDate)) {
-        return dateUtil.formatDate(selectedStartDate, format);
+        const date2 = this.dateUtil.formatDate(
+          this.selectedEndDate,
+          this.sameDateFormat.to,
+        );
+
+        return `${date1} - ${date2}`;
       }
 
-      const date1 = dateUtil.formatDate(selectedStartDate, format);
-      const date2 = dateUtil.formatDate(selectedEndDate, format);
+      const date1 = this.dateUtil.formatDate(
+        this.selectedStartDate,
+        this.format,
+      );
+
+      const date2 = this.dateUtil.formatDate(this.selectedEndDate, this.format);
 
       return `${date1} - ${date2}`;
     },
@@ -60,7 +71,6 @@ export default {
     },
   },
   mounted() {
-    this.inputElem = this.$refs.dateinput;
   },
 };
 </script>

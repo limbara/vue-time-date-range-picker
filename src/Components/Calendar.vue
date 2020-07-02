@@ -98,7 +98,7 @@ export default {
 
       let firstDay = days[0].date;
 
-      for (let j = this.dateUtil.weekday(firstDay); j > 0; j -= 1) {
+      for (let j = firstDay.getDay(); j > 0; j -= 1) {
         firstDay = this.dateUtil.subtract(firstDay, 1, 'd');
         preDays.unshift(this.constructDay(firstDay, true));
       }

@@ -14,9 +14,7 @@
             onHelperClick(btn.from, btn.to);
           }
         "
-      >
-        {{ btn.name }}
-      </button>
+      >{{ btn.name }}</button>
     </div>
     <calendar
       :language="language"
@@ -31,10 +29,10 @@
         <switch-button :checked="isAllDay" @onCheckChange="onCheckChange" />
       </div>
       <div class="vdpr-datepicker__calendar-input-wrapper">
-        <span>Starts</span>
+        <span>{{ startInput.label }}</span>
         <calendar-input-date
-          :id="startInput.label"
-          :name="startInput.label"
+          :id="startInput.id"
+          :name="startInput.name"
           :format="startInput.format"
           :timestamp="unixSelectedStartDate"
           :language="language"
@@ -48,15 +46,16 @@
           v-show="isVisibleTimeInput"
           id="time_start"
           name="time_start"
+          :step="timeInputStep"
           :timestamp="unixSelectedStartDate"
           @onChange="onTimeStartInputChange"
         />
       </div>
       <div class="vdpr-datepicker__calendar-input-wrapper">
-        <span>Ends</span>
+        <span>{{ endInput.label }}</span>
         <calendar-input-date
-          :id="endInput.label"
-          :name="endInput.label"
+          :id="endInput.id"
+          :name="endInput.name"
           :format="endInput.format"
           :timestamp="unixSelectedEndDate"
           :language="language"
@@ -70,6 +69,7 @@
           v-show="isVisibleTimeInput"
           id="time_end"
           name="time_end"
+          :step="timeInputStep"
           :timestamp="unixSelectedEndDate"
           @onChange="onTimeEndInputChange"
         />
@@ -81,9 +81,7 @@
           'vdpr-datepicker__button-submit',
         ]"
         @click="onClickButtonApply"
-      >
-        Apply
-      </button>
+      >Apply</button>
     </div>
   </div>
 </template>
@@ -130,11 +128,18 @@ export default {
         return [];
       },
     },
+    timeInputStep: {
+      type: Number,
+      default: 60, // in minute
+    },
     startInput: {
       type: Object,
       default() {
         return {
+          id: null,
+          name: null,
           label: 'Starts',
+          step: 60,
           format: 'DD/MM/yyyy',
         };
       },
@@ -143,7 +148,10 @@ export default {
       type: Object,
       default() {
         return {
+          id: null,
+          name: null,
           label: 'Ends',
+          step: 60,
           format: 'DD/MM/yyyy',
         };
       },
@@ -151,17 +159,20 @@ export default {
   },
   data() {
     const dateUtil = new DateUtil(this.language);
-    let [from, to] = this.initialDates;
+    const [from, to] = this.initialDates;
+    let isAllDay = false;
 
-    if (this.isAllDay) {
-      from = this.dateUtil.startOf(from, 'd');
-      to = this.dateUtil.endOf(to, 'd');
+    if (
+      dateUtil.isSame(from, dateUtil.startOf(from, 'd'))
+      && dateUtil.isSame(to, dateUtil.endOf(to, 'd'))
+    ) {
+      isAllDay = true;
     }
 
     return {
       selectedStartDate: from ?? null,
       selectedEndDate: to ?? null,
-      isAllDay: true,
+      isAllDay,
       dateUtil,
     };
   },
