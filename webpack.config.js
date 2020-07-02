@@ -1,55 +1,64 @@
 const path = require('path');
-const fs = require('fs');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-const isProduction = process.env.NODE_ENV === 'production';
+$momentLocale = [
+  'af',
+  'ar',
+  'en',
+  'es',
+  'fi',
+  'fr',
+  'he',
+  'hi',
+  'id',
+  'it',
+  'ja',
+  'kn',
+  'ko',
+  'nl',
+  'ms',
+  'ru',
+  'sk',
+  'sr',
+  'sv',
+  'th',
+  'tr',
+  'uk',
+  'ur',
+  'vi',
+  'zh-cn',
+]
 
-const files = fs.readdirSync(path.join(__dirname, 'src', 'Locales', 'Translations'));
-
-const rules = [
-  {
-    test: /\.js$/,
-    exclude: /node_modules/,
-    use: {
-      loader: 'babel-loader',
-    },
+module.exports = {
+  mode: 'production',
+  entry: {
+    DatePicker: './src/Components/DatePicker.vue',
+    CalendarDialog: './src/Components/CalendarDialog.vue',
   },
-];
-
-const translations = files.map((file) => ({
-  mode: isProduction ? 'production' : 'development',
-  entry: path.join(__dirname, 'src', 'Locales', 'Translations', file),
   output: {
-    path: path.join(__dirname, 'dist', 'Locales', 'Translations'),
-    filename: `${file}`,
-  },
-  module: {
-    rules,
-  },
-}));
-
-const translationsIndex = {
-  mode: isProduction ? 'production' : 'development',
-  entry: path.join(__dirname, 'src', 'Locales', 'index.js'),
-  output: {
-    path: path.join(__dirname, 'dist', 'Locales'),
-    filename: 'index.js',
-  },
-  module: {
-    rules,
-  },
-};
-
-const main = {
-  mode: isProduction ? 'production' : 'development',
-  entry: path.join(__dirname, 'src', 'Components', 'index.js'),
-  output: {
-    filename: 'index.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
   },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin(),
+      new OptimizeCssAssetsPlugin()
+    ],
+  },
   module: {
-    rules: rules.concat([
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+        },
+      },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
@@ -70,15 +79,16 @@ const main = {
           MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
-          'sass-loader',
+          'sass-loader'
         ],
       },
-    ]),
+    ],
   },
   plugins: [
+    new MomentLocalesPlugin({
+      localesToKeep: $momentLocale,
+    }),
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin(),
   ],
 };
-
-module.exports = translations.concat(translationsIndex).concat(main);

@@ -12,7 +12,7 @@
     "prebuild": "npm run clean",
     "build": "webpack",
     "preserve": "rimraf demo",
-    "serve": "webpack-dev-server --config=./webpack-serve.config.js --open",
+    "serve": "webpack-dev-server --config webpack-serve.config.js --open",
     "lint": "eslint --fix --ext .js,.vue src example"
   },
   "pre-commit": [
@@ -45,11 +45,14 @@
     "eslint-plugin-vue": "^6.2.2",
     "html-webpack-plugin": "^4.3.0",
     "mini-css-extract-plugin": "^0.9.0",
+    "moment-locales-webpack-plugin": "^1.2.0",
     "node-sass": "^4.14.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss-loader": "^3.0.0",
     "postcss-preset-env": "^6.7.0",
     "rimraf": "^3.0.2",
     "sass-loader": "^8.0.2",
+    "terser-webpack-plugin": "^3.0.6",
     "vue": "^2.6.11",
     "vue-loader": "^15.9.2",
     "vue-template-compiler": "^2.6.11",
