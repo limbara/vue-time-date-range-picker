@@ -3,8 +3,6 @@
     <input
       class="vdpr-datepicker__calendar-input-date-elem"
       type="text"
-      :id="id"
-      :name="name"
       :class="inputClass"
       :value="formattedValue"
       @keyup.enter="onSubmit"
@@ -17,8 +15,6 @@ import DateUtil from '../Utils/DateUtil';
 
 export default {
   props: {
-    id: String,
-    name: String,
     inputClass: [String, Object, Array],
     timestamp: Number,
     format: String,

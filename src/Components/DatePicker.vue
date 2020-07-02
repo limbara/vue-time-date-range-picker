@@ -20,8 +20,8 @@
       :disabledDates="disabledDates"
       :showHelperButtons="showHelperButtons"
       :helperButtons="helperButtons"
-      :startInput="startInput"
-      :endInput="endInput"
+      :dateInput="calendarDateInput"
+      :timeInput="calendarTimeInput"
       @onApply="onApply"
     />
   </div>
@@ -48,7 +48,7 @@ export default {
     },
     language: {
       type: String,
-      default: 'fr',
+      default: 'en',
     },
     format: {
       type: String,
@@ -73,8 +73,8 @@ export default {
     disabledDates: Object,
     showHelperButtons: Boolean,
     helperButtons: Array,
-    startInput: Object,
-    endInput: Object,
+    calendarDateInput: Object,
+    calendarTimeInput: Object,
   },
   data() {
     const dateUtil = new DateUtil(this.language);

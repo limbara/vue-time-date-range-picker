@@ -3,11 +3,10 @@
     <input
       class="vdpr-datepicker__calendar-input-time-elem"
       type="text"
-      :id="id"
-      :name="name"
       :class="inputClass"
       :value="formattedValue"
-      readonly
+      :readonly="readonly"
+      @keyup.enter="onSubmit"
     />
     <div class="vdpr-datepicker__calendar-input-time-control">
       <span
@@ -31,9 +30,8 @@ import DateUtil from '../Utils/DateUtil';
 
 export default {
   props: {
-    id: String,
-    name: String,
     inputClass: [String, Object, Array],
+    readonly: Boolean,
     timestamp: Number,
     language: String,
     step: Number,
@@ -42,6 +40,7 @@ export default {
     return {
       copyTimestamp: this.timestamp,
       dateUtil: new DateUtil(this.language),
+      format: 'HH:mm',
     };
   },
   computed: {
@@ -50,7 +49,7 @@ export default {
 
       return this.dateUtil.formatDate(
         this.dateUtil.fromUnix(this.copyTimestamp),
-        'HH:mm',
+        this.format,
       );
     },
   },
@@ -70,7 +69,24 @@ export default {
 
       this.$emit('onChange', this.dateUtil.fromUnix(this.copyTimestamp));
     },
+    onSubmit(e) {
+      let [hours, minutes] = e.target.value.trim().split(':');
+      hours = parseInt(hours, 10);
+      minutes = parseInt(minutes, 10);
+
+      if (typeof hours !== 'number' && typeof minutes !== 'number') {
+        return false;
+      }
+
+      const totalMinutes = hours * 60 + minutes;
+      const startOfDate = this.dateUtil.startOf(
+        this.dateUtil.fromUnix(this.copyTimestamp),
+        'd',
+      );
+      const date = this.dateUtil.add(startOfDate, totalMinutes, 'm');
+
+      return this.$emit('onSubmit', date);
+    },
   },
-  mounted() {},
 };
 </script>

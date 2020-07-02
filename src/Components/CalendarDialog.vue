@@ -14,7 +14,9 @@
             onHelperClick(btn.from, btn.to);
           }
         "
-      >{{ btn.name }}</button>
+      >
+        {{ btn.name }}
+      </button>
     </div>
     <calendar
       :language="language"
@@ -29,11 +31,10 @@
         <switch-button :checked="isAllDay" @onCheckChange="onCheckChange" />
       </div>
       <div class="vdpr-datepicker__calendar-input-wrapper">
-        <span>{{ startInput.label }}</span>
+        <span>{{ dateInput.labelStarts }}</span>
         <calendar-input-date
-          :id="startInput.id"
-          :name="startInput.name"
-          :format="startInput.format"
+          :format="dateInput.format"
+          :inputClass="dateInput.inputClass"
           :timestamp="unixSelectedStartDate"
           :language="language"
           @onChange="onStartInputDateChange"
@@ -44,19 +45,19 @@
       >
         <calendar-input-time
           v-show="isVisibleTimeInput"
-          id="time_start"
-          name="time_start"
-          :step="timeInputStep"
+          :step="timeInput.step"
+          :readonly="timeInput.readonly"
+          :inputClass="timeInput.inputClass"
           :timestamp="unixSelectedStartDate"
           @onChange="onTimeStartInputChange"
+          @onSubmit="onTimeStartInputSubmit"
         />
       </div>
       <div class="vdpr-datepicker__calendar-input-wrapper">
-        <span>{{ endInput.label }}</span>
+        <span>{{ dateInput.labelEnds }}</span>
         <calendar-input-date
-          :id="endInput.id"
-          :name="endInput.name"
-          :format="endInput.format"
+          :format="dateInput.format"
+          :inputClass="dateInput.inputClass"
           :timestamp="unixSelectedEndDate"
           :language="language"
           @onChange="onEndDateInputDateChange"
@@ -67,11 +68,12 @@
       >
         <calendar-input-time
           v-show="isVisibleTimeInput"
-          id="time_end"
-          name="time_end"
-          :step="timeInputStep"
+          :step="timeInput.step"
+          :readonly="timeInput.readonly"
+          :inputClass="timeInput.inputClass"
           :timestamp="unixSelectedEndDate"
           @onChange="onTimeEndInputChange"
+          @onSubmit="onTimeEndInputSubmit"
         />
       </div>
       <button
@@ -81,7 +83,9 @@
           'vdpr-datepicker__button-submit',
         ]"
         @click="onClickButtonApply"
-      >Apply</button>
+      >
+        Apply
+      </button>
     </div>
   </div>
 </template>
@@ -109,7 +113,10 @@ export default {
         return [];
       },
     },
-    language: String,
+    language: {
+      type: String,
+      default: 'en',
+    },
     disabledDates: {
       type: Object,
       validator: PropsValidator.isValidDisabledDates,
@@ -128,31 +135,25 @@ export default {
         return [];
       },
     },
-    timeInputStep: {
-      type: Number,
-      default: 60, // in minute
-    },
-    startInput: {
+    timeInput: {
       type: Object,
       default() {
         return {
-          id: null,
-          name: null,
-          label: 'Starts',
-          step: 60,
-          format: 'DD/MM/YYYY',
+          inputClass: null,
+          readonly: false,
+          step: 60, // in minutes
         };
       },
     },
-    endInput: {
+    dateInput: {
       type: Object,
       default() {
         return {
-          id: null,
-          name: null,
-          label: 'Ends',
-          step: 60,
+          labelStarts: 'Starts',
+          labelEnds: 'Ends',
+          inputClass: null,
           format: 'DD/MM/YYYY',
+          readonly: false,
         };
       },
     },
@@ -230,6 +231,14 @@ export default {
       this.checkAndSwap();
     },
     onTimeEndInputChange(value) {
+      this.selectedEndDate = value;
+      this.checkAndSwap();
+    },
+    onTimeStartInputSubmit(value) {
+      this.selectedStartDate = value;
+      this.checkAndSwap();
+    },
+    onTimeEndInputSubmit(value) {
       this.selectedEndDate = value;
       this.checkAndSwap();
     },
