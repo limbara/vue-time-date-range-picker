@@ -48,7 +48,7 @@ export default {
         return false;
       }
 
-      return this.$emit('onChange', date);
+      return this.$emit('on-submit', date);
     },
   },
 };

@@ -62,12 +62,12 @@ export default {
     onClickUp() {
       this.copyTimestamp += this.step * 60;
 
-      this.$emit('onChange', this.dateUtil.fromUnix(this.copyTimestamp));
+      this.$emit('on-change', this.dateUtil.fromUnix(this.copyTimestamp));
     },
     onClickDown() {
       this.copyTimestamp -= this.step * 60;
 
-      this.$emit('onChange', this.dateUtil.fromUnix(this.copyTimestamp));
+      this.$emit('on-change', this.dateUtil.fromUnix(this.copyTimestamp));
     },
     onSubmit(e) {
       let [hours, minutes] = e.target.value.trim().split(':');
@@ -85,7 +85,7 @@ export default {
       );
       const date = this.dateUtil.add(startOfDate, totalMinutes, 'm');
 
-      return this.$emit('onSubmit', date);
+      return this.$emit('on-submit', date);
     },
   },
 };

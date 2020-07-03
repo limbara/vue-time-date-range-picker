@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     onClick() {
-      this.$emit('onCheckChange', !this.checked);
+      this.$emit('on-check-change', !this.checked);
     },
   },
 };

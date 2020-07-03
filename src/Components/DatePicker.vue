@@ -11,7 +11,7 @@
       :id="dateInput.id"
       :placeholder="dateInput.placeholder"
       :required="dateInput.required"
-      @onClick="onClickDateInput"
+      @on-click="onClickDateInput"
     />
     <calendar-dialog
       v-show="showCalendarDialog"
@@ -22,11 +22,11 @@
       :helperButtons="helperButtons"
       :dateInput="calendarDateInput"
       :timeInput="calendarTimeInput"
-      @onApply="onApply"
-      @selectDate="selectDate"
-      @selectDisabledDate="selectDisabledDate"
-      @onPrevCalendar="onPrevCalendar"
-      @onNextCalendar="onNextCalendar"
+      @on-apply="onApply"
+      @select-date="selectDate"
+      @select-disabled-date="selectDisabledDate"
+      @on-prev-calendar="onPrevCalendar"
+      @on-next-calendar="onNextCalendar"
     />
   </div>
 </template>
@@ -96,28 +96,28 @@ export default {
       this.selectedStartDate = date1;
       this.selectedEndDate = date2;
       this.showCalendarDialog = false;
-      this.$emit('dateApplied', date1, date2);
+      this.$emit('date-applied', date1, date2);
     },
     onClickDateInput() {
       this.showCalendarDialog = !this.showCalendarDialog;
 
       if (this.showCalendarDialog) {
-        this.$emit('datepickerOpened');
+        this.$emit('datepicker-opened');
       } else {
-        this.$emit('datepickerClosed');
+        this.$emit('datepicker-closed');
       }
     },
     onPrevCalendar() {
-      this.$emit('onPrevCalendar');
+      this.$emit('on-prev-calendar');
     },
     onNextCalendar() {
-      this.$emit('onNextCalendar');
+      this.$emit('on-next-calendar');
     },
     selectDate(date1, date2) {
-      this.$emit('selectDate', date1, date2);
+      this.$emit('select-date', date1, date2);
     },
     selectDisabledDate(date) {
-      this.$emit('selectDisabledDate', date);
+      this.$emit('select-disabled-date', date);
     },
   },
 };

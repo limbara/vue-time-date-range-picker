@@ -6,13 +6,13 @@
     <date-picker
       :showHelperButtons="showHelperButtons"
       :dateInput="dateInput"
-      @dateApplied="dateApplied"
-      @onPrevCalendar="onPrevCalendar"
-      @onNextCalendar="onNextCalendar"
-      @datepickerOpened="datepickerOpened"
-      @datepickerClosed="datepickerClosed"
-      @selectDate="selectDate"
-      @selectDisabledDate="selectDisabledDate"
+      @date-applied="dateApplied"
+      @on-prev-calendar="onPrevCalendar"
+      @on-next-calendar="onNextCalendar"
+      @datepicker-opened="datepickerOpened"
+      @datepicker-closed="datepickerClosed"
+      @select-date="selectDate"
+      @select-disabled-date="selectDisabledDate"
     />
   </div>
 </template>
@@ -36,31 +36,31 @@ export default {
   },
   methods: {
     dateApplied(date1, date2) {
-      this.eventName = 'dateApplied';
+      this.eventName = 'date-applied';
       this.eventParams = `${date1.toString()} - ${date2.toString()}`;
     },
     onPrevCalendar() {
-      this.eventName = 'onPrevCalendar';
+      this.eventName = 'on-prev-calendar';
       this.eventParams = '';
     },
     onNextCalendar() {
-      this.eventName = 'onNextCalendar';
+      this.eventName = 'on-next-calendar';
       this.eventParams = '';
     },
     datepickerOpened() {
-      this.eventName = 'datepickerOpened';
+      this.eventName = 'datepicker-opened';
       this.eventParams = '';
     },
     datepickerClosed() {
-      this.eventName = 'datepickerClosed';
+      this.eventName = 'datepicker-closed';
       this.eventParams = '';
     },
     selectDate(date1, date2) {
-      this.eventName = 'selectDate';
+      this.eventName = 'select-date';
       this.eventParams = `${date1.toString()} - ${date2.toString()}`;
     },
     selectDisabledDate(date) {
-      this.eventName = 'selectDisabledDate';
+      this.eventName = 'select-disabled-date';
       this.eventParams = date.toString();
     },
   },

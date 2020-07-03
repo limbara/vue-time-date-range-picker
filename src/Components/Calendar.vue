@@ -223,10 +223,10 @@ export default {
     },
     selectDate(day) {
       if (day.isDisabled) {
-        return this.$emit('selectDisabledDate', day.date);
+        return ('select-disabled-date', day.date);
       }
 
-      return this.$emit('selectDate', day.date);
+      return this.$emit('select-date', day.date);
     },
     onPrevClick() {
       if (this.isPrevDisabled) return;
@@ -239,7 +239,7 @@ export default {
 
       this.pageTimestamp = this.dateUtil.toUnix(pageDate);
 
-      this.$emit('onPrevCalendar');
+      this.$emit('on-prev-calendar');
     },
     onNextClick() {
       if (this.isNextDisabled) return;
@@ -252,7 +252,7 @@ export default {
 
       this.pageTimestamp = this.dateUtil.toUnix(pageDate);
 
-      this.$emit('onNextCalendar');
+      this.$emit('on-next-calendar');
     },
   },
   mounted() {},

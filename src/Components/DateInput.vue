@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     onClick() {
-      this.$emit('onClick', true);
+      this.$emit('on-click', true);
     },
   },
   mounted() {
