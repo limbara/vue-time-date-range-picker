@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved
 import moment from 'moment';
 import Util from './Util';
 

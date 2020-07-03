@@ -1,37 +1,8 @@
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-
-$momentLocale = [
-  'af',
-  'ar',
-  'en',
-  'es',
-  'fi',
-  'fr',
-  'he',
-  'hi',
-  'id',
-  'it',
-  'ja',
-  'kn',
-  'ko',
-  'nl',
-  'ms',
-  'ru',
-  'sk',
-  'sr',
-  'sv',
-  'th',
-  'tr',
-  'uk',
-  'ur',
-  'vi',
-  'zh-cn',
-]
 
 module.exports = {
   mode: 'production',
@@ -40,6 +11,8 @@ module.exports = {
     CalendarDialog: './src/Components/CalendarDialog.vue',
   },
   output: {
+    library: '[name]',
+    libraryExport: 'default', 
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
   },
@@ -49,6 +22,9 @@ module.exports = {
       new TerserPlugin(),
       new OptimizeCssAssetsPlugin()
     ],
+  },
+  externals: {
+    moment: 'moment'
   },
   module: {
     rules: [
@@ -85,9 +61,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new MomentLocalesPlugin({
-      localesToKeep: $momentLocale,
-    }),
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin(),
   ],
