@@ -225,7 +225,7 @@ export default {
     },
     selectDate(day) {
       if (day.isDisabled) {
-        return ('select-disabled-date', day.date);
+        return this.$emit('select-disabled-date', day.date);
       }
 
       return this.$emit('select-date', day.date);
