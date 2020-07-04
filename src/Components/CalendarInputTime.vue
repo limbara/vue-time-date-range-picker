@@ -62,14 +62,24 @@ export default {
   },
   methods: {
     onClickUp() {
+      if (this.copyTimestamp === 0) return false;
+
       this.copyTimestamp += this.step * 60;
 
-      this.$emit('on-change', this.dateUtil.fromUnix(this.copyTimestamp));
+      return this.$emit(
+        'on-change',
+        this.dateUtil.fromUnix(this.copyTimestamp),
+      );
     },
     onClickDown() {
+      if (this.copyTimestamp === 0) return false;
+
       this.copyTimestamp -= this.step * 60;
 
-      this.$emit('on-change', this.dateUtil.fromUnix(this.copyTimestamp));
+      return this.$emit(
+        'on-change',
+        this.dateUtil.fromUnix(this.copyTimestamp),
+      );
     },
     onSubmit(e) {
       let [hours, minutes] = e.target.value.trim().split(':');
