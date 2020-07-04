@@ -173,10 +173,12 @@ export default {
       selectedStartDate: from ?? null,
       selectedEndDate: to ?? null,
       isAllDay,
-      dateUtil,
     };
   },
   computed: {
+    dateUtil() {
+      return new DateUtil(this.language);
+    },
     helpers() {
       if (!this.showHelperButtons) return [];
 

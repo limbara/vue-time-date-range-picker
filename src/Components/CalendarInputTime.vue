@@ -39,11 +39,13 @@ export default {
   data() {
     return {
       copyTimestamp: this.timestamp,
-      dateUtil: new DateUtil(this.language),
       format: 'HH:mm',
     };
   },
   computed: {
+    dateUtil() {
+      return new DateUtil(this.language);
+    },
     formattedValue() {
       if (this.copyTimestamp === 0) return '';
 

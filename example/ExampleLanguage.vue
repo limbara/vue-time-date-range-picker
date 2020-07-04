@@ -14,6 +14,21 @@
       }
     </pre>
     <date-picker :dateInput="dateInput" language="id" />
+    <br />
+    <h4>changing language</h4>
+    <p>{{ displayLang }}</p>
+    <ul>
+      <li @click="changeLanguage('en')">
+        <button>en</button>
+      </li>
+      <li @click="changeLanguage('id')">
+        <button>id</button>
+      </li>
+      <li @click="changeLanguage('fr')">
+        <button>fr</button>
+      </li>
+    </ul>
+    <date-picker :language="language" :dateInput="dateInput" />
   </div>
 </template>
 
@@ -26,10 +41,21 @@ export default {
   },
   data() {
     return {
+      language: 'id',
       dateInput: {
         placeholder: 'Select Date',
       },
     };
+  },
+  computed: {
+    displayLang() {
+      return `Current Language ${this.language}`;
+    },
+  },
+  methods: {
+    changeLanguage(lang) {
+      this.language = lang;
+    },
   },
 };
 </script>

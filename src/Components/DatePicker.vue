@@ -81,15 +81,18 @@ export default {
     calendarTimeInput: Object,
   },
   data() {
-    const dateUtil = new DateUtil(this.language);
     const [fromDate, toDate] = this.initialDates;
 
     return {
       selectedStartDate: fromDate ?? null,
       selectedEndDate: toDate ?? null,
-      dateUtil,
       showCalendarDialog: false,
     };
+  },
+  computed: {
+    dateUtil() {
+      return new DateUtil(this.language);
+    },
   },
   methods: {
     onApply(date1, date2) {

@@ -23,7 +23,6 @@ export default {
   data() {
     return {
       copyTimestamp: this.timestamp,
-      dateUtil: new DateUtil(this.language),
     };
   },
   watch: {
@@ -32,6 +31,9 @@ export default {
     },
   },
   computed: {
+    dateUtil() {
+      return new DateUtil(this.language);
+    },
     formattedValue() {
       if (this.copyTimestamp === 0) return '';
 

@@ -30,12 +30,10 @@ export default {
     selectedStartDate: Date,
     selectedEndDate: Date,
   },
-  data() {
-    return {
-      dateUtil: new DateUtil(this.language),
-    };
-  },
   computed: {
+    dateUtil() {
+      return new DateUtil(this.language);
+    },
     formattedValue() {
       if (!this.selectedStartDate || !this.selectedEndDate) return '';
 

@@ -74,10 +74,12 @@ export default {
     return {
       // stored page time stamp start of a month
       pageTimestamp,
-      dateUtil,
     };
   },
   computed: {
+    dateUtil() {
+      return new DateUtil(this.language);
+    },
     dayNames() {
       const dayNames = this.dateUtil.getAbbrDayNames();
 
