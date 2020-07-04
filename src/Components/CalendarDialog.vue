@@ -14,7 +14,9 @@
             onHelperClick(btn.from, btn.to);
           }
         "
-      >{{ btn.name }}</button>
+      >
+        {{ btn.name }}
+      </button>
     </div>
     <calendar
       :language="language"
@@ -84,7 +86,9 @@
           'vdpr-datepicker__button-submit',
         ]"
         @click="onClickButtonApply"
-      >Apply</button>
+      >
+        Apply
+      </button>
     </div>
   </div>
 </template>
@@ -190,14 +194,12 @@ export default {
       if (!this.selectedStartDate) {
         return 0;
       }
-
       return this.dateUtil.toUnix(this.selectedStartDate);
     },
     unixSelectedEndDate() {
       if (!this.selectedEndDate) {
         return 0;
       }
-
       return this.dateUtil.toUnix(this.selectedEndDate);
     },
     isVisibleTimeInput() {
@@ -220,28 +222,22 @@ export default {
       }
     },
     onStartInputDateChange(value) {
-      this.selectedStartDate = value;
-      this.checkAndSwap();
+      this.applyOrSwapApply(value, this.selectedEndDate);
     },
     onEndDateInputDateChange(value) {
-      this.selectedEndDate = value;
-      this.checkAndSwap();
+      this.applyOrSwapApply(this.selectedStartDate, value);
     },
     onTimeStartInputChange(value) {
-      this.selectedStartDate = value;
-      this.checkAndSwap();
+      this.applyOrSwapApply(value, this.selectedEndDate);
     },
     onTimeEndInputChange(value) {
-      this.selectedEndDate = value;
-      this.checkAndSwap();
+      this.applyOrSwapApply(this.selectedStartDate, value);
     },
     onTimeStartInputSubmit(value) {
-      this.selectedStartDate = value;
-      this.checkAndSwap();
+      this.applyOrSwapApply(value, this.selectedEndDate);
     },
     onTimeEndInputSubmit(value) {
-      this.selectedEndDate = value;
-      this.checkAndSwap();
+      this.applyOrSwapApply(this.selectedStartDate, value);
     },
     onHelperClick(fromDate, toDate) {
       if (
@@ -253,8 +249,7 @@ export default {
         this.isAllDay = false;
       }
 
-      this.selectedStartDate = fromDate;
-      this.selectedEndDate = toDate;
+      this.applyOrSwapApply(fromDate, toDate);
     },
     onClickButtonApply() {
       this.$emit('on-apply', this.selectedStartDate, this.selectedEndDate);
@@ -265,13 +260,11 @@ export default {
         && this.dateUtil.isValidDate(this.selectedEndDate)
         && this.dateUtil.isSameDate(this.selectedStartDate, this.selectedEndDate)
       ) {
-        this.selectedEndDate = date;
+        this.applyOrSwapApply(this.selectedStartDate, date);
       } else {
         this.selectedStartDate = date;
         this.selectedEndDate = date;
       }
-
-      this.checkAndSwap();
 
       if (this.isAllDay) {
         this.selectedStartDate = this.dateUtil.startOf(
@@ -290,12 +283,12 @@ export default {
       this.selectedStartDate = null;
       this.selectedEndDate = null;
     },
-    checkAndSwap() {
-      if (this.dateUtil.isAfter(this.selectedStartDate, this.selectedEndDate)) {
-        [this.selectedStartDate, this.selectedEndDate] = [
-          this.selectedEndDate,
-          this.selectedStartDate,
-        ];
+    applyOrSwapApply(startDate, endDate) {
+      if (this.dateUtil.isAfter(startDate, endDate)) {
+        [this.selectedStartDate, this.selectedEndDate] = [endDate, startDate];
+      } else {
+        this.selectedStartDate = startDate;
+        this.selectedEndDate = endDate;
       }
     },
     getDefaultHelpers() {

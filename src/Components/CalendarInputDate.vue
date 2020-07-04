@@ -44,7 +44,9 @@ export default {
   },
   methods: {
     onSubmit(e) {
-      const date = this.dateUtil.createDate(e.target.value, this.format);
+      const lastDate = this.dateUtil.fromUnix(this.copyTimestamp);
+      const lastTime = this.dateUtil.formatDate(lastDate, 'HH:mm:ss');
+      const date = this.dateUtil.createDate(`${e.target.value} ${lastTime}`, `${this.format} HH:mm:ss`);
 
       if (!this.dateUtil.isValidDate(date)) {
         return false;
