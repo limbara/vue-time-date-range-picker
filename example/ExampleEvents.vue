@@ -6,6 +6,7 @@
     <date-picker
       :showHelperButtons="showHelperButtons"
       :dateInput="dateInput"
+      :disabledDates="disabledDates"
       @date-applied="dateApplied"
       @on-prev-calendar="onPrevCalendar"
       @on-next-calendar="onNextCalendar"
@@ -32,6 +33,9 @@ export default {
       showHelperButtons: true,
       eventName: '',
       eventParams: '',
+      disabledDates: {
+        to: new Date((new Date()).setDate(1)),
+      },
     };
   },
   methods: {
