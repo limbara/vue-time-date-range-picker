@@ -96,10 +96,13 @@ export default {
   },
   methods: {
     onApply(date1, date2) {
+      if (!date1 || !date2) return false;
+
       this.selectedStartDate = date1;
       this.selectedEndDate = date2;
       this.showCalendarDialog = false;
-      this.$emit('date-applied', date1, date2);
+
+      return this.$emit('date-applied', date1, date2);
     },
     onClickDateInput() {
       this.showCalendarDialog = !this.showCalendarDialog;
