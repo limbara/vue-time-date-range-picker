@@ -65,7 +65,7 @@ export default class {
    */
   // eslint-disable-next-line class-methods-use-this
   formatDate(date, format) {
-    return moment(date).format(format);
+    return moment(date).locale(this.lang).format(format);
   }
 
   /**
