@@ -170,10 +170,7 @@ export default {
     const [from, to] = this.initialDates;
     let isAllDay = false;
 
-    if (
-      dateUtil.isSame(from, dateUtil.startOf(from, 'd'))
-      && dateUtil.isSame(to, dateUtil.endOf(to, 'd'))
-    ) {
+    if (dateUtil.isAllDay(from, to)) {
       isAllDay = true;
     }
 
@@ -244,10 +241,7 @@ export default {
       this.applyOrSwapApply(this.selectedStartDate, value);
     },
     onHelperClick(fromDate, toDate) {
-      if (
-        this.dateUtil.isSame(fromDate, this.dateUtil.startOf(fromDate, 'd'))
-        && this.dateUtil.isSame(toDate, this.dateUtil.endOf(toDate, 'd'))
-      ) {
+      if (this.dateUtil.isAllDay(fromDate, toDate)) {
         this.isAllDay = true;
       } else {
         this.isAllDay = false;

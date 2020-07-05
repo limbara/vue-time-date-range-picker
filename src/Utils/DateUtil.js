@@ -65,7 +65,9 @@ export default class {
    */
   // eslint-disable-next-line class-methods-use-this
   formatDate(date, format) {
-    return moment(date).locale(this.lang).format(format);
+    return moment(date)
+      .locale(this.lang)
+      .format(format);
   }
 
   /**
@@ -97,13 +99,21 @@ export default class {
   /**
    * check for date time similarity
    *
-   * @param {Date} date1
-   * @param {Date} date2
+   * @param {Date} fromDate
+   * @param {Date} toDate
    * @returns {Boolean}
    */
   // eslint-disable-next-line class-methods-use-this
-  isSame(date1, date2) {
-    return moment(date1).isSame(date2);
+  isAllDay(fromDate, toDate) {
+    const startFromDate = moment(fromDate).startOf('day');
+    const endToDate = moment(toDate).endOf('day');
+
+    return (
+      moment(fromDate).format('DD MM YYYY HH:mm:ss')
+        === startFromDate.format('DD MM YYYY HH:mm:ss')
+      && moment(toDate).format('DD MM YYYY HH:mm:ss')
+        === endToDate.format('DD MM YYYY HH:mm:ss')
+    );
   }
 
   /**
