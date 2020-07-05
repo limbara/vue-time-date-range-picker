@@ -65,7 +65,7 @@ export default {
       },
       disabledDates1: {
         from: new Date('2020 08 01'),
-        to: new Date('2020 06 31'),
+        to: new Date('2020 06 30'),
       },
       disabledDates2: {
         ranges: [

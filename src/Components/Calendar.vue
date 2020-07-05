@@ -206,7 +206,10 @@ export default {
         if (disabled) return true;
       }
 
-      if (this.dateUtil.isValidDate(to) && this.dateUtil.isBefore(date, to)) {
+      if (
+        this.dateUtil.isValidDate(to)
+        && this.dateUtil.isSameOrBefore(date, to)
+      ) {
         disabled = true;
       }
 
@@ -257,6 +260,5 @@ export default {
       this.$emit('on-next-calendar');
     },
   },
-  mounted() {},
 };
 </script>
