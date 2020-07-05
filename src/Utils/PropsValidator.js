@@ -10,7 +10,11 @@ export default {
 
     const [from, to] = value;
 
-    return Util.isObjectDate(from) && Util.isObjectDate(to);
+    return (
+      Util.isObjectDate(from)
+      && Util.isObjectDate(to)
+      && to.getTime() >= from.getTime()
+    );
   },
 
   /**
