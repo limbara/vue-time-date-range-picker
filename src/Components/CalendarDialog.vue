@@ -30,7 +30,7 @@
     />
     <div class="vdpr-datepicker__calendar-actions">
       <div class="vdpr-datepicker__calendar-input-wrapper">
-        <span>All Days</span>
+        <span>{{ switchButtonLabel }}</span>
         <switch-button :checked="isAllDay" @on-check-change="onCheckChange" />
       </div>
       <div class="vdpr-datepicker__calendar-input-wrapper">
@@ -159,6 +159,10 @@ export default {
           readonly: false,
         };
       },
+    },
+    switchButtonLabel: {
+      type: String,
+      default: 'All Days',
     },
   },
   data() {
