@@ -21,6 +21,14 @@ describe('Calendar', () => {
     vm = wrapper.vm;
   });
 
+  it('should have correct default data', () => {
+    const d = new Date(wrapper.vm.pageTimestamp * 1000);
+
+    expect(d.getFullYear()).toEqual(now.getFullYear());
+    expect(d.getMonth()).toEqual(now.getMonth());
+    expect(d.getDate()).toEqual(1);
+  });
+
   it('should render correct contents', () => {
     expect(wrapper.find(calendarClass).exists()).toBe(true);
     expect(wrapper.find(calendarPrevButtonClass).exists()).toBe(true);
@@ -31,8 +39,8 @@ describe('Calendar', () => {
   it('should show current calendar page', () => {
     const index = vm.days.find((day) => (
       day.date.getFullYear() === now.getFullYear()
-        && day.date.getMonth() === now.getMonth()
-        && day.date.getDate() === now.getDate()
+      && day.date.getMonth() === now.getMonth()
+      && day.date.getDate() === now.getDate()
     ));
 
     expect(index !== -1).toBe(true);
