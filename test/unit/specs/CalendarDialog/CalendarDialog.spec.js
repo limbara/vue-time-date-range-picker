@@ -50,17 +50,42 @@ describe('Calendar Dialog', () => {
   });
 
   it('should render correct contents', () => {
-    wrapper = mount(CalendarDialog);
+    wrapper = mount(CalendarDialog, {
+      propsData: {
+        initialDates: [
+          new Date('2020 08 01 00:00:00'),
+          new Date('2020 08 02 23:59:59'),
+        ],
+        dateInput: {
+          format: 'DD/MM/YYYY',
+        },
+      },
+    });
 
     expect(wrapper.find(datePickerDialogClass).exists()).toBe(true);
     expect(wrapper.find(datePickerHelperButtons).exists()).toBe(true);
     expect(wrapper.find(datePickerActionsClass).exists()).toBe(true);
     expect(wrapper.find(datePickerButtonSubmit).exists()).toBe(true);
 
-    expect(wrapper.findComponent(Calendar).exists()).toBe(true);
-    expect(wrapper.findComponent(SwitchButton).exists()).toBe(true);
-    expect(wrapper.findAllComponents(CalendarInputDate)).toHaveLength(2);
-    expect(wrapper.findAllComponents(CalendarInputTime)).toHaveLength(2);
+    const comCalendar = wrapper.findComponent(Calendar);
+    const inputDates = wrapper.findAllComponents(CalendarInputDate);
+    const comSwitchButton = wrapper.findComponent(SwitchButton);
+    const inputTimes = wrapper.findAllComponents(CalendarInputTime);
+
+    expect(comCalendar.exists()).toBe(true);
+    expect(comSwitchButton.exists()).toBe(true);
+    expect(inputDates).toHaveLength(2);
+    expect(inputTimes).toHaveLength(2);
+
+    const inputDateStart = inputDates.at(0).find('input');
+    const inputDateEnd = inputDates.at(1).find('input');
+    const inputTimeStart = inputTimes.at(0).find('input');
+    const inputTimeEnd = inputTimes.at(1).find('input');
+
+    expect(inputDateStart.element.value).toEqual('01/08/2020');
+    expect(inputDateEnd.element.value).toEqual('02/08/2020');
+    expect(inputTimeStart.element.value).toEqual('00:00');
+    expect(inputTimeEnd.element.value).toEqual('23:59');
   });
 
   it('should change switch button label', () => {
