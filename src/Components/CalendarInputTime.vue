@@ -11,14 +11,12 @@
     <div class="vdpr-datepicker__calendar-input-time-control">
       <span
         class="vdpr-datepicker__calendar-input-time-control-up"
-        @click="onClickUp"
-      >
-        &#9652;
+        @click="onClickUp">
+      &#9652;
       </span>
       <span
         class="vdpr-datepicker__calendar-input-time-control-down"
-        @click="onClickDown"
-      >
+        @click="onClickDown">
         &#9662;
       </span>
     </div>
@@ -86,7 +84,8 @@ export default {
       hours = parseInt(hours, 10);
       minutes = parseInt(minutes, 10);
 
-      if (typeof hours !== 'number' && typeof minutes !== 'number') {
+      // eslint-disable-next-line no-restricted-globals
+      if (isNaN(hours) || isNaN(minutes)) {
         return false;
       }
 
