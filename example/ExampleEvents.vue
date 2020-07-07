@@ -1,8 +1,11 @@
 <template>
   <div>
     <h2>Example Events</h2>
-    <p>{{ eventName }}</p>
-    <p>{{ eventParams }}</p>
+    <ol class="event-list">
+      <li v-for="event in events" :key="event.name+event.time.getTime()" class="event-list__item">
+        {{event.name}} - {{event.value}}
+      </li>
+    </ol>
     <date-picker
       :showHelperButtons="showHelperButtons"
       :dateInput="dateInput"
@@ -21,6 +24,14 @@
 <script>
 import DatePicker from '../src/Components/DatePicker.vue';
 
+class Event {
+  constructor(name, value) {
+    this.name = name;
+    this.value = value;
+    this.time = new Date();
+  }
+}
+
 export default {
   components: {
     DatePicker,
@@ -31,44 +42,55 @@ export default {
         placeholder: 'Select Date',
       },
       showHelperButtons: true,
-      eventName: '',
-      eventParams: '',
+      events: [],
       disabledDates: {
-        to: new Date((new Date()).setDate(1)),
+        to: new Date(new Date().setDate(1)),
       },
     };
   },
   methods: {
     dateApplied(date1, date2) {
-      this.eventName = 'date-applied';
-      this.eventParams = `${date1.toString()} - ${date2.toString()}`;
+      this.events.push(
+        new Event('date-applied', `${date1.toString()} - ${date2.toString()}`),
+      );
     },
     onPrevCalendar() {
-      this.eventName = 'on-prev-calendar';
-      this.eventParams = '';
+      this.events.push(new Event('on-prev-calendar', ''));
     },
     onNextCalendar() {
-      this.eventName = 'on-next-calendar';
-      this.eventParams = '';
+      this.events.push(new Event('on-next-calendar', ''));
     },
     datepickerOpened() {
-      this.eventName = 'datepicker-opened';
-      this.eventParams = '';
+      this.events.push(new Event('datepicker-opened', ''));
     },
     datepickerClosed() {
-      this.eventName = 'datepicker-closed';
-      this.eventParams = '';
+      this.events.push(new Event('datepicker-closed', ''));
     },
     selectDate(date1, date2) {
-      this.eventName = 'select-date';
-      this.eventParams = `${date1.toString()} - ${date2.toString()}`;
+      this.events.push(
+        new Event('select-date', `${date1.toString()} - ${date2.toString()}`),
+      );
     },
     selectDisabledDate(date) {
-      this.eventName = 'select-disabled-date';
-      this.eventParams = date.toString();
+      this.events.push(new Event('select-disabled-date', date.toString()));
     },
+    clearEvents() {
+      const date = new Date();
+      this.events = this.events.filter((event) => date.getTime() < event.time.getTime() + 5000);
+    },
+  },
+  mounted() {
+    setInterval(this.clearEvents, 1000);
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.event-list {
+  padding: 0;
+  margin: 0;
+  &__item {
+    font-size: 10px;
+  }
+}
+</style>
