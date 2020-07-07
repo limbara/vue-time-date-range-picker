@@ -62,4 +62,15 @@ describe('Calendar Dialog : helper buttons', () => {
 
     expect(wrapper.vm.isAllDay).toEqual(true);
   });
+
+  it('should emit select-date event', () => {
+    wrapper = shallowMount(CalendarDialog);
+
+    const from = new Date('2020 07 01 00:00:00');
+    const to = new Date('2020 07 31 23:59:59');
+
+    wrapper.vm.onHelperClick(from, to);
+
+    expect(wrapper.emitted('select-date')[0]).toEqual([from, to]);
+  });
 });

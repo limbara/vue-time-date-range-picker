@@ -2,7 +2,7 @@
   <div
     class="vdpr-datepicker__calendar-dialog"
     :class="{
-      'vdpr-datepicker__calendar-dialog--inline' : this.inline
+      'vdpr-datepicker__calendar-dialog--inline': this.inline,
     }"
   >
     <div class="vdpr-datepicker__calendar-button-helper" v-if="helpers.length">
@@ -19,7 +19,9 @@
             onHelperClick(btn.from, btn.to);
           }
         "
-      >{{ btn.name }}</button>
+      >
+        {{ btn.name }}
+      </button>
     </div>
     <calendar
       :language="language"
@@ -90,7 +92,9 @@
           'vdpr-datepicker__button-submit',
         ]"
         @click="onClickButtonApply"
-      >Apply</button>
+      >
+        Apply
+      </button>
     </div>
   </div>
 </template>
@@ -263,6 +267,7 @@ export default {
       }
 
       this.applyOrSwapApply(fromDate, toDate);
+      this.$emit('select-date', this.selectedStartDate, this.selectedEndDate);
       this.emitOnApplyIfInline();
     },
     onClickButtonApply() {
@@ -272,9 +277,9 @@ export default {
       let startDate = this.selectedStartDate;
       let endDate = this.selectedEndDate;
       if (
-        this.dateUtil.isValidDate(this.selectedStartDate)
-        && this.dateUtil.isValidDate(this.selectedEndDate)
-        && this.dateUtil.isSameDate(this.selectedStartDate, this.selectedEndDate)
+        this.dateUtil.isValidDate(startDate)
+        && this.dateUtil.isValidDate(endDate)
+        && this.dateUtil.isSameDate(startDate, endDate)
       ) {
         endDate = date;
       } else {
@@ -282,12 +287,15 @@ export default {
         endDate = date;
       }
 
-      if (this.isAllDay) {
-        startDate = this.dateUtil.startOf(startDate, 'd');
-        endDate = this.dateUtil.endOf(endDate, 'd');
-      }
-
       this.applyOrSwapApply(startDate, endDate);
+
+      if (this.isAllDay) {
+        this.selectedStartDate = this.dateUtil.startOf(
+          this.selectedStartDate,
+          'd',
+        );
+        this.selectedEndDate = this.dateUtil.endOf(this.selectedEndDate, 'd');
+      }
 
       this.$emit('select-date', this.selectedStartDate, this.selectedEndDate);
       this.emitOnApplyIfInline();
