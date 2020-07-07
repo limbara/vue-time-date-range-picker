@@ -35,6 +35,9 @@
     "coverageDirectory": "./test/unit/coverage/",
     "collectCoverage": true
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "peerDependencies": {
     "moment": "^2.27.0",
     "vue": "^2.6.11"
