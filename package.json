@@ -4,6 +4,8 @@
   "description": "a vue time date range picker",
   "keywords": [
     "vue",
+    "vuejs",
+    "range-datetime-picker",
     "date-time-range-picker"
   ],
   "main": "/dist/DatePicker.js",
@@ -23,12 +25,16 @@
     "type": "git",
     "url": "git+https://github.com/limbara/vue-time-date-range-picker.git"
   },
-  "author": "Nico Limbara",
+  "author": "Nico Limbara <nick_dev@yahoo.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/limbara/vue-time-date-range-picker/issues"
   },
   "homepage": "https://github.com/limbara/vue-time-date-range-picker#readme",
+  "jest": {
+    "coverageDirectory": "./test/unit/coverage/",
+    "collectCoverage": true
+  },
   "peerDependencies": {
     "moment": "^2.27.0",
     "vue": "^2.6.11"
