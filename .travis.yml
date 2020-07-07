@@ -15,8 +15,6 @@ jobs:
         - codecov        
     - stage: NPM release
       script: npm run build
-      before_deploy:
-        - npm run build
       deploy:
         edge: true
         provider: npm
