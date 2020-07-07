@@ -1,11 +1,13 @@
 <template>
   <div class="vdpr-datepicker">
     <date-input
+      :type="showingDateInput ? 'text' : 'hidden'"
       :language="language"
       :selectedStartDate="selectedStartDate"
       :selectedEndDate="selectedEndDate"
       :format="format"
       :sameDateFormat="sameDateFormat"
+      :refName="dateInput.refName"
       :inputClass="dateInput.inputClass"
       :name="dateInput.name"
       :id="dateInput.id"
@@ -14,8 +16,9 @@
       @on-click="onClickDateInput"
     />
     <calendar-dialog
-      v-show="showCalendarDialog"
+      v-show="showingCalendarDialog"
       :language="language"
+      :inline="inline"
       :initialDates="initialDates"
       :disabledDates="disabledDates"
       :showHelperButtons="showHelperButtons"
@@ -51,6 +54,10 @@ export default {
         return [];
       },
     },
+    inline: {
+      type: Boolean,
+      default: false,
+    },
     language: {
       type: String,
       default: 'en',
@@ -84,16 +91,23 @@ export default {
   },
   data() {
     const [fromDate, toDate] = this.initialDates;
+    const showCalendarDialog = this.inline;
 
     return {
       selectedStartDate: fromDate ?? null,
       selectedEndDate: toDate ?? null,
-      showCalendarDialog: false,
+      showCalendarDialog,
     };
   },
   computed: {
     dateUtil() {
       return new DateUtil(this.language);
+    },
+    showingDateInput() {
+      return !this.inline;
+    },
+    showingCalendarDialog() {
+      return this.showCalendarDialog || this.inline;
     },
   },
   methods: {
@@ -102,11 +116,16 @@ export default {
 
       this.selectedStartDate = date1;
       this.selectedEndDate = date2;
-      this.showCalendarDialog = false;
+
+      if (!this.inline) {
+        this.showCalendarDialog = false;
+      }
 
       return this.$emit('date-applied', date1, date2);
     },
     onClickDateInput() {
+      if (this.inline) return;
+
       this.showCalendarDialog = !this.showCalendarDialog;
 
       if (this.showCalendarDialog) {

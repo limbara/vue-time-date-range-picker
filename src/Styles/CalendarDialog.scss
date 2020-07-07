@@ -10,11 +10,23 @@
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
     position: absolute;
     margin-top: 2px;
-    padding: 10px;
+    padding: 5px;
     display: flex;
     flex-direction: row;
     z-index: 1000;
     background-color: white;
+
+    &--inline {
+      display: inline-flex;
+      position: unset;
+      z-index: 0;
+      box-shadow: none;
+      border: 1px solid rgba(0, 0, 0, 0.175);
+    }
+  }
+
+  &__calendar {
+    width: 300px;
   }
 
   &__calendar-button-helper {

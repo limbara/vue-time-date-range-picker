@@ -1,5 +1,10 @@
 <template>
-  <div class="vdpr-datepicker__calendar-dialog">
+  <div
+    class="vdpr-datepicker__calendar-dialog"
+    :class="{
+      'vdpr-datepicker__calendar-dialog--inline' : this.inline
+    }"
+  >
     <div class="vdpr-datepicker__calendar-button-helper" v-if="helpers.length">
       <button
         v-for="btn in helpers"
@@ -14,9 +19,7 @@
             onHelperClick(btn.from, btn.to);
           }
         "
-      >
-        {{ btn.name }}
-      </button>
+      >{{ btn.name }}</button>
     </div>
     <calendar
       :language="language"
@@ -80,15 +83,14 @@
         />
       </div>
       <button
+        v-show="isVisibleButtonApply"
         :class="[
           'vdpr-datepicker__button',
           'vdpr-datepicker__button--block',
           'vdpr-datepicker__button-submit',
         ]"
         @click="onClickButtonApply"
-      >
-        Apply
-      </button>
+      >Apply</button>
     </div>
   </div>
 </template>
@@ -109,6 +111,10 @@ export default {
     SwitchButton,
   },
   props: {
+    inline: {
+      type: Boolean,
+      default: false,
+    },
     initialDates: {
       type: Array,
       validator: PropsValidator.isValidInitialDate,
@@ -206,6 +212,9 @@ export default {
     isVisibleTimeInput() {
       return !this.isAllDay;
     },
+    isVisibleButtonApply() {
+      return !this.inline;
+    },
   },
   methods: {
     onCheckChange(check) {
@@ -224,21 +233,27 @@ export default {
     },
     onStartInputDateChange(value) {
       this.applyOrSwapApply(value, this.selectedEndDate);
+      this.emitOnApplyIfInline();
     },
     onEndDateInputDateChange(value) {
       this.applyOrSwapApply(this.selectedStartDate, value);
+      this.emitOnApplyIfInline();
     },
     onTimeStartInputChange(value) {
       this.applyOrSwapApply(value, this.selectedEndDate);
+      this.emitOnApplyIfInline();
     },
     onTimeEndInputChange(value) {
       this.applyOrSwapApply(this.selectedStartDate, value);
+      this.emitOnApplyIfInline();
     },
     onTimeStartInputSubmit(value) {
       this.applyOrSwapApply(value, this.selectedEndDate);
+      this.emitOnApplyIfInline();
     },
     onTimeEndInputSubmit(value) {
       this.applyOrSwapApply(this.selectedStartDate, value);
+      this.emitOnApplyIfInline();
     },
     onHelperClick(fromDate, toDate) {
       if (this.dateUtil.isAllDay(fromDate, toDate)) {
@@ -248,38 +263,37 @@ export default {
       }
 
       this.applyOrSwapApply(fromDate, toDate);
+      this.emitOnApplyIfInline();
     },
     onClickButtonApply() {
       this.$emit('on-apply', this.selectedStartDate, this.selectedEndDate);
     },
     selectDate(date) {
+      let startDate = this.selectedStartDate;
+      let endDate = this.selectedEndDate;
       if (
         this.dateUtil.isValidDate(this.selectedStartDate)
         && this.dateUtil.isValidDate(this.selectedEndDate)
         && this.dateUtil.isSameDate(this.selectedStartDate, this.selectedEndDate)
       ) {
-        this.applyOrSwapApply(this.selectedStartDate, date);
+        endDate = date;
       } else {
-        this.selectedStartDate = date;
-        this.selectedEndDate = date;
+        startDate = date;
+        endDate = date;
       }
 
       if (this.isAllDay) {
-        this.selectedStartDate = this.dateUtil.startOf(
-          this.selectedStartDate,
-          'd',
-        );
-        this.selectedEndDate = this.dateUtil.endOf(this.selectedEndDate, 'd');
+        startDate = this.dateUtil.startOf(startDate, 'd');
+        endDate = this.dateUtil.endOf(endDate, 'd');
       }
 
+      this.applyOrSwapApply(startDate, endDate);
+
       this.$emit('select-date', this.selectedStartDate, this.selectedEndDate);
+      this.emitOnApplyIfInline();
     },
     selectDisabledDate(date) {
       this.$emit('select-disabled-date', date);
-    },
-    clearSelectedDate() {
-      this.selectedStartDate = null;
-      this.selectedEndDate = null;
     },
     applyOrSwapApply(startDate, endDate) {
       if (this.dateUtil.isAfter(startDate, endDate)) {
@@ -287,6 +301,11 @@ export default {
       } else {
         this.selectedStartDate = startDate;
         this.selectedEndDate = endDate;
+      }
+    },
+    emitOnApplyIfInline() {
+      if (this.inline) {
+        this.$emit('on-apply', this.selectedStartDate, this.selectedEndDate);
       }
     },
     getDefaultHelpers() {

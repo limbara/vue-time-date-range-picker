@@ -16,6 +16,7 @@
     <br />
     <example-initial-dates />
     <br />
+    <example-inline />
   </div>
 </template>
 
@@ -27,6 +28,7 @@ import ExampleTimeInputConfig from './ExampleTimeInputConfig.vue';
 import ExampleDateFormat from './ExampleDateFormat.vue';
 import ExampleInitialDates from './ExampleInitialDates.vue';
 import ExampleLanguage from './ExampleLanguage.vue';
+import ExampleInline from './ExampleInline.vue';
 
 export default {
   components: {
@@ -37,14 +39,14 @@ export default {
     ExampleDateFormat,
     ExampleInitialDates,
     ExampleLanguage,
+    ExampleInline,
   },
 };
 </script>
 
 <style lang="scss">
 .app {
-  width: 80%;
-  margin: 0 auto;
+  padding: 40px;
 }
 
 h2 {

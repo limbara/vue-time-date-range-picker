@@ -2,13 +2,14 @@
   <div>
     <input
       :id="id"
+      :type="type"
+      :ref="refName"
       :name="name"
       :placeholder="placeholder"
       :required="required"
       :value="formattedValue"
       :class="inputClass"
       @click="onClick"
-      type="text"
       readonly
     />
   </div>
@@ -20,7 +21,9 @@ import DateUtil from '../Utils/DateUtil';
 export default {
   props: {
     inputClass: [String, Object, Array],
+    refName: String,
     name: String,
+    type: String,
     placeholder: String,
     id: String,
     required: Boolean,
