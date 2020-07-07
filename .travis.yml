@@ -21,8 +21,7 @@ jobs:
         edge: true
         provider: npm
         email: "$NPM_EMAIL"
-        api_key: "$NPM_TOKEN"
-        skip_cleanup: true
+        api_token: "$NPM_TOKEN"
         on:
           tags: true
 branches:
