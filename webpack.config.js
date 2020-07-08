@@ -1,26 +1,26 @@
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
   mode: 'production',
   entry: {
-    DatePicker: './src/Components/DatePicker.vue',
-    CalendarDialog: './src/Components/CalendarDialog.vue',
+    'vdprDatePicker': './src/Components/DatePicker.vue',
+    'vdprDatePicker.min': './src/Components/DatePicker.vue'
   },
+  devtool: "source-map",
   output: {
-    library: '[name]',
-    libraryExport: 'default', 
+    library: 'vdprDatePicker',
+    libraryTarget: 'umd', 
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
   },
   optimization: {
     minimize: true,
     minimizer: [
-      new TerserPlugin(),
-      new OptimizeCssAssetsPlugin()
+      new TerserPlugin({
+        include: /\.min\.js$/,
+      }),
     ],
   },
   externals: {
@@ -43,7 +43,6 @@ module.exports = {
         test: /\.css$/,
         use: [
           'vue-style-loader',
-          MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
         ],
@@ -52,7 +51,6 @@ module.exports = {
         test: /\.scss$/,
         use: [
           'vue-style-loader',
-          MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
           'sass-loader'
@@ -62,6 +60,5 @@ module.exports = {
   },
   plugins: [
     new VueLoaderPlugin(),
-    new MiniCssExtractPlugin(),
   ],
 };

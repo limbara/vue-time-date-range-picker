@@ -41,6 +41,7 @@ import DateUtil from '../Utils/DateUtil';
 import DateInput from './DateInput.vue';
 import CalendarDialog from './CalendarDialog.vue';
 
+export { CalendarDialog };
 export default {
   components: {
     DateInput,
