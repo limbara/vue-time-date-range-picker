@@ -74,7 +74,7 @@ Below is props that're available in **DatePicker** Component
 | format                                | String        | DD/MM/YYYY HH:mm  | Format for display date input                           |
 | [same-date-format](#same-date-format) | Object        | refer below       | Format for display date input if start & end date same  |
 | [disabled-dates](#disabled-dates)     | Object        | refer below       | Disable certain dates                                   |
-| [date-input]($date-input)             | Object        |                   | Input configuration                                     |
+| [date-input](#date-input)             | Object        |                   | Input configuration                                     |
 | show-helper-buttons                   | Boolean       |                   | Show helper buttons                                     |
 | [helper-buttons](#helper-buttons)     | [ ]Object     |                   | Custom helper button                                    |
 | [calendar-date-input](#c-date-input)  | Object        | refer below       | Calendar input date configuration                       |
