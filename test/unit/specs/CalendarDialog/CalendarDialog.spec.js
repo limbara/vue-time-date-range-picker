@@ -6,6 +6,7 @@ import CalendarInputDate from '@/Components/CalendarInputDate.vue';
 import CalendarInputTime from '@/Components/CalendarInputTime.vue';
 import { shallowMount, mount } from '@vue/test-utils';
 import 'regenerator-runtime';
+import '@testing-library/jest-dom';
 
 describe('Calendar Dialog', () => {
   const datePickerDialogClass = '.vdpr-datepicker__calendar-dialog';
@@ -27,14 +28,14 @@ describe('Calendar Dialog', () => {
     wrapper = shallowMount(CalendarDialog, {
       propsData: {
         initialDates: [
-          new Date('2020 08 01 15:00'),
-          new Date('2020 08 02 00:00'),
+          new Date('2020 08 01 15:00:00'),
+          new Date('2020 08 02 00:00:00'),
         ],
       },
     });
 
-    expect(wrapper.vm.selectedStartDate).toEqual(new Date('2020 08 01 15:00'));
-    expect(wrapper.vm.selectedEndDate).toEqual(new Date('2020 08 02 00:00'));
+    expect(wrapper.vm.selectedStartDate).toEqual(new Date('2020 08 01 15:00:00'));
+    expect(wrapper.vm.selectedEndDate).toEqual(new Date('2020 08 02 00:00:00'));
     expect(wrapper.vm.isAllDay).toEqual(false);
 
     wrapper = shallowMount(CalendarDialog, {
@@ -86,6 +87,30 @@ describe('Calendar Dialog', () => {
     expect(inputDateEnd.element.value).toEqual('02/08/2020');
     expect(inputTimeStart.element.value).toEqual('00:00');
     expect(inputTimeEnd.element.value).toEqual('23:59');
+  });
+
+  it('should change switch button initial state', () => {
+    wrapper = mount(CalendarDialog, {
+      propsData: {
+        switchButtonInitial: true,
+      },
+    });
+
+    let comSwitchButton = wrapper.findComponent(SwitchButton);
+    let inputCheckbox = comSwitchButton.find('input');
+
+    expect(inputCheckbox.element).toBeChecked();
+
+    wrapper = mount(CalendarDialog, {
+      propsData: {
+        switchButtonInitial: false,
+      },
+    });
+
+    comSwitchButton = wrapper.findComponent(SwitchButton);
+    inputCheckbox = comSwitchButton.find('input');
+
+    expect(inputCheckbox.element).not.toBeChecked();
   });
 
   it('should change switch button label', () => {

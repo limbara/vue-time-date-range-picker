@@ -26,6 +26,7 @@
       :dateInput="calendarDateInput"
       :timeInput="calendarTimeInput"
       :switchButtonLabel="switchButtonLabel"
+      :switchButtonInitial="switchButtonInitial"
       @on-apply="onApply"
       @select-date="selectDate"
       @select-disabled-date="selectDisabledDate"
@@ -89,6 +90,7 @@ export default {
     calendarDateInput: Object,
     calendarTimeInput: Object,
     switchButtonLabel: Object,
+    switchButtonInitial: Boolean,
   },
   data() {
     const [fromDate, toDate] = this.initialDates;

@@ -80,6 +80,7 @@ Below is props that're available in **DatePicker** Component
 | [calendar-date-input](#c-date-input)  | Object        | refer below       | Calendar input date configuration                       |
 | [calendar-time-input](#c-time-input)  | Object        | refer below       | Calendar input time configuration                       |
 | switch-button-label                   | String        | refer below       | Switch Button label                                     |
+| switch-button-initial                 | Boolean       |                   | Switch Button initial value                             |
 
 Below is props that're available in **Calendar Dialog** Component
 
@@ -94,6 +95,7 @@ Below is props that're available in **Calendar Dialog** Component
 | [date-input](#c-date-input)           | Object          |             | Calendar input date configuration        |
 | [time-input](#c-time-input)           | Object          |             | Calendar input time configuration        |
 | switch-button-label                   | String          | All Days    | Switch Button label                      |
+| switch-button-initial                 | Boolean         |             | Switch Button initial value              |
 
 #### Same Date Format 
 Below is values that're available for props "same-date-format"
