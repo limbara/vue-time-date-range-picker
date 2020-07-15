@@ -19,9 +19,7 @@
             onHelperClick(btn.from, btn.to);
           }
         "
-      >
-        {{ btn.name }}
-      </button>
+      >{{ btn.name }}</button>
     </div>
     <calendar
       :language="language"
@@ -92,9 +90,7 @@
           'vdpr-datepicker__button-submit',
         ]"
         @click="onClickButtonApply"
-      >
-        Apply
-      </button>
+      >Apply</button>
     </div>
   </div>
 </template>
@@ -181,8 +177,12 @@ export default {
     const [from, to] = this.initialDates;
     let isAllDay = this.switchButtonInitial ?? false;
 
-    if (from && to && dateUtil.isAllDay(from, to)) {
-      isAllDay = true;
+    if (from && to) {
+      if (dateUtil.isAllDay(from, to)) {
+        isAllDay = true;
+      } else {
+        isAllDay = false;
+      }
     }
 
     return {
