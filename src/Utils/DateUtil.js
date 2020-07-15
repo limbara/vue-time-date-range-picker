@@ -97,7 +97,7 @@ export default class {
   }
 
   /**
-   * check for date time similarity
+   * Check for is All Day.
    *
    * @param {Date} fromDate
    * @param {Date} toDate
@@ -109,10 +109,10 @@ export default class {
     const endToDate = moment(toDate).endOf('day');
 
     return (
-      moment(fromDate).format('DD MM YYYY HH:mm:ss')
-        === startFromDate.format('DD MM YYYY HH:mm:ss')
-      && moment(toDate).format('DD MM YYYY HH:mm:ss')
-        === endToDate.format('DD MM YYYY HH:mm:ss')
+      moment(fromDate).format('DD MM YYYY HH:mm')
+        === startFromDate.format('DD MM YYYY HH:mm')
+      && moment(toDate).format('DD MM YYYY HH:mm')
+        === endToDate.format('DD MM YYYY HH:mm')
     );
   }
 
