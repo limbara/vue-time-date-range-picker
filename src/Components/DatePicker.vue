@@ -89,7 +89,7 @@ export default {
     helperButtons: Array,
     calendarDateInput: Object,
     calendarTimeInput: Object,
-    switchButtonLabel: Object,
+    switchButtonLabel: String,
     switchButtonInitial: Boolean,
   },
   data() {

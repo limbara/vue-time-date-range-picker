@@ -79,7 +79,7 @@ Below is props that're available in **DatePicker** Component
 | [helper-buttons](#helper-buttons)     | [ ]Object     |                   | Custom helper button                                    |
 | [calendar-date-input](#c-date-input)  | Object        | refer below       | Calendar input date configuration                       |
 | [calendar-time-input](#c-time-input)  | Object        | refer below       | Calendar input time configuration                       |
-| switch-button-label                   | String        | refer below       | Switch Button label                                     |
+| switch-button-label                   | String        |                   | Switch Button label                                     |
 | switch-button-initial                 | Boolean       |                   | Switch Button initial value                             |
 
 Below is props that're available in **Calendar Dialog** Component
