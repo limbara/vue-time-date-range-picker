@@ -170,12 +170,15 @@ export default {
       type: String,
       default: 'All Days',
     },
-    switchButtonInitial: Boolean,
+    switchButtonInitial: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     const dateUtil = new DateUtil(this.language);
     const [from, to] = this.initialDates;
-    let isAllDay = this.switchButtonInitial ?? false;
+    let isAllDay = this.switchButtonInitial;
 
     if (from && to) {
       if (dateUtil.isAllDay(from, to)) {
