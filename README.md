@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/limbara/vue-time-date-range-picker/branch/master/graph/badge.svg)](https://codecov.io/gh/limbara/vue-time-date-range-picker)
+
 # vue-time-date-range-picker
 
 A Vue Component to pick a ranged datetime in calendar. Built alongside Vue 2.x . 
@@ -95,7 +97,7 @@ Below is props that're available in **Calendar Dialog** Component
 | [date-input](#c-date-input)           | Object          |             | Calendar input date configuration        |
 | [time-input](#c-time-input)           | Object          |             | Calendar input time configuration        |
 | switch-button-label                   | String          | All Days    | Switch Button label                      |
-| switch-button-initial                 | Boolean         |             | Switch Button initial value              |
+| switch-button-initial                 | Boolean         | Boolean     | Switch Button initial value              |
 
 #### Same Date Format 
 Below is values that're available for props "same-date-format"
