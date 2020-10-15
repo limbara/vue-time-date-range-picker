@@ -26,6 +26,7 @@
       :selectedStartDate="selectedStartDate"
       :selectedEndDate="selectedEndDate"
       :disabledDates="disabledDates"
+      :isMondayFirst="isMondayFirst"
       @select-date="selectDate"
       @select-disabled-date="selectDisabledDate"
       @on-prev-calendar="onPrevCalendar"
@@ -171,6 +172,10 @@ export default {
       default: 'All Days',
     },
     switchButtonInitial: {
+      type: Boolean,
+      default: false,
+    },
+    isMondayFirst: {
       type: Boolean,
       default: false,
     },

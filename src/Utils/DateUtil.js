@@ -71,18 +71,6 @@ export default class {
   }
 
   /**
-   * Check if a locale first weekday is monday
-   */
-  isMondayFirst() {
-    return (
-      moment()
-        .locale(this.lang)
-        .weekday(0)
-        .format('E') === '1'
-    );
-  }
-
-  /**
    * check for same date only
    *
    * @param {Date} date1
@@ -110,9 +98,9 @@ export default class {
 
     return (
       moment(fromDate).format('DD MM YYYY HH:mm')
-        === startFromDate.format('DD MM YYYY HH:mm')
+      === startFromDate.format('DD MM YYYY HH:mm')
       && moment(toDate).format('DD MM YYYY HH:mm')
-        === endToDate.format('DD MM YYYY HH:mm')
+      === endToDate.format('DD MM YYYY HH:mm')
     );
   }
 
@@ -288,6 +276,17 @@ export default class {
   // eslint-disable-next-line class-methods-use-this
   daysInMonth(date) {
     return moment(date).daysInMonth();
+  }
+
+  /**
+   * Get Day 0 - 6 from A Date
+   *
+   * @param {Date} date
+   * @returns {Number}
+   */
+  // eslint-disable-next-line class-methods-use-this
+  day(date) {
+    return moment(date).day();
   }
 
   /**

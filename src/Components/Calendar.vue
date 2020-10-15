@@ -65,6 +65,7 @@ export default {
     selectedEndDate: Date,
     language: String,
     disabledDates: Object,
+    isMondayFirst: Boolean,
   },
   data() {
     const dateUtil = new DateUtil(this.language);
@@ -83,7 +84,7 @@ export default {
     dayNames() {
       const dayNames = this.dateUtil.getAbbrDayNames();
 
-      if (this.dateUtil.isMondayFirst()) {
+      if (this.isMondayFirst) {
         const [sunday, ...restOfDays] = dayNames;
 
         return [...restOfDays, sunday];
@@ -113,7 +114,7 @@ export default {
       const MONDAY = 1;
       for (
         let j = firstDay.getDay();
-        j > this.dateUtil.isMondayFirst() ? MONDAY : SUNDAY;
+        j > this.isMondayFirst ? MONDAY : SUNDAY;
         j -= 1
       ) {
         firstDay = this.dateUtil.subtract(firstDay, 1, 'd');

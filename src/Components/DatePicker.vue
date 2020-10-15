@@ -27,6 +27,7 @@
       :timeInput="calendarTimeInput"
       :switchButtonLabel="switchButtonLabel"
       :switchButtonInitial="switchButtonInitial"
+      :isMondayFirst="isMondayFirst"
       @on-apply="onApply"
       @select-date="selectDate"
       @select-disabled-date="selectDisabledDate"
@@ -91,6 +92,7 @@ export default {
     calendarTimeInput: Object,
     switchButtonLabel: String,
     switchButtonInitial: Boolean,
+    isMondayFirst: Boolean,
   },
   data() {
     const [fromDate, toDate] = this.initialDates;

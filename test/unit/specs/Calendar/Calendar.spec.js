@@ -74,6 +74,16 @@ describe('Calendar', () => {
     expect(vm.monthYear).toContain(myMonth);
   });
 
+  it('should render Monday first', () => {
+    expect(vm.dayNames[0]).toBe('Sun');
+
+    wrapper.setProps({
+      isMondayFirst: true,
+    });
+
+    expect(vm.dayNames[0]).toBe('Mon');
+  });
+
   it('emit an event select-date when selected', () => {
     vm.selectDate({ isDisabled: false });
     expect(wrapper.emitted('select-date')).toBeTruthy();
