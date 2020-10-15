@@ -16,6 +16,8 @@
     <br />
     <example-initial-dates />
     <br />
+    <example-is-monday-first />
+    <br />
     <example-inline />
   </div>
 </template>
@@ -29,6 +31,7 @@ import ExampleDateFormat from './ExampleDateFormat.vue';
 import ExampleInitialDates from './ExampleInitialDates.vue';
 import ExampleLanguage from './ExampleLanguage.vue';
 import ExampleInline from './ExampleInline.vue';
+import ExampleIsMondayFirst from './ExampleIsMondayFirst.vue';
 
 export default {
   components: {
@@ -40,6 +43,7 @@ export default {
     ExampleInitialDates,
     ExampleLanguage,
     ExampleInline,
+    ExampleIsMondayFirst,
   },
 };
 </script>
