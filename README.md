@@ -50,7 +50,7 @@ Usage from CDN
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
-<script src="https://unpkg.com/vue-time-date-range-picker@1.1.1/dist/vdprDatePicker.js"></script>
+<script src="https://unpkg.com/vue-time-date-range-picker@1.2.0/dist/vdprDatePicker.js"></script>
 <script>
 const app = new Vue({
   el: '#app',
@@ -83,21 +83,23 @@ Below is props that're available in **DatePicker** Component
 | [calendar-time-input](#c-time-input)  | Object        | refer below       | Calendar input time configuration                       |
 | switch-button-label                   | String        |                   | Switch Button label                                     |
 | switch-button-initial                 | Boolean       |                   | Switch Button initial value                             |
+| is-monday-first                       | Boolean       |                   | Calendar start from Monday instead of Sunday            |
 
 Below is props that're available in **Calendar Dialog** Component
 
-| Prop                                  | Type            | Default     | Description                              |
-|---------------------------------------|-----------------|-------------|------------------------------------------|
-| initial-dates                         | [Date, Date]    |             | Initial value for the datepicker         |
-| inline                                | Boolean         | false       | Use datepicker inline style              |
-| language                              | String          | en          | Languange                                |
-| [disabled-dates](#disabled-dates)     | Object          | refer below | Disable certain dates                    |
-| show-helper-buttons                   | Boolean         | true        | Show helper buttons                      |
-| [helper-buttons](#helper-buttons)     | [ ]Object       | [ ]         | Custom helper button                     |
-| [date-input](#c-date-input)           | Object          |             | Calendar input date configuration        |
-| [time-input](#c-time-input)           | Object          |             | Calendar input time configuration        |
-| switch-button-label                   | String          | All Days    | Switch Button label                      |
-| switch-button-initial                 | Boolean         | Boolean     | Switch Button initial value              |
+| Prop                                  | Type            | Default     | Description                                 |
+|---------------------------------------|-----------------|-------------|---------------------------------------------|
+| initial-dates                         | [Date, Date]    |             | Initial value for the datepicker            |
+| inline                                | Boolean         | false       | Use datepicker inline style                 |
+| language                              | String          | en          | Languange                                   |
+| [disabled-dates](#disabled-dates)     | Object          | refer below | Disable certain dates                       |
+| show-helper-buttons                   | Boolean         | true        | Show helper buttons                         |
+| [helper-buttons](#helper-buttons)     | [ ]Object       | [ ]         | Custom helper button                        |
+| [date-input](#c-date-input)           | Object          |             | Calendar input date configuration           |
+| [time-input](#c-time-input)           | Object          |             | Calendar input time configuration           |
+| switch-button-label                   | String          | All Days    | Switch Button label                         |
+| switch-button-initial                 | Boolean         | false       | Switch Button initial value                 |
+| is-monday-first                       | Boolean         | false       | Calendar start from Monday (default Sunday) |
 
 #### Same Date Format 
 Below is values that're available for props "same-date-format"
