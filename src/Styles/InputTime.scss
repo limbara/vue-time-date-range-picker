@@ -22,6 +22,7 @@
     height: 100%;
     width: 20%;
     flex-direction: column;
+    user-select: none;
     @include flex-c-c;
 
     &-up,
