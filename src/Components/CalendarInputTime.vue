@@ -6,7 +6,7 @@
       :class="inputClass"
       :value="formattedValue"
       :readonly="readonly"
-      @keyup.enter="onSubmit"
+      @change="onChange"
     />
     <div class="vdpr-datepicker__calendar-input-time-control">
       <span
@@ -79,7 +79,7 @@ export default {
         this.dateUtil.fromUnix(this.copyTimestamp),
       );
     },
-    onSubmit(e) {
+    onChange(e) {
       let [hours, minutes] = e.target.value.trim().split(':');
       hours = parseInt(hours, 10);
       minutes = parseInt(minutes, 10);
@@ -96,7 +96,7 @@ export default {
       );
       const date = this.dateUtil.add(startOfDate, totalMinutes, 'm');
 
-      return this.$emit('on-submit', date);
+      return this.$emit('on-change', date);
     },
   },
 };

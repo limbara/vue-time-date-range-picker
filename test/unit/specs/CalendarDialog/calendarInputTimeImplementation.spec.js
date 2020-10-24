@@ -26,7 +26,7 @@ describe('Calendar Dialog : Calendar Input Time Implementation', () => {
   });
 
   it('set date when input time start submitted', () => {
-    const e = 'on-submit';
+    const e = 'on-change';
 
     inputTimeStart.vm.$emit(e, new Date('2020 07 01 02:00:00'));
 
@@ -40,7 +40,7 @@ describe('Calendar Dialog : Calendar Input Time Implementation', () => {
   });
 
   it('set date when input time end submitted', () => {
-    const e = 'on-submit';
+    const e = 'on-change';
 
     inputTimeTo.vm.$emit(e, new Date('2020 07 01 20:00:00'));
 

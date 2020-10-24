@@ -5,7 +5,7 @@
       type="text"
       :class="inputClass"
       :value="formattedValue"
-      @keyup.enter="onSubmit"
+      @change="onChange"
     />
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
     },
   },
   methods: {
-    onSubmit(e) {
+    onChange(e) {
       const lastDate = this.dateUtil.fromUnix(this.copyTimestamp);
       const lastTime = this.dateUtil.formatDate(lastDate, 'HH:mm:ss');
       const date = this.dateUtil.createDate(`${e.target.value} ${lastTime}`, `${this.format} HH:mm:ss`);
@@ -52,7 +52,7 @@ export default {
         return false;
       }
 
-      return this.$emit('on-submit', date);
+      return this.$emit('on-change', date);
     },
   },
 };

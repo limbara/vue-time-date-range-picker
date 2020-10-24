@@ -44,7 +44,7 @@
           :inputClass="dateInput.inputClass"
           :timestamp="unixSelectedStartDate"
           :language="language"
-          @on-submit="onStartInputDateChange"
+          @on-change="onStartInputDateChange"
         />
       </div>
       <div
@@ -57,7 +57,6 @@
           :inputClass="timeInput.inputClass"
           :timestamp="unixSelectedStartDate"
           @on-change="onTimeStartInputChange"
-          @on-submit="onTimeStartInputSubmit"
         />
       </div>
       <div class="vdpr-datepicker__calendar-input-wrapper">
@@ -67,7 +66,7 @@
           :inputClass="dateInput.inputClass"
           :timestamp="unixSelectedEndDate"
           :language="language"
-          @on-submit="onEndDateInputDateChange"
+          @on-change="onEndDateInputDateChange"
         />
       </div>
       <div
@@ -80,7 +79,6 @@
           :inputClass="timeInput.inputClass"
           :timestamp="unixSelectedEndDate"
           @on-change="onTimeEndInputChange"
-          @on-submit="onTimeEndInputSubmit"
         />
       </div>
       <button
@@ -257,14 +255,6 @@ export default {
       this.emitOnApplyIfInline();
     },
     onTimeEndInputChange(value) {
-      this.applyOrSwapApply(this.selectedStartDate, value);
-      this.emitOnApplyIfInline();
-    },
-    onTimeStartInputSubmit(value) {
-      this.applyOrSwapApply(value, this.selectedEndDate);
-      this.emitOnApplyIfInline();
-    },
-    onTimeEndInputSubmit(value) {
       this.applyOrSwapApply(this.selectedStartDate, value);
       this.emitOnApplyIfInline();
     },

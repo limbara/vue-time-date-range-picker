@@ -59,17 +59,19 @@ describe('Calendar Input Date', () => {
     expect(vm.formattedValue).toEqual('Ogos');
   });
 
-  it('emit on-submit', async () => {
-    await wrapper.find('input').trigger('keyup.enter');
+  it('emit on-change when input change', async () => {
+    wrapper.find('input').element.value = '24/10/2020';
 
-    expect(wrapper.emitted('on-submit')[0]).toEqual([new Date(date)]);
+    await wrapper.find('input').trigger('change');
+
+    expect(wrapper.emitted('on-change')[0]).toEqual([new Date('2020 10 24')]);
   });
 
-  it("doesn't emit on-submit if input invalid", async () => {
+  it("doesn't emit on-change if input invalid", async () => {
     wrapper.find('input').element.value = 'ww/08/2020';
 
-    await wrapper.find('input').trigger('keyup.enter');
+    await wrapper.find('input').trigger('change');
 
-    expect(wrapper.emitted('on-submit')).toBeFalsy();
+    expect(wrapper.emitted('on-change')).toBeFalsy();
   });
 });
