@@ -6,7 +6,7 @@ export default {
    * @returns {Boolean}
    */
   isValidInitialDate(value) {
-    if (value.length === 0) return true;
+    if (!value || value.length === 0) return true;
 
     const [from, to] = value;
 
@@ -22,7 +22,7 @@ export default {
    * @returns {Boolean}
    */
   isValidHelperButtons(value) {
-    if (value.length === 0) return true;
+    if (!value || value.length === 0) return true;
 
     const filtered = value.filter((button) => {
       const isButtonNameValid = typeof button.name === 'string' && button.name !== '';
@@ -40,7 +40,7 @@ export default {
    * @returns {Boolean}
    */
   isValidDisabledDates(value) {
-    if (Util.getObjectLength(value) === 0) return true;
+    if (!value || Util.getObjectLength(value) === 0) return true;
 
     const {
       dates, from, to, ranges, custom,
@@ -84,11 +84,11 @@ export default {
    * @returns {Boolean}
    */
   isValidSameDateFormat(value) {
-    if (Util.getObjectLength(value) === 0) return true;
+    if (!value || Util.getObjectLength(value) === 0) return true;
 
     const { from, to } = value;
 
-    if (typeof from !== 'string' && typeof to !== 'string') {
+    if (typeof from !== 'string' || typeof to !== 'string') {
       return false;
     }
 
