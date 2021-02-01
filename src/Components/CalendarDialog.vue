@@ -317,22 +317,26 @@ export default {
     },
     getDefaultHelpers() {
       const now = new Date();
+      const yesterday = this.dateUtil.subtract(now, 1, 'd');
+      const lastWeek = this.dateUtil.subtract(now, 7, 'd');
+      const lastMonth = this.dateUtil.subtract(now, 1, 'M');
+      const lastYear = this.dateUtil.subtract(now, 1, 'y');
       const todayFrom = this.dateUtil.startOf(now, 'd');
       const todayTo = this.dateUtil.endOf(now, 'd');
-      const yesterdayFrom = this.dateUtil.subtract(todayFrom, 1, 'd');
-      const yesterdayTo = this.dateUtil.subtract(todayTo, 1, 'd');
+      const yesterdayFrom = this.dateUtil.startOf(yesterday, 'd');
+      const yesterdayTo = this.dateUtil.endOf(yesterday, 'd');
       const thisWeekFrom = this.dateUtil.startOf(now, 'week');
       const thisWeekTo = this.dateUtil.endOf(now, 'week');
-      const lastWeekFrom = this.dateUtil.subtract(thisWeekFrom, 7, 'd');
-      const lastWeekTo = this.dateUtil.subtract(thisWeekTo, 7, 'd');
+      const lastWeekFrom = this.dateUtil.startOf(lastWeek, 'week');
+      const lastWeekTo = this.dateUtil.endOf(lastWeek, 'week');
       const thisMonthFrom = this.dateUtil.startOf(now, 'month');
       const thisMonthTo = this.dateUtil.endOf(now, 'month');
-      const lastMonthFrom = this.dateUtil.subtract(thisMonthFrom, 1, 'M');
-      const lastMonthTo = this.dateUtil.subtract(thisMonthTo, 1, 'M');
+      const lastMonthFrom = this.dateUtil.startOf(lastMonth, 'month');
+      const lastMonthTo = this.dateUtil.endOf(lastMonth, 'month');
       const thisYearFrom = this.dateUtil.startOf(now, 'year');
       const thisYearTo = this.dateUtil.endOf(now, 'year');
-      const lastYearFrom = this.dateUtil.subtract(thisYearFrom, 1, 'y');
-      const lastYearTo = this.dateUtil.subtract(thisYearTo, 1, 'y');
+      const lastYearFrom = this.dateUtil.startOf(lastYear, 'year');
+      const lastYearTo = this.dateUtil.endOf(lastYear, 'year');
 
       return [
         {

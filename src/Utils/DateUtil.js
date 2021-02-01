@@ -147,6 +147,7 @@ export default class {
   // eslint-disable-next-line class-methods-use-this
   startOf(date, of) {
     return moment(date)
+      .locale(this.lang)
       .startOf(of)
       .toDate();
   }
@@ -161,6 +162,7 @@ export default class {
   // eslint-disable-next-line class-methods-use-this
   endOf(date, of) {
     return moment(date)
+      .locale(this.lang)
       .endOf(of)
       .toDate();
   }
@@ -248,6 +250,7 @@ export default class {
   // eslint-disable-next-line class-methods-use-this
   add(date, number, timeKey) {
     return moment(date)
+      .locale(this.lang)
       .add(number, timeKey)
       .toDate();
   }
@@ -263,6 +266,7 @@ export default class {
   // eslint-disable-next-line class-methods-use-this
   subtract(date, number, timeKey) {
     return moment(date)
+      .locale(this.lang)
       .subtract(number, timeKey)
       .toDate();
   }
