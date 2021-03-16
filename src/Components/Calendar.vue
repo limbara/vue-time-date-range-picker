@@ -113,7 +113,7 @@ export default {
       const SUNDAY = 0;
       const MONDAY = 1;
       for (
-        let j = firstDay.getDay();
+        let j = (this.isMondayFirst && firstDay.getDay() == SUNDAY) ? 7 : firstDay.getDay();
         j > this.isMondayFirst ? MONDAY : SUNDAY;
         j -= 1
       ) {
