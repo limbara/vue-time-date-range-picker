@@ -1,6 +1,6 @@
 {
   "name": "vue-time-date-range-picker",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "a vue time date range picker",
   "keywords": [
     "vue",
@@ -44,7 +44,6 @@
     "moment": "^2.27.0",
     "vue": "^2.6.11"
   },
-  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.10.3",
     "@babel/preset-env": "^7.10.3",
