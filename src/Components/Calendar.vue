@@ -112,11 +112,9 @@ export default {
       let firstDay = days[0].date;
       const SUNDAY = 0;
       const MONDAY = 1;
-      for (
-        let j = firstDay.getDay();
-        j > this.isMondayFirst ? MONDAY : SUNDAY;
-        j -= 1
-      ) {
+      const threshold = this.isMondayFirst ? MONDAY : SUNDAY;
+
+      while (firstDay.getDay() !== threshold) {
         firstDay = this.dateUtil.subtract(firstDay, 1, 'd');
         preDays.unshift(this.constructDay(firstDay, true));
       }
