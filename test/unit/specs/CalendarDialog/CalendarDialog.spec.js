@@ -123,6 +123,16 @@ describe('Calendar Dialog', () => {
     expect(wrapper.find(datePickerActionsClass).html()).toContain('Seharian');
   });
 
+  it('should change apply button label', () => {
+    wrapper = shallowMount(CalendarDialog, {
+      propsData: {
+        applyButtonLabel: 'Use',
+      },
+    });
+
+    expect(wrapper.find(datePickerButtonSubmit).html()).toContain('Use');
+  });
+
   it('emit on-apply when button apply clicked', async () => {
     wrapper = mount(CalendarDialog);
 

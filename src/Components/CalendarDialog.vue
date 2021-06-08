@@ -89,7 +89,7 @@
           'vdpr-datepicker__button-submit',
         ]"
         @click="onClickButtonApply"
-      >Apply</button>
+      >{{ applyButtonLabel }}</button>
     </div>
   </div>
 </template>
@@ -172,6 +172,10 @@ export default {
     switchButtonInitial: {
       type: Boolean,
       default: false,
+    },
+    applyButtonLabel: {
+      type: String,
+      default: 'Apply',
     },
     isMondayFirst: {
       type: Boolean,

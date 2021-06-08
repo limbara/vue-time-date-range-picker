@@ -27,6 +27,7 @@
       :timeInput="calendarTimeInput"
       :switchButtonLabel="switchButtonLabel"
       :switchButtonInitial="switchButtonInitial"
+      :applyButtonLabel="applyButtonLabel"
       :isMondayFirst="isMondayFirst"
       @on-apply="onApply"
       @select-date="selectDate"
@@ -92,6 +93,7 @@ export default {
     calendarTimeInput: Object,
     switchButtonLabel: String,
     switchButtonInitial: Boolean,
+    applyButtonLabel: String,
     isMondayFirst: Boolean,
   },
   data() {
