@@ -12,6 +12,8 @@
     <br />
     <example-time-input-config />
     <br />
+    <example-date-input-config />
+    <br />
     <example-date-format />
     <br />
     <example-initial-dates />
@@ -27,6 +29,7 @@ import ExampleEvents from './ExampleEvents.vue';
 import ExampleDisabledDates from './ExampleDisabledDates.vue';
 import ExampleHelperButtons from './ExampleHelperButtons.vue';
 import ExampleTimeInputConfig from './ExampleTimeInputConfig.vue';
+import ExampleDateInputConfig from './ExampleDateInputConfig.vue';
 import ExampleDateFormat from './ExampleDateFormat.vue';
 import ExampleInitialDates from './ExampleInitialDates.vue';
 import ExampleLanguage from './ExampleLanguage.vue';
@@ -39,6 +42,7 @@ export default {
     ExampleDisabledDates,
     ExampleHelperButtons,
     ExampleTimeInputConfig,
+    ExampleDateInputConfig,
     ExampleDateFormat,
     ExampleInitialDates,
     ExampleLanguage,
