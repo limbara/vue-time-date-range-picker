@@ -142,7 +142,7 @@ Below is values that're available for props "helper-buttons"
 | to          | String         |              | format selected end date                 |
 
 #### C Date Input
-Below is values that're available for props "calendar-date-input" or "date-input" in Calendar Dialog component 
+Below is values that're available for props "calendar-date-input" or "date-input" for Calendar Dialog component 
 
 | Key         | Type                  | Default      | Description                              |
 |-------------|-----------------------|--------------|------------------------------------------|
@@ -152,7 +152,7 @@ Below is values that're available for props "calendar-date-input" or "date-input
 | format      | String                | DD/MM/YYYY   | date format                              |
 
 #### C Time Input
-Below is values that're available for props "calendar-time-input" or "time-input" in Calendar Dialog component
+Below is values that're available for props "calendar-time-input" or "time-input" for Calendar Dialog component
 
 | Key         | Type                  | Default      | Description                              |
 |-------------|-----------------------|--------------|------------------------------------------|
