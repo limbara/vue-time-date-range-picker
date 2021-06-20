@@ -83,7 +83,8 @@ Below is props that're available in **DatePicker** Component
 | [calendar-time-input](#c-time-input)  | Object        | refer below       | Calendar input time configuration                       |
 | switch-button-label                   | String        |                   | Switch Button label                                     |
 | switch-button-initial                 | Boolean       |                   | Switch Button initial value                             |
-| apply-button-label                    | String        |                   | Apply Button Label                                      | 
+| apply-button-label                    | String        |                   | Apply Button Label                                      |
+| reset-button-label                    | String        |                   | Reset Button Label                                      | 
 | is-monday-first                       | Boolean       |                   | Calendar start from Monday instead of Sunday            |
 
 Below is props that're available in **Calendar Dialog** Component
@@ -100,7 +101,8 @@ Below is props that're available in **Calendar Dialog** Component
 | [time-input](#c-time-input)           | Object          |             | Calendar input time configuration           |
 | switch-button-label                   | String          | All Days    | Switch Button label                         |
 | switch-button-initial                 | Boolean         | false       | Switch Button initial value                 |
-| apply-button-label                    | String          | Apply       | Apply Button Label                          | 
+| apply-button-label                    | String          | Apply       | Apply Button Label                          |
+| reset-button-label                    | String          | Reset       | Reset Button Label                          |
 | is-monday-first                       | Boolean         | false       | Calendar start from Monday (default Sunday) |
 
 #### Same Date Format 
