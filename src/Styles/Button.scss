@@ -2,6 +2,8 @@ $bg-button-default: white;
 $color-button-default: #333;
 $bg-button-submit: #3a86ff;
 $color-button-submit: white;
+$bg-button-reset: #ef233c;
+$color-button-reset: white;
 
 .vdpr-datepicker__button {
   cursor: pointer;
@@ -38,6 +40,16 @@ $color-button-submit: white;
 
     &:hover {
       background-color: darken($bg-button-submit, 10%);
+    }
+  }
+
+  &-reset {
+    color: $color-button-reset;
+    background-color: $bg-button-reset;
+    border-color: darken($bg-button-reset, 10%);
+
+    &:hover {
+      background-color: darken($bg-button-reset, 10%);
     }
   }
 }

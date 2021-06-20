@@ -28,8 +28,10 @@
       :switchButtonLabel="switchButtonLabel"
       :switchButtonInitial="switchButtonInitial"
       :applyButtonLabel="applyButtonLabel"
+      :resetButtonLabel="resetButtonLabel"
       :isMondayFirst="isMondayFirst"
       @on-apply="onApply"
+      @on-reset="onReset"
       @select-date="selectDate"
       @select-disabled-date="selectDisabledDate"
       @on-prev-calendar="onPrevCalendar"
@@ -94,6 +96,7 @@ export default {
     switchButtonLabel: String,
     switchButtonInitial: Boolean,
     applyButtonLabel: String,
+    resetButtonLabel: String,
     isMondayFirst: Boolean,
   },
   data() {
@@ -129,6 +132,10 @@ export default {
       }
 
       return this.$emit('date-applied', date1, date2);
+    },
+    onReset() {
+      this.selectedStartDate = null;
+      this.selectedEndDate = null;
     },
     onClickDateInput() {
       if (this.inline) return;

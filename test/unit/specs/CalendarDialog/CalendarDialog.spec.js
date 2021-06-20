@@ -13,6 +13,7 @@ describe('Calendar Dialog', () => {
   const datePickerActionsClass = '.vdpr-datepicker__calendar-actions';
   const datePickerHelperButtons = '.vdpr-datepicker__calendar-button-helper';
   const datePickerButtonSubmit = '.vdpr-datepicker__button-submit';
+  const datePickerButtonReset = '.vdpr-datepicker__button-reset';
 
   let wrapper;
 
@@ -67,6 +68,7 @@ describe('Calendar Dialog', () => {
     expect(wrapper.find(datePickerHelperButtons).exists()).toBe(true);
     expect(wrapper.find(datePickerActionsClass).exists()).toBe(true);
     expect(wrapper.find(datePickerButtonSubmit).exists()).toBe(true);
+    expect(wrapper.find(datePickerButtonReset).exists()).toBe(true);
 
     const comCalendar = wrapper.findComponent(Calendar);
     const inputDates = wrapper.findAllComponents(CalendarInputDate);
@@ -131,6 +133,16 @@ describe('Calendar Dialog', () => {
     });
 
     expect(wrapper.find(datePickerButtonSubmit).html()).toContain('Use');
+  });
+
+  it('should change reset button label', () => {
+    wrapper = shallowMount(CalendarDialog, {
+      propsData: {
+        resetButtonLabel: 'Restart',
+      },
+    });
+
+    expect(wrapper.find(datePickerButtonReset).html()).toContain('Restart');
   });
 
   it('emit on-apply when button apply clicked', async () => {

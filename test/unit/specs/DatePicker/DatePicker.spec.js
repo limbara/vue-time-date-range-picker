@@ -43,6 +43,14 @@ describe('Date Picker', () => {
     expect(wrapper.vm.showCalendarDialog).toEqual(false);
   });
 
+  it('should reset selected dates and date input value', () => {
+    calendarDialog.vm.$emit('on-reset');
+
+    expect(wrapper.vm.selectedStartDate).toBeNull();
+    expect(wrapper.vm.selectedEndDate).toBeNull();
+    expect(dateInput.find('input').element.value).toBe('');
+  });
+
   it('toggle calendar dialog', async () => {
     await dateInput.vm.$emit('on-click');
     expect(calendarDialog.element).toBeVisible();

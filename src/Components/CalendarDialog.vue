@@ -90,6 +90,14 @@
         ]"
         @click="onClickButtonApply"
       >{{ applyButtonLabel }}</button>
+      <button
+        :class="[
+          'vdpr-datepicker__button',
+          'vdpr-datepicker__button--block',
+          'vdpr-datepicker__button-reset',
+        ]"
+        @click="onClickButtonReset"
+      >{{ resetButtonLabel }}</button>
     </div>
   </div>
 </template>
@@ -176,6 +184,10 @@ export default {
     applyButtonLabel: {
       type: String,
       default: 'Apply',
+    },
+    resetButtonLabel: {
+      type: String,
+      default: 'Reset',
     },
     isMondayFirst: {
       type: Boolean,
@@ -275,6 +287,13 @@ export default {
     },
     onClickButtonApply() {
       this.$emit('on-apply', this.selectedStartDate, this.selectedEndDate);
+    },
+    onClickButtonReset() {
+      this.selectedStartDate = null;
+      this.selectedEndDate = null;
+      this.isAllDay = false;
+
+      this.$emit('on-reset');
     },
     selectDate(date) {
       let startDate = this.selectedStartDate;
