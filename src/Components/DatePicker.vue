@@ -40,19 +40,15 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import PropsValidator from '../Utils/PropsValidator';
 import DateUtil from '../Utils/DateUtil';
 import DateInput from './DateInput.vue';
 import CalendarDialog from './CalendarDialog.vue';
 
-export { CalendarDialog };
-export default {
-  components: {
-    DateInput,
-    CalendarDialog,
-  },
-  props: {
+import { computed, toRefs, ref } from 'vue';
+
+  const props = defineProps({
     initialDates: {
       type: Array,
       validator: PropsValidator.isValidInitialDate,
@@ -98,72 +94,67 @@ export default {
     applyButtonLabel: String,
     resetButtonLabel: String,
     isMondayFirst: Boolean,
-  },
-  data() {
-    const [fromDate, toDate] = this.initialDates;
-    const showCalendarDialog = this.inline;
+  });
 
-    return {
-      selectedStartDate: fromDate ?? null,
-      selectedEndDate: toDate ?? null,
-      showCalendarDialog,
-    };
-  },
-  computed: {
-    dateUtil() {
-      return new DateUtil(this.language);
-    },
-    showingDateInput() {
-      return !this.inline;
-    },
-    showingCalendarDialog() {
-      return this.showCalendarDialog || this.inline;
-    },
-  },
-  methods: {
-    onApply(date1, date2) {
-      if (!date1 || !date2) return false;
+  const { inline } = toRefs(props);
+  const showCalendarDialog = ref(inline.value);
 
-      this.selectedStartDate = date1;
-      this.selectedEndDate = date2;
+  const [fromDate, toDate] = props.initialDates;
+  const selectedStartDate = ref(fromDate ?? null);
+  const selectedEndDate = ref(toDate ?? null);
 
-      if (!this.inline) {
-        this.showCalendarDialog = false;
-      }
+  const dateUtil = computed(() => new DateUtil(props.language));
+  const showingDateInput = computed(() => !props.inline);
+  const showingCalendarDialog = computed(() => showCalendarDialog.value || props.inline);
 
-      return this.$emit('date-applied', date1, date2);
-    },
-    onReset() {
-      this.selectedStartDate = null;
-      this.selectedEndDate = null;
-    },
-    onClickDateInput() {
-      if (this.inline) return;
+  const onApply = (date1, date2) => {
+    if (!date1 || !date2) return false;
 
-      this.showCalendarDialog = !this.showCalendarDialog;
+    selectedStartDate.value = date1;
+    selectedEndDate.value = date2;
 
-      if (this.showCalendarDialog) {
-        this.$emit('datepicker-opened');
-      } else {
-        this.$emit('datepicker-closed');
-      }
-    },
-    onPrevCalendar() {
-      this.$emit('on-prev-calendar');
-    },
-    onNextCalendar() {
-      this.$emit('on-next-calendar');
-    },
-    selectDate(date1, date2) {
-      this.$emit('select-date', date1, date2);
-    },
-    selectDisabledDate(date) {
-      this.$emit('select-disabled-date', date);
-    },
-  },
-};
+    if (!props.inline) {
+      showCalendarDialog.value = false;
+    }
+
+    return emit('date-applied', date1, date2);
+  };
+
+  const onReset = () => {
+    selectedStartDate.value = null;
+    selectedEndDate.value = null;
+  };
+
+  const onClickDateInput = () => {
+    if (props.inline) return;
+
+    showCalendarDialog.value = !showCalendarDialog.value;
+
+    if (showCalendarDialog.value) {
+      datePickerOpened();
+    } else {
+      datePickerClosed();
+    }
+  };
+
+  const emit = defineEmit([
+    'on-prev-calendar',
+    'on-next-calendar',
+    'select-disabled-date',
+    'select-date',
+    'datepicker-opened',
+    'datepicker-closed',
+    'date-applied'
+  ]);
+
+  const datePickerClosed = () => emit('datepicker-closed');
+  const datePickerOpened = () => emit('datepicker-opened');
+  const onPrevCalendar = () => emit('on-prev-calendar');
+  const onNextCalendar = () => emit('on-next-calendar');
+  const selectDate = (date1, date2) => emit('select-date', date1, date2);
+  const selectDisabledDate = (date) => emit('select-disabled-date', date);
 </script>
 
 <style lang="scss">
-@import "../Styles/DatePicker.scss";
+  @import "../Styles/DatePicker.scss";
 </style>

@@ -2,7 +2,7 @@
   <div
     class="vdpr-datepicker__calendar-dialog"
     :class="{
-      'vdpr-datepicker__calendar-dialog--inline': this.inline,
+      'vdpr-datepicker__calendar-dialog--inline': props.inline,
     }"
   >
     <div class="vdpr-datepicker__calendar-button-helper" v-if="helpers.length">
@@ -102,7 +102,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import PropsValidator from '../Utils/PropsValidator';
 import DateUtil from '../Utils/DateUtil';
 import Calendar from './Calendar.vue';
@@ -110,14 +110,9 @@ import SwitchButton from './SwitchButton.vue';
 import CalendarInputDate from './CalendarInputDate.vue';
 import CalendarInputTime from './CalendarInputTime.vue';
 
-export default {
-  components: {
-    Calendar,
-    CalendarInputDate,
-    CalendarInputTime,
-    SwitchButton,
-  },
-  props: {
+import { computed, ref } from 'vue';
+
+  const props = defineProps({
     inline: {
       type: Boolean,
       default: false,
@@ -193,225 +188,241 @@ export default {
       type: Boolean,
       default: false,
     },
-  },
-  data() {
-    const dateUtil = new DateUtil(this.language);
-    const [from, to] = this.initialDates;
-    let isAllDay = this.switchButtonInitial;
+  });
 
-    if (from && to) {
-      if (dateUtil.isAllDay(from, to)) {
-        isAllDay = true;
-      } else {
-        isAllDay = false;
-      }
+  const emit = defineEmit([
+    'select-date',
+    'select-disabled-date',
+    'on-apply',
+    'on-reset',
+    'on-prev-calendar',
+    'on-next-calendar'
+  ]);
+
+  const dateUtil = computed(() => {
+    return new DateUtil(props.language);
+  });
+
+  const [from, to] = props.initialDates;
+
+  const isAllDay = ref(props.switchButtonInitial);
+
+  if (from && to) {
+    if (dateUtil.value.isAllDay(from, to)) {
+      isAllDay.value = true;
+    } else {
+      isAllDay.value = false;
+    }
+  }
+
+  const selectedStartDate = ref(from ?? null);
+  const selectedEndDate = ref(to ?? null);
+
+  const helpers = computed(() => {
+    if (!props.showHelperButtons) return [];
+
+    if (props.helperButtons.length) return props.helperButtons;
+
+    return getDefaultHelpers();
+  });
+
+  const unixSelectedStartDate = computed(() => {
+    if (!selectedStartDate.value) {
+      return 0;
+    }
+    return dateUtil.value.toUnix(selectedStartDate.value);
+  })
+
+  const unixSelectedEndDate = computed(() => {
+    if (!selectedEndDate) {
+      return 0;
+    }
+    return dateUtil.value.toUnix(selectedEndDate);
+  });
+
+  const isVisibleTimeInput = computed(() => {
+    return !isAllDay.value;
+  });
+
+  const isVisibleButtonApply = computed(() => {
+    return !props.inline;
+  });
+
+
+  // Methods
+
+
+  const onCheckChange = (check) => {
+    isAllDay.value = check;
+    if (!selectedStartDate.value || !selectedEndDate.value) return;
+
+    selectedStartDate.value = dateUtil.value.startOf(
+      selectedStartDate.value,
+      'd',
+    );
+    if (check) {
+      selectedEndDate.value = dateUtil.value.endOf(selectedEndDate.value, 'd');
+    } else {
+      selectedEndDate.value = dateUtil.value.startOf(selectedEndDate.value, 'd');
+    }
+  }
+  const onStartInputDateChange = (value) => {
+    applyOrSwapApply(value, selectedEndDate.value);
+    emitOnApplyIfInline();
+  }
+  const onEndDateInputDateChange = (value) => {
+    applyOrSwapApply(selectedStartDate.value, value);
+    emitOnApplyIfInline();
+  }
+  const onTimeStartInputChange = (value) => {
+    applyOrSwapApply(value, selectedEndDate.value);
+    emitOnApplyIfInline();
+  }
+  const onTimeEndInputChange = (value) => {
+    applyOrSwapApply(selectedStartDate.value, value);
+    emitOnApplyIfInline();
+  }
+  const onHelperClick = (fromDate, toDate) => {
+    if (dateUtil.value.isAllDay(fromDate, toDate)) {
+      isAllDay.value = true;
+    } else {
+      isAllDay.value = false;
     }
 
-    return {
-      selectedStartDate: from ?? null,
-      selectedEndDate: to ?? null,
-      isAllDay,
-    };
-  },
-  computed: {
-    dateUtil() {
-      return new DateUtil(this.language);
-    },
-    helpers() {
-      if (!this.showHelperButtons) return [];
+    applyOrSwapApply(fromDate, toDate);
+    emit('select-date', selectedStartDate.value, selectedEndDate.value);
+    emitOnApplyIfInline();
+  }
 
-      if (this.helperButtons.length) return this.helperButtons;
+  const onClickButtonApply = () => {
+    emit('on-apply', selectedStartDate.value, selectedEndDate.value);
+  }
 
-      return this.getDefaultHelpers();
-    },
-    unixSelectedStartDate() {
-      if (!this.selectedStartDate) {
-        return 0;
-      }
-      return this.dateUtil.toUnix(this.selectedStartDate);
-    },
-    unixSelectedEndDate() {
-      if (!this.selectedEndDate) {
-        return 0;
-      }
-      return this.dateUtil.toUnix(this.selectedEndDate);
-    },
-    isVisibleTimeInput() {
-      return !this.isAllDay;
-    },
-    isVisibleButtonApply() {
-      return !this.inline;
-    },
-  },
-  methods: {
-    onCheckChange(check) {
-      this.isAllDay = check;
-      if (!this.selectedStartDate || !this.selectedEndDate) return;
+  const onClickButtonReset = () => {
+    selectedStartDate.value = null;
+    selectedEndDate.value = null;
+    isAllDay.value = false;
 
-      this.selectedStartDate = this.dateUtil.startOf(
-        this.selectedStartDate,
+    emit('on-reset');
+  }
+
+  const selectDate = (date) => {
+    let startDate = selectedStartDate.value;
+    let endDate = selectedEndDate.value;
+    if (
+      dateUtil.value.isValidDate(startDate)
+      && dateUtil.value.isValidDate(endDate)
+      && dateUtil.value.isSameDate(startDate, endDate)
+    ) {
+      endDate = date;
+    } else {
+      startDate = date;
+      endDate = date;
+    }
+
+    applyOrSwapApply(startDate, endDate);
+
+    if (isAllDay.value) {
+      selectedStartDate.value = dateUtil.value.startOf(
+        selectedStartDate.value,
         'd',
       );
-      if (check) {
-        this.selectedEndDate = this.dateUtil.endOf(this.selectedEndDate, 'd');
-      } else {
-        this.selectedEndDate = this.dateUtil.startOf(this.selectedEndDate, 'd');
-      }
-    },
-    onStartInputDateChange(value) {
-      this.applyOrSwapApply(value, this.selectedEndDate);
-      this.emitOnApplyIfInline();
-    },
-    onEndDateInputDateChange(value) {
-      this.applyOrSwapApply(this.selectedStartDate, value);
-      this.emitOnApplyIfInline();
-    },
-    onTimeStartInputChange(value) {
-      this.applyOrSwapApply(value, this.selectedEndDate);
-      this.emitOnApplyIfInline();
-    },
-    onTimeEndInputChange(value) {
-      this.applyOrSwapApply(this.selectedStartDate, value);
-      this.emitOnApplyIfInline();
-    },
-    onHelperClick(fromDate, toDate) {
-      if (this.dateUtil.isAllDay(fromDate, toDate)) {
-        this.isAllDay = true;
-      } else {
-        this.isAllDay = false;
-      }
+      selectedEndDate = dateUtil.value.endOf(selectedEndDate.value, 'd');
+    }
 
-      this.applyOrSwapApply(fromDate, toDate);
-      this.$emit('select-date', this.selectedStartDate, this.selectedEndDate);
-      this.emitOnApplyIfInline();
-    },
-    onClickButtonApply() {
-      this.$emit('on-apply', this.selectedStartDate, this.selectedEndDate);
-    },
-    onClickButtonReset() {
-      this.selectedStartDate = null;
-      this.selectedEndDate = null;
-      this.isAllDay = false;
+    emit('select-date', selectedStartDate.value, selectedEndDate.value);
+    emitOnApplyIfInline();
+  }
 
-      this.$emit('on-reset');
-    },
-    selectDate(date) {
-      let startDate = this.selectedStartDate;
-      let endDate = this.selectedEndDate;
-      if (
-        this.dateUtil.isValidDate(startDate)
-        && this.dateUtil.isValidDate(endDate)
-        && this.dateUtil.isSameDate(startDate, endDate)
-      ) {
-        endDate = date;
-      } else {
-        startDate = date;
-        endDate = date;
-      }
+  const selectDisabledDate = (date) => {
+    emit('select-disabled-date', date);
+  }
 
-      this.applyOrSwapApply(startDate, endDate);
+  const applyOrSwapApply = (startDate, endDate) => {
+    if (dateUtil.value.isAfter(startDate, endDate)) {
+      selectedStartDate.value = endDate;
+      selectedEndDate.value = startDate;
+    } else {
+      selectedStartDate.value = startDate;
+      selectedEndDate.value = endDate;
+    }
+  }
 
-      if (this.isAllDay) {
-        this.selectedStartDate = this.dateUtil.startOf(
-          this.selectedStartDate,
-          'd',
-        );
-        this.selectedEndDate = this.dateUtil.endOf(this.selectedEndDate, 'd');
-      }
+  const emitOnApplyIfInline = () => {
+    if (props.inline) {
+      emit('on-apply', selectedStartDate.value, selectedEndDate.value);
+    }
+  }
 
-      this.$emit('select-date', this.selectedStartDate, this.selectedEndDate);
-      this.emitOnApplyIfInline();
-    },
-    selectDisabledDate(date) {
-      this.$emit('select-disabled-date', date);
-    },
-    applyOrSwapApply(startDate, endDate) {
-      if (this.dateUtil.isAfter(startDate, endDate)) {
-        [this.selectedStartDate, this.selectedEndDate] = [endDate, startDate];
-      } else {
-        this.selectedStartDate = startDate;
-        this.selectedEndDate = endDate;
-      }
-    },
-    emitOnApplyIfInline() {
-      if (this.inline) {
-        this.$emit('on-apply', this.selectedStartDate, this.selectedEndDate);
-      }
-    },
-    getDefaultHelpers() {
-      const now = new Date();
-      const yesterday = this.dateUtil.subtract(now, 1, 'd');
-      const lastWeek = this.dateUtil.subtract(now, 7, 'd');
-      const lastMonth = this.dateUtil.subtract(now, 1, 'M');
-      const lastYear = this.dateUtil.subtract(now, 1, 'y');
-      const todayFrom = this.dateUtil.startOf(now, 'd');
-      const todayTo = this.dateUtil.endOf(now, 'd');
-      const yesterdayFrom = this.dateUtil.startOf(yesterday, 'd');
-      const yesterdayTo = this.dateUtil.endOf(yesterday, 'd');
-      const thisWeekFrom = this.dateUtil.startOf(now, 'week');
-      const thisWeekTo = this.dateUtil.endOf(now, 'week');
-      const lastWeekFrom = this.dateUtil.startOf(lastWeek, 'week');
-      const lastWeekTo = this.dateUtil.endOf(lastWeek, 'week');
-      const thisMonthFrom = this.dateUtil.startOf(now, 'month');
-      const thisMonthTo = this.dateUtil.endOf(now, 'month');
-      const lastMonthFrom = this.dateUtil.startOf(lastMonth, 'month');
-      const lastMonthTo = this.dateUtil.endOf(lastMonth, 'month');
-      const thisYearFrom = this.dateUtil.startOf(now, 'year');
-      const thisYearTo = this.dateUtil.endOf(now, 'year');
-      const lastYearFrom = this.dateUtil.startOf(lastYear, 'year');
-      const lastYearTo = this.dateUtil.endOf(lastYear, 'year');
+  const getDefaultHelpers = () => {
+    const now = new Date();
+    const yesterday = dateUtil.value.subtract(now, 1, 'd');
+    const lastWeek = dateUtil.value.subtract(now, 7, 'd');
+    const lastMonth = dateUtil.value.subtract(now, 1, 'M');
+    const lastYear = dateUtil.value.subtract(now, 1, 'y');
+    const todayFrom = dateUtil.value.startOf(now, 'd');
+    const todayTo = dateUtil.value.endOf(now, 'd');
+    const yesterdayFrom = dateUtil.value.startOf(yesterday, 'd');
+    const yesterdayTo = dateUtil.value.endOf(yesterday, 'd');
+    const thisWeekFrom = dateUtil.value.startOf(now, 'week');
+    const thisWeekTo = dateUtil.value.endOf(now, 'week');
+    const lastWeekFrom = dateUtil.value.startOf(lastWeek, 'week');
+    const lastWeekTo = dateUtil.value.endOf(lastWeek, 'week');
+    const thisMonthFrom = dateUtil.value.startOf(now, 'month');
+    const thisMonthTo = dateUtil.value.endOf(now, 'month');
+    const lastMonthFrom = dateUtil.value.startOf(lastMonth, 'month');
+    const lastMonthTo = dateUtil.value.endOf(lastMonth, 'month');
+    const thisYearFrom = dateUtil.value.startOf(now, 'year');
+    const thisYearTo = dateUtil.value.endOf(now, 'year');
+    const lastYearFrom = dateUtil.value.startOf(lastYear, 'year');
+    const lastYearTo = dateUtil.value.endOf(lastYear, 'year');
 
-      return [
-        {
-          name: 'Today',
-          from: todayFrom,
-          to: todayTo,
-        },
-        {
-          name: 'Yesterday',
-          from: yesterdayFrom,
-          to: yesterdayTo,
-        },
-        {
-          name: 'This Week',
-          from: thisWeekFrom,
-          to: thisWeekTo,
-        },
-        {
-          name: 'Last Week',
-          from: lastWeekFrom,
-          to: lastWeekTo,
-        },
-        {
-          name: 'This Month',
-          from: thisMonthFrom,
-          to: thisMonthTo,
-        },
-        {
-          name: 'Last Month',
-          from: lastMonthFrom,
-          to: lastMonthTo,
-        },
-        {
-          name: 'This Year',
-          from: thisYearFrom,
-          to: thisYearTo,
-        },
-        {
-          name: 'Last Year',
-          from: lastYearFrom,
-          to: lastYearTo,
-        },
-      ];
-    },
-    onPrevCalendar() {
-      this.$emit('on-prev-calendar');
-    },
-    onNextCalendar() {
-      this.$emit('on-next-calendar');
-    },
-  },
-};
+    return [
+      {
+        name: 'Today',
+        from: todayFrom,
+        to: todayTo,
+      },
+      {
+        name: 'Yesterday',
+        from: yesterdayFrom,
+        to: yesterdayTo,
+      },
+      {
+        name: 'This Week',
+        from: thisWeekFrom,
+        to: thisWeekTo,
+      },
+      {
+        name: 'Last Week',
+        from: lastWeekFrom,
+        to: lastWeekTo,
+      },
+      {
+        name: 'This Month',
+        from: thisMonthFrom,
+        to: thisMonthTo,
+      },
+      {
+        name: 'Last Month',
+        from: lastMonthFrom,
+        to: lastMonthTo,
+      },
+      {
+        name: 'This Year',
+        from: thisYearFrom,
+        to: thisYearTo,
+      },
+      {
+        name: 'Last Year',
+        from: lastYearFrom,
+        to: lastYearTo,
+      },
+    ];
+  }
+
+  const onPrevCalendar = () => emit('on-prev-calendar');
+  const onNextCalendar = () => emit('on-next-calendar');
 </script>
 
 <style lang="scss">

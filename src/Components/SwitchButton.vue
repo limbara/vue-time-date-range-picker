@@ -9,15 +9,12 @@
   </label>
 </template>
 
-<script>
-export default {
-  props: {
+<script setup>
+  const props = defineProps({
     checked: Boolean,
-  },
-  methods: {
-    onClick() {
-      this.$emit('on-check-change', !this.checked);
-    },
-  },
-};
+  });
+
+  const emit = defineEmit(['on-check-change']);
+
+  const onClick = () => emit('on-check-change', !props.checked);
 </script>

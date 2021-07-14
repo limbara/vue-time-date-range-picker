@@ -43,221 +43,221 @@
   </div>
 </template>
 
-<script>
-import DateUtil from '../Utils/DateUtil';
+<script setup>
+  import { computed, ref } from 'vue';
+  import DateUtil from '../Utils/DateUtil';
 
-class Day {
-  constructor(date, isBetween, isStartDate, isEndDate, isDisabled, isFaded) {
-    this.date = date;
-    this.timestamp = date.getTime();
-    this.dateNumber = date.getDate();
-    this.isBetween = isBetween;
-    this.isStartDate = isStartDate;
-    this.isEndDate = isEndDate;
-    this.isDisabled = isDisabled;
-    this.isFaded = isFaded;
+  class Day {
+    constructor(date, isBetween, isStartDate, isEndDate, isDisabled, isFaded) {
+      this.date = date;
+      this.timestamp = date.getTime();
+      this.dateNumber = date.getDate();
+      this.isBetween = isBetween;
+      this.isStartDate = isStartDate;
+      this.isEndDate = isEndDate;
+      this.isDisabled = isDisabled;
+      this.isFaded = isFaded;
+    }
   }
-}
 
-export default {
-  props: {
+  const props = defineProps({
     selectedStartDate: Date,
     selectedEndDate: Date,
     language: String,
     disabledDates: Object,
     isMondayFirst: Boolean,
-  },
-  data() {
-    const dateUtil = new DateUtil(this.language);
-    const startDate = this.selectedStartDate ?? this.selectedEndDate ?? new Date();
-    const pageTimestamp = dateUtil.toUnix(dateUtil.startOf(startDate, 'month'));
+  });
 
-    return {
-      // stored page time stamp start of a month
-      pageTimestamp,
-    };
-  },
-  computed: {
-    dateUtil() {
-      return new DateUtil(this.language);
-    },
-    dayNames() {
-      const dayNames = this.dateUtil.getAbbrDayNames();
+  const emit = defineEmit(['select-disabled-date', 'select-date', 'on-prev-calendar', 'on-next-calendar']);
 
-      if (this.isMondayFirst) {
-        const [sunday, ...restOfDays] = dayNames;
+  const dateUtil = computed(() => new DateUtil(props.language));
 
-        return [...restOfDays, sunday];
-      }
+  const startDate = props.selectedStartDate ?? props.selectedEndDate ?? new Date();
+  const pageTimestamp = ref(dateUtil.value.toUnix(dateUtil.value.startOf(startDate, 'month')));
 
-      return dayNames;
-    },
-    monthYear() {
-      const pageDate = this.dateUtil.fromUnix(this.pageTimestamp);
+  const dayNames = computed(() => {
+    const dayNames = dateUtil.value.getAbbrDayNames();
 
-      return this.dateUtil.formatDate(pageDate, 'MMM YYYY');
-    },
-    days() {
-      let pageDate = this.dateUtil.fromUnix(this.pageTimestamp);
-      const daysInMonth = this.dateUtil.daysInMonth(pageDate);
-      const days = [];
-      const preDays = [];
-      const postDays = [];
+    if (props.isMondayFirst) {
+      const [sunday, ...restOfDays] = dayNames;
 
-      for (let i = 0; i < daysInMonth; i += 1) {
-        days.push(this.constructDay(pageDate, false));
-        pageDate = this.dateUtil.add(pageDate, 1, 'd');
-      }
+      return [...restOfDays, sunday];
+    }
 
-      let firstDay = days[0].date;
-      const SUNDAY = 0;
-      const MONDAY = 1;
-      const threshold = this.isMondayFirst ? MONDAY : SUNDAY;
+    return dayNames;
+  });
 
-      while (firstDay.getDay() !== threshold) {
-        firstDay = this.dateUtil.subtract(firstDay, 1, 'd');
-        preDays.unshift(this.constructDay(firstDay, true));
-      }
+  const monthYear = computed(() => {
+    const pageDate = dateUtil.value.fromUnix(pageTimestamp.value);
 
-      let lastDay = days[days.length - 1].date;
+    return dateUtil.value.formatDate(pageDate, 'MMM YYYY');
+  });
 
-      for (let k = preDays.length + days.length; k < 42; k += 1) {
-        lastDay = this.dateUtil.add(lastDay, 1, 'd');
-        postDays.push(this.constructDay(lastDay, true));
-      }
+  const days = computed(() => {
+    let pageDate = dateUtil.value.fromUnix(pageTimestamp.value);
+    const daysInMonth = dateUtil.value.daysInMonth(pageDate);
+    const days = [];
+    const preDays = [];
+    const postDays = [];
 
-      return [...preDays, ...days, ...postDays];
-    },
-    isNextDisabled() {
-      if (!this.disabledDates || !this.disabledDates.from) return false;
+    for (let i = 0; i < daysInMonth; i += 1) {
+      days.push(constructDay(pageDate, false));
+      pageDate = dateUtil.value.add(pageDate, 1, 'd');
+    }
 
-      const pageDate = this.dateUtil.fromUnix(this.pageTimestamp);
+    let firstDay = days[0].date;
+    const SUNDAY = 0;
+    const MONDAY = 1;
+    const threshold = props.isMondayFirst ? MONDAY : SUNDAY;
 
-      return (
-        this.dateUtil.month(this.disabledDates.from)
-          <= this.dateUtil.month(pageDate)
-        && this.dateUtil.year(this.disabledDates.from)
-          <= this.dateUtil.year(pageDate)
-      );
-    },
-    isPrevDisabled() {
-      if (!this.disabledDates || !this.disabledDates.to) return false;
+    while (firstDay.getDay() !== threshold) {
+      firstDay = dateUtil.value.subtract(firstDay, 1, 'd');
+      preDays.unshift(constructDay(firstDay, true));
+    }
 
-      const pageDate = this.dateUtil.fromUnix(this.pageTimestamp);
-      return (
-        this.dateUtil.month(this.disabledDates.to)
-          >= this.dateUtil.month(pageDate)
-        && this.dateUtil.year(this.disabledDates.to)
-          >= this.dateUtil.year(pageDate)
-      );
-    },
-  },
-  methods: {
-    getRowDays(row) {
-      const endIndex = row * 7;
-      const startIndex = endIndex - 7;
+    let lastDay = days[days.length - 1].date;
 
-      return this.days.slice(startIndex, endIndex);
-    },
-    constructDay(date, isFaded) {
-      return new Day(
+    for (let k = preDays.length + days.length; k < 42; k += 1) {
+      lastDay = dateUtil.value.add(lastDay, 1, 'd');
+      postDays.push(constructDay(lastDay, true));
+    }
+
+    return [...preDays, ...days, ...postDays];
+  });
+
+  const isNextDisabled = computed(() => {
+    if (!props.disabledDates || !props.disabledDates.from) return false;
+
+    const pageDate = dateUtil.value.fromUnix(pageTimestamp.value);
+
+    return (
+      dateUtil.value.month(props.disabledDates.from)
+        <= dateUtil.value.month(pageDate)
+      && dateUtil.value.year(props.disabledDates.from)
+        <= dateUtil.value.year(pageDate)
+    );
+  });
+
+  const isPrevDisabled = computed(() => {
+    if (!props.disabledDates || !props.disabledDates.to) return false;
+
+    const pageDate = dateUtil.value.fromUnix(pageTimestamp.value);
+    return (
+      dateUtil.value.month(props.disabledDates.to)
+        >= dateUtil.value.month(pageDate)
+      && dateUtil.value.year(props.disabledDates.to)
+        >= dateUtil.value.year(pageDate)
+    );
+  });
+
+  const getRowDays = (row) => {
+    const endIndex = row * 7;
+    const startIndex = endIndex - 7;
+
+    return days.value.slice(startIndex, endIndex);
+  };
+
+  const constructDay = (date, isFaded) => {
+    return new Day(
+      date,
+      dateUtil.value.isBetween(
         date,
-        this.dateUtil.isBetween(
-          date,
-          this.selectedStartDate,
-          this.selectedEndDate,
-        ),
-        this.dateUtil.isSameDate(date, this.selectedStartDate),
-        this.dateUtil.isSameDate(date, this.selectedEndDate),
-        this.isDisabledDate(date),
-        isFaded,
-      );
-    },
-    isDisabledDate(date) {
-      if (!this.disabledDates) {
-        return false;
-      }
-      let disabled = false;
-      const {
-        dates, from, to, ranges, custom,
-      } = this.disabledDates;
+        props.selectedStartDate,
+        props.selectedEndDate,
+      ),
+      dateUtil.value.isSameDate(date, props.selectedStartDate),
+      dateUtil.value.isSameDate(date, props.selectedEndDate),
+      isDisabledDate(date),
+      isFaded,
+    );
+  };
 
-      if (typeof dates !== 'undefined' && Array.isArray(dates)) {
-        dates.forEach((d) => {
-          if (this.dateUtil.isSameDate(d, date)) {
+  const isDisabledDate = (date) => {
+    if (!props.disabledDates) {
+      return false;
+    }
+    let disabled = false;
+    const {
+      dates, from, to, ranges, custom,
+    } = props.disabledDates;
+
+    if (typeof dates !== 'undefined' && Array.isArray(dates)) {
+      dates.forEach((d) => {
+        if (dateUtil.value.isSameDate(d, date)) {
+          disabled = true;
+        }
+      });
+      if (disabled) return true;
+    }
+
+    if (ranges !== 'undefined' && Array.isArray(ranges)) {
+      ranges.forEach((range) => {
+        if (
+          dateUtil.value.isValidDate(range.from)
+          && dateUtil.value.isValidDate(range.to)
+        ) {
+          if (dateUtil.value.isSameOrBetween(date, range.from, range.to)) {
             disabled = true;
           }
-        });
-        if (disabled) return true;
-      }
+        }
+      });
+      if (disabled) return true;
+    }
 
-      if (ranges !== 'undefined' && Array.isArray(ranges)) {
-        ranges.forEach((range) => {
-          if (
-            this.dateUtil.isValidDate(range.from)
-            && this.dateUtil.isValidDate(range.to)
-          ) {
-            if (this.dateUtil.isSameOrBetween(date, range.from, range.to)) {
-              disabled = true;
-            }
-          }
-        });
-        if (disabled) return true;
-      }
+    if (
+      dateUtil.value.isValidDate(to)
+      && dateUtil.value.isSameOrBefore(date, to)
+    ) {
+      disabled = true;
+    }
 
-      if (
-        this.dateUtil.isValidDate(to)
-        && this.dateUtil.isSameOrBefore(date, to)
-      ) {
-        disabled = true;
-      }
+    if (
+      dateUtil.value.isValidDate(from)
+      && dateUtil.value.isSameOrAfter(date, from)
+    ) {
+      disabled = true;
+    }
 
-      if (
-        this.dateUtil.isValidDate(from)
-        && this.dateUtil.isSameOrAfter(date, from)
-      ) {
-        disabled = true;
-      }
+    if (typeof custom === 'function' && custom(date)) {
+      disabled = true;
+    }
 
-      if (typeof custom === 'function' && custom(date)) {
-        disabled = true;
-      }
+    return disabled;
+  };
 
-      return disabled;
-    },
-    selectDate(day) {
-      if (day.isDisabled) {
-        return this.$emit('select-disabled-date', day.date);
-      }
+  const selectDate = (day) => {
+    if (day.isDisabled) {
+      emit('select-disabled-date', day.date);
+    }
 
-      return this.$emit('select-date', day.date);
-    },
-    onPrevClick() {
-      if (this.isPrevDisabled) return;
+    return emit('select-date', day.date);
+  };
 
-      const pageDate = this.dateUtil.subtract(
-        this.dateUtil.fromUnix(this.pageTimestamp),
-        1,
-        'month',
-      );
+  const onPrevClick = () => {
+    if (isPrevDisabled.value) return;
 
-      this.pageTimestamp = this.dateUtil.toUnix(pageDate);
+    const pageDate = dateUtil.value.subtract(
+      dateUtil.value.fromUnix(pageTimestamp.value),
+      1,
+      'month',
+    );
 
-      this.$emit('on-prev-calendar');
-    },
-    onNextClick() {
-      if (this.isNextDisabled) return;
+    pageTimestamp.value = dateUtil.value.toUnix(pageDate);
 
-      const pageDate = this.dateUtil.add(
-        this.dateUtil.fromUnix(this.pageTimestamp),
-        1,
-        'month',
-      );
+    emit('on-prev-calendar');
+  };
 
-      this.pageTimestamp = this.dateUtil.toUnix(pageDate);
+  const onNextClick = () => {
+    if (isNextDisabled.value) return;
 
-      this.$emit('on-next-calendar');
-    },
-  },
-};
+    const pageDate = dateUtil.value.add(
+      dateUtil.value.fromUnix(pageTimestamp.value),
+      1,
+      'month',
+    );
+
+    pageTimestamp.value = dateUtil.value.toUnix(pageDate);
+
+    emit('on-next-calendar');
+  };
 </script>

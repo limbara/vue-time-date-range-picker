@@ -10,50 +10,43 @@
   </div>
 </template>
 
-<script>
-import DateUtil from '../Utils/DateUtil';
+<script setup>
+  import { computed, toRefs, ref, watch } from 'vue';
+  import DateUtil from '../Utils/DateUtil';
 
-export default {
-  props: {
+  const props = defineProps({
     inputClass: [String, Object, Array],
     timestamp: Number,
     format: String,
     language: String,
-  },
-  data() {
-    return {
-      copyTimestamp: this.timestamp,
-    };
-  },
-  watch: {
-    timestamp(value) {
-      this.copyTimestamp = value;
-    },
-  },
-  computed: {
-    dateUtil() {
-      return new DateUtil(this.language);
-    },
-    formattedValue() {
-      if (this.copyTimestamp === 0) return '';
+  });
 
-      const date = this.dateUtil.fromUnix(this.copyTimestamp);
+  const emit = defineEmit(['on-change']);
 
-      return this.dateUtil.formatDate(date, this.format);
-    },
-  },
-  methods: {
-    onChange(e) {
-      const lastDate = this.dateUtil.fromUnix(this.copyTimestamp);
-      const lastTime = this.dateUtil.formatDate(lastDate, 'HH:mm:ss');
-      const date = this.dateUtil.createDate(`${e.target.value} ${lastTime}`, `${this.format} HH:mm:ss`);
+  const { timestamp } = toRefs(props);
 
-      if (!this.dateUtil.isValidDate(date)) {
-        return false;
-      }
+  const dateUtil = computed(() => {
+    return new DateUtil(props.language);
+  });
 
-      return this.$emit('on-change', date);
-    },
-  },
-};
+  const formattedValue = computed(() => {
+    if (timestamp.value === 0) return '';
+
+    const date = dateUtil.value.fromUnix(timestamp.value);
+
+    return dateUtil.value.formatDate(date, props.format);
+  });
+
+
+  const onChange = (e) => {
+    const lastDate = dateUtil.value.fromUnix(timestamp.value);
+    const lastTime = dateUtil.value.formatDate(lastDate, 'HH:mm:ss');
+    const date = dateUtil.value.createDate(`${e.target.value} ${lastTime}`, `${props.format} HH:mm:ss`);
+
+    if (!dateUtil.value.isValidDate(date)) {
+      return false;
+    }
+
+    return emit('on-change', date);
+  };
 </script>

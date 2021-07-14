@@ -15,11 +15,12 @@
   </div>
 </template>
 
-<script>
-import DateUtil from '../Utils/DateUtil';
+<script setup>
+  import { computed } from 'vue';
 
-export default {
-  props: {
+  import DateUtil from '../Utils/DateUtil';
+
+  const props = defineProps({
     inputClass: [String, Object, Array],
     refName: String,
     name: String,
@@ -32,46 +33,42 @@ export default {
     language: String,
     selectedStartDate: Date,
     selectedEndDate: Date,
-  },
-  computed: {
-    dateUtil() {
-      return new DateUtil(this.language);
-    },
-    formattedValue() {
-      if (!this.selectedStartDate || !this.selectedEndDate) return '';
+  });
 
-      if (
-        this.dateUtil.isSameDate(this.selectedStartDate, this.selectedEndDate)
-      ) {
-        const date1 = this.dateUtil.formatDate(
-          this.selectedStartDate,
-          this.sameDateFormat.from,
-        );
+  const emit = defineEmit(['on-click']);
 
-        const date2 = this.dateUtil.formatDate(
-          this.selectedEndDate,
-          this.sameDateFormat.to,
-        );
+  const dateUtil = computed(() => {
+    return new DateUtil(props.language);
+  });
 
-        return `${date1} - ${date2}`;
-      }
+  const formattedValue = computed(() => {
+    if (!props.selectedStartDate || !props.selectedEndDate) return '';
 
-      const date1 = this.dateUtil.formatDate(
-        this.selectedStartDate,
-        this.format,
+    if (
+      dateUtil.value.isSameDate(props.selectedStartDate, props.selectedEndDate)
+    ) {
+      const date1 = dateUtil.value.formatDate(
+        props.selectedStartDate,
+        props.sameDateFormat.from,
       );
 
-      const date2 = this.dateUtil.formatDate(this.selectedEndDate, this.format);
+      const date2 = dateUtil.value.formatDate(
+        props.selectedEndDate,
+        props.sameDateFormat.to,
+      );
 
       return `${date1} - ${date2}`;
-    },
-  },
-  methods: {
-    onClick() {
-      this.$emit('on-click', true);
-    },
-  },
-  mounted() {
-  },
-};
+    }
+
+    const date1 = dateUtil.value.formatDate(
+      props.selectedStartDate,
+      props.format,
+    );
+
+    const date2 = dateUtil.value.formatDate(props.selectedEndDate, props.format);
+
+    return `${date1} - ${date2}`;
+  });
+
+  const onClick = () => emit('on-click', true);
 </script>

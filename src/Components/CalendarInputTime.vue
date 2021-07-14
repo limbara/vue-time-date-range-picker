@@ -23,81 +23,76 @@
   </div>
 </template>
 
-<script>
-import DateUtil from '../Utils/DateUtil';
+<script setup>
+  import DateUtil from '../Utils/DateUtil';
+  import { computed, toRefs, ref, watch } from 'vue';
 
-export default {
-  props: {
+  const props = defineProps({
     inputClass: [String, Object, Array],
     readonly: Boolean,
     timestamp: Number,
     language: String,
     step: Number,
-  },
-  data() {
-    return {
-      copyTimestamp: this.timestamp,
-      format: 'HH:mm',
-    };
-  },
-  computed: {
-    dateUtil() {
-      return new DateUtil(this.language);
-    },
-    formattedValue() {
-      if (this.copyTimestamp === 0) return '';
+  });
 
-      return this.dateUtil.formatDate(
-        this.dateUtil.fromUnix(this.copyTimestamp),
-        this.format,
-      );
-    },
-  },
-  watch: {
-    timestamp(value) {
-      this.copyTimestamp = value;
-    },
-  },
-  methods: {
-    onClickUp() {
-      if (this.copyTimestamp === 0) return false;
+  const emit = defineEmit(['on-change']);
 
-      this.copyTimestamp += this.step * 60;
+  const { timestamp } = toRefs(props);
 
-      return this.$emit(
-        'on-change',
-        this.dateUtil.fromUnix(this.copyTimestamp),
-      );
-    },
-    onClickDown() {
-      if (this.copyTimestamp === 0) return false;
+  const format = 'HH:mm';
 
-      this.copyTimestamp -= this.step * 60;
+  const dateUtil = computed(() => {
+    return new DateUtil(props.language);
+  });
 
-      return this.$emit(
-        'on-change',
-        this.dateUtil.fromUnix(this.copyTimestamp),
-      );
-    },
-    onChange(e) {
-      let [hours, minutes] = e.target.value.trim().split(':');
-      hours = parseInt(hours, 10);
-      minutes = parseInt(minutes, 10);
+  const formattedValue = computed(() => {
+    if (timestamp.value === 0) return '';
 
-      // eslint-disable-next-line no-restricted-globals
-      if (isNaN(hours) || isNaN(minutes)) {
-        return false;
-      }
+    return dateUtil.value.formatDate(
+      dateUtil.value.fromUnix(timestamp.value),
+      format,
+    );
+  });
 
-      const totalMinutes = hours * 60 + minutes;
-      const startOfDate = this.dateUtil.startOf(
-        this.dateUtil.fromUnix(this.copyTimestamp),
-        'd',
-      );
-      const date = this.dateUtil.add(startOfDate, totalMinutes, 'm');
+  const onClickUp = () => {
+    if (timestamp.value === 0) return false;
 
-      return this.$emit('on-change', date);
-    },
-  },
-};
+    timestamp.value += props.step * 60;
+
+    return emit(
+      'on-change',
+      dateUtil.value.fromUnix(timestamp.value),
+    );
+  };
+
+  const onClickDown = () => {
+    if (timestamp.value === 0) return false;
+
+    timestamp.value -= props.step * 60;
+
+    return emit(
+      'on-change',
+      dateUtil.value.fromUnix(timestamp.value),
+    );
+  };
+
+  const onChange = (e) => {
+    let [hours, minutes] = e.target.value.trim().split(':');
+    hours = parseInt(hours, 10);
+    minutes = parseInt(minutes, 10);
+
+    // eslint-disable-next-line no-restricted-globals
+    if (isNaN(hours) || isNaN(minutes)) {
+      return false;
+    }
+
+    const totalMinutes = hours * 60 + minutes;
+    const startOfDate = dateUtil.value.startOf(
+      dateUtil.value.fromUnix(timestamp.value),
+      'd',
+    );
+    const date = dateUtil.value.add(startOfDate, totalMinutes, 'm');
+
+    return emit('on-change', date);
+  };
 </script>
