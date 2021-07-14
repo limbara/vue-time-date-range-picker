@@ -2,7 +2,7 @@
   <div
     class="vdpr-datepicker__calendar-dialog"
     :class="{
-      'vdpr-datepicker__calendar-dialog--inline': props.inline,
+      'vdpr-datepicker__calendar-dialog--inline': inline,
     }"
   >
     <div class="vdpr-datepicker__calendar-button-helper" v-if="helpers.length">
