@@ -45,6 +45,7 @@
 
 <script>
 import DateUtil from '../Utils/DateUtil';
+import Util from '../Utils/Util';
 
 class Day {
   constructor(date, isBetween, isStartDate, isEndDate, isDisabled, isFaded) {
@@ -65,6 +66,7 @@ export default {
     selectedEndDate: Date,
     language: String,
     disabledDates: Object,
+    availableDates: Object,
     isMondayFirst: Boolean,
   },
   data() {
@@ -129,27 +131,54 @@ export default {
       return [...preDays, ...days, ...postDays];
     },
     isNextDisabled() {
-      if (!this.disabledDates || !this.disabledDates.from) return false;
-
-      const pageDate = this.dateUtil.fromUnix(this.pageTimestamp);
-
-      return (
-        this.dateUtil.month(this.disabledDates.from)
+      if (this.disabledDates && this.disabledDates.from) {
+        const pageDate = this.dateUtil.fromUnix(this.pageTimestamp);
+        return (
+          (this.dateUtil.month(this.disabledDates.from)
           <= this.dateUtil.month(pageDate)
         && this.dateUtil.year(this.disabledDates.from)
-          <= this.dateUtil.year(pageDate)
-      );
+          <= this.dateUtil.year(pageDate))
+        || this.dateUtil.year(this.disabledDates.from)
+          < this.dateUtil.year(pageDate)
+        );
+      }
+      if (this.availableDates && this.availableDates.to) {
+        const pageDate = this.dateUtil.fromUnix(this.pageTimestamp);
+        return (
+          (this.dateUtil.month(this.availableDates.to)
+          <= this.dateUtil.month(pageDate)
+        && this.dateUtil.year(this.availableDates.to)
+          <= this.dateUtil.year(pageDate))
+        || this.dateUtil.year(this.availableDates.to)
+          < this.dateUtil.year(pageDate)
+        );
+      }
+      return false;
     },
     isPrevDisabled() {
-      if (!this.disabledDates || !this.disabledDates.to) return false;
-
-      const pageDate = this.dateUtil.fromUnix(this.pageTimestamp);
-      return (
-        this.dateUtil.month(this.disabledDates.to)
+      if (this.disabledDates && this.disabledDates.to) {
+        const pageDate = this.dateUtil.fromUnix(this.pageTimestamp);
+        return (
+          (this.dateUtil.month(this.disabledDates.to)
           >= this.dateUtil.month(pageDate)
         && this.dateUtil.year(this.disabledDates.to)
-          >= this.dateUtil.year(pageDate)
-      );
+          >= this.dateUtil.year(pageDate))
+        || this.dateUtil.year(this.disabledDates.to)
+          > this.dateUtil.year(pageDate)
+        );
+      }
+      if (this.availableDates && this.availableDates.from) {
+        const pageDate = this.dateUtil.fromUnix(this.pageTimestamp);
+        return (
+          (this.dateUtil.month(this.availableDates.from)
+          >= this.dateUtil.month(pageDate)
+        && this.dateUtil.year(this.availableDates.from)
+          >= this.dateUtil.year(pageDate))
+        || this.dateUtil.year(this.availableDates.from)
+          > this.dateUtil.year(pageDate)
+        );
+      }
+      return false;
     },
   },
   methods: {
@@ -174,55 +203,97 @@ export default {
       );
     },
     isDisabledDate(date) {
-      if (!this.disabledDates) {
+      if (!Util.checkDateObject(this.disabledDates) && !Util.checkDateObject(this.availableDates)) {
         return false;
       }
       let disabled = false;
-      const {
-        dates, from, to, ranges, custom,
-      } = this.disabledDates;
-
-      if (typeof dates !== 'undefined' && Array.isArray(dates)) {
-        dates.forEach((d) => {
-          if (this.dateUtil.isSameDate(d, date)) {
-            disabled = true;
-          }
-        });
-        if (disabled) return true;
-      }
-
-      if (ranges !== 'undefined' && Array.isArray(ranges)) {
-        ranges.forEach((range) => {
-          if (
-            this.dateUtil.isValidDate(range.from)
-            && this.dateUtil.isValidDate(range.to)
-          ) {
-            if (this.dateUtil.isSameOrBetween(date, range.from, range.to)) {
+      if (Util.checkDateObject(this.disabledDates)) {
+        const {
+          dates, from, to, ranges, custom,
+        } = this.disabledDates;
+        if (typeof dates !== 'undefined' && Array.isArray(dates)) {
+          dates.forEach((d) => {
+            if (this.dateUtil.isSameDate(d, date)) {
               disabled = true;
             }
-          }
-        });
-        if (disabled) return true;
-      }
-
-      if (
-        this.dateUtil.isValidDate(to)
-        && this.dateUtil.isSameOrBefore(date, to)
-      ) {
-        disabled = true;
-      }
-
-      if (
-        this.dateUtil.isValidDate(from)
+          });
+          if (disabled) return true;
+        }
+        if (ranges !== 'undefined' && Array.isArray(ranges)) {
+          ranges.forEach((range) => {
+            if (
+              this.dateUtil.isValidDate(range.from)
+            && this.dateUtil.isValidDate(range.to)
+            ) {
+              if (this.dateUtil.isSameOrBetween(date, range.from, range.to)) {
+                disabled = true;
+              }
+            }
+          });
+          if (disabled) return true;
+        }
+        if (
+          this.dateUtil.isValidDate(from)
         && this.dateUtil.isSameOrAfter(date, from)
-      ) {
+        ) {
+          disabled = true;
+        }
+        if (
+          this.dateUtil.isValidDate(to)
+        && this.dateUtil.isSameOrBefore(date, to)
+        ) {
+          disabled = true;
+        }
+        if (typeof custom === 'function' && custom(date)) {
+          disabled = true;
+        }
+      } else if (Util.checkDateObject(this.availableDates)) {
         disabled = true;
-      }
+        const {
+          dates, from, to, ranges, custom,
+        } = this.availableDates;
 
-      if (typeof custom === 'function' && custom(date)) {
-        disabled = true;
-      }
+        if (typeof dates !== 'undefined' && Array.isArray(dates)) {
+          dates.forEach((d) => {
+            if (this.dateUtil.isSameDate(d, date)) {
+              disabled = false;
+            }
+          });
+          if (disabled) return true;
+        }
 
+        if (ranges !== 'undefined' && Array.isArray(ranges)) {
+          ranges.forEach((range) => {
+            if (
+              this.dateUtil.isValidDate(range.from)
+            && this.dateUtil.isValidDate(range.to)
+            ) {
+              if (this.dateUtil.isSameOrBetween(date, range.from, range.to)) {
+                disabled = false;
+              }
+            }
+          });
+          if (disabled) return true;
+        }
+
+        if (
+          this.dateUtil.isValidDate(to)
+        && this.dateUtil.isSameOrBefore(date, to)
+        ) {
+          disabled = false;
+        }
+
+        if (
+          this.dateUtil.isValidDate(from)
+        && this.dateUtil.isSameOrAfter(date, from)
+        ) {
+          disabled = false;
+        }
+
+        if (typeof custom === 'function' && custom(date)) {
+          disabled = false;
+        }
+      }
       return disabled;
     },
     selectDate(day) {
