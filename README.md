@@ -138,6 +138,8 @@ Below is values that're available for props "disabled-dates"
 | ranges      | Object          |            | disable dates matching object of date "from" & "to"     |
 | custom      | Function        |            | disable dates with function                             |
 
+If accidentially both disabled dates and available dates are provided, disabled dates take priority.
+
 #### Available Dates
 Below is values that're available for props "available-dates"
 
@@ -148,6 +150,8 @@ Below is values that're available for props "available-dates"
 | to          | Date            |            | allow dates until this date                             |
 | ranges      | Object          |            | allow dates matching object of date "from" & "to"       |
 | custom      | Function        |            | allow dates with function                               |
+
+If accidentially both disabled dates and available dates are provided, disabled dates take priority.
 
 #### Helper Buttons
 Below is values that're available for props "helper-buttons"
