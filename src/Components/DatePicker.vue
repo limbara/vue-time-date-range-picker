@@ -21,6 +21,7 @@
       :inline="inline"
       :initialDates="initialDates"
       :disabledDates="disabledDates"
+      :availableDates="availableDates"
       :showHelperButtons="showHelperButtons"
       :helperButtons="helperButtons"
       :dateInput="calendarDateInput"
@@ -89,6 +90,7 @@ export default {
       },
     },
     disabledDates: Object,
+    availableDates: Object,
     showHelperButtons: Boolean,
     helperButtons: Array,
     calendarDateInput: Object,
