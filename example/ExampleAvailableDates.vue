@@ -90,9 +90,9 @@ export default {
       },
       availableDates3: {
         dates: [
-          new Date('2021 08 01'),
-          new Date('2021 07 26'),
-          new Date('2021 08 05'),
+          new Date('2020 08 01'),
+          new Date('2020 07 26'),
+          new Date('2020 08 05'),
         ],
       },
       availableDates4: {
