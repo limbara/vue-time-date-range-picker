@@ -203,11 +203,11 @@ export default {
       );
     },
     isDisabledDate(date) {
-      if (!Util.checkDateObject(this.disabledDates) && !Util.checkDateObject(this.availableDates)) {
+      if (Util.isEmptyObject(this.disabledDates) && Util.isEmptyObject(this.availableDates)) {
         return false;
       }
       let disabled = false;
-      if (Util.checkDateObject(this.disabledDates)) {
+      if (!Util.isEmptyObject(this.disabledDates)) {
         const {
           dates, from, to, ranges, custom,
         } = this.disabledDates;
@@ -247,7 +247,7 @@ export default {
         if (typeof custom === 'function' && custom(date)) {
           disabled = true;
         }
-      } else if (Util.checkDateObject(this.availableDates)) {
+      } else if (!Util.isEmptyObject(this.availableDates)) {
         disabled = true;
         const {
           dates, from, to, ranges, custom,

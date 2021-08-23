@@ -16,17 +16,17 @@ export default {
   getObjectLength: (value) => Object.keys(value).length,
 
   /**
-   * Check disabled/available date object is not empty
+   * Check if disabled/available date object is empty
    *
    * @param {Object} value
    * @returns {Boolean}
    */
-  checkDateObject: (value) => {
+  isEmptyObject: (value) => {
     if (value) {
       if (Object.keys(value).length > 0) {
-        return true;
+        return false;
       }
     }
-    return false;
+    return true;
   },
 };
