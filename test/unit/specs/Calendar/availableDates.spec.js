@@ -33,14 +33,63 @@ describe('Calendar : Available Dates', () => {
     const past = moment(now)
       .subtract(20, 'y')
       .toDate();
+    const middleOfMonth = moment(startOfMonth)
+      .add(14, 'd');
+
+    expect(wrapper.vm.isNextDisabled).toEqual(false);
+    expect(wrapper.vm.isPrevDisabled).toEqual(false);
+
+    expect(wrapper.vm.isDisabledDate(startOfMonth)).toEqual(false);
+    expect(wrapper.vm.isDisabledDate(future)).toEqual(false);
+    expect(wrapper.vm.isDisabledDate(middleOfMonth)).toEqual(true);
+    expect(wrapper.vm.isDisabledDate(endOfMonth)).toEqual(false);
+    expect(wrapper.vm.isDisabledDate(past)).toEqual(false);
+  });
+
+  it("should make available dates 'to' a date availableDates", () => {
+    wrapper.setProps({
+      availableDates: {
+        to: endOfMonth,
+      },
+    });
+
+    const future = moment(now)
+      .add(12, 'y')
+      .toDate();
+    const past = moment(now)
+      .subtract(20, 'y')
+      .toDate();
 
     expect(wrapper.vm.isNextDisabled).toEqual(true);
+    expect(wrapper.vm.isPrevDisabled).toEqual(false);
+
+    expect(wrapper.vm.isDisabledDate(startOfMonth)).toEqual(false);
+    expect(wrapper.vm.isDisabledDate(future)).toEqual(true);
+    expect(wrapper.vm.isDisabledDate(endOfMonth)).toEqual(false);
+    expect(wrapper.vm.isDisabledDate(past)).toEqual(false);
+  });
+
+  it("should make available dates 'from' a date availableDates", () => {
+    wrapper.setProps({
+      availableDates: {
+        from: startOfMonth,
+      },
+    });
+
+    const future = moment(now)
+      .add(12, 'y')
+      .toDate();
+    const past = moment(now)
+      .subtract(20, 'y')
+      .toDate();
+
+    expect(wrapper.vm.isNextDisabled).toEqual(false);
     expect(wrapper.vm.isPrevDisabled).toEqual(true);
 
     expect(wrapper.vm.isDisabledDate(startOfMonth)).toEqual(false);
     expect(wrapper.vm.isDisabledDate(future)).toEqual(false);
     expect(wrapper.vm.isDisabledDate(endOfMonth)).toEqual(false);
-    expect(wrapper.vm.isDisabledDate(past)).toEqual(false);
+    expect(wrapper.vm.isDisabledDate(past)).toEqual(true);
   });
 
   it("can change to available 'to' date & 'from' date", () => {
@@ -54,9 +103,11 @@ describe('Calendar : Available Dates', () => {
     const monthYear = moment(now).format('MMM YYYY');
 
     wrapper.vm.onPrevClick();
-    expect(wrapper.vm.monthYear === monthYear).toBe(true);
+    expect(wrapper.vm.monthYear === monthYear).toBe(false);
     wrapper.vm.onNextClick();
     expect(wrapper.vm.monthYear === monthYear).toBe(true);
+    wrapper.vm.onNextClick();
+    expect(wrapper.vm.monthYear === monthYear).toBe(false);
   });
 
   it("should allow dates 'dates' from availableDates", () => {
@@ -108,5 +159,31 @@ describe('Calendar : Available Dates', () => {
     expect(wrapper.vm.isDisabledDate(new Date('2020 01 01'))).toEqual(true);
     expect(wrapper.vm.isDisabledDate(new Date('2020 01 02'))).toEqual(false);
     expect(wrapper.vm.isDisabledDate(new Date('2045 05 07'))).toEqual(true);
+  });
+
+  it('should ignore availableDates if disabledDates is provided', () => {
+    wrapper.setProps({
+      availableDates: {
+        from: endOfMonth,
+      },
+      disabledDates: {
+        from: endOfMonth,
+      },
+    });
+
+    const future = moment(now)
+      .add(12, 'y')
+      .toDate();
+    const past = moment(now)
+      .subtract(20, 'y')
+      .toDate();
+
+    expect(wrapper.vm.isNextDisabled).toEqual(true);
+    expect(wrapper.vm.isPrevDisabled).toEqual(false);
+
+    expect(wrapper.vm.isDisabledDate(startOfMonth)).toEqual(false);
+    expect(wrapper.vm.isDisabledDate(future)).toEqual(true);
+    expect(wrapper.vm.isDisabledDate(endOfMonth)).toEqual(true);
+    expect(wrapper.vm.isDisabledDate(past)).toEqual(false);
   });
 });

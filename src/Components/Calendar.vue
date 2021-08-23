@@ -142,7 +142,12 @@ export default {
           < this.dateUtil.year(pageDate)
         );
       }
-      if (this.availableDates && this.availableDates.to) {
+      if (
+        Util.isEmptyObject(this.disabledDates)
+        && this.availableDates
+        && this.availableDates.to
+        && !this.availableDates.from
+      ) {
         const pageDate = this.dateUtil.fromUnix(this.pageTimestamp);
         return (
           (this.dateUtil.month(this.availableDates.to)
@@ -167,7 +172,12 @@ export default {
           > this.dateUtil.year(pageDate)
         );
       }
-      if (this.availableDates && this.availableDates.from) {
+      if (
+        Util.isEmptyObject(this.disabledDates)
+        && this.availableDates
+        && this.availableDates.from
+        && !this.availableDates.to
+      ) {
         const pageDate = this.dateUtil.fromUnix(this.pageTimestamp);
         return (
           (this.dateUtil.month(this.availableDates.from)

@@ -39,12 +39,15 @@ describe('Calendar : Disabled Dates', () => {
     const past = moment(now)
       .subtract(20, 'y')
       .toDate();
+    const middleOfMonth = moment(startOfMonth)
+      .add(14, 'd');
 
     expect(wrapper.vm.isNextDisabled).toEqual(true);
     expect(wrapper.vm.isPrevDisabled).toEqual(true);
 
     expect(wrapper.vm.isDisabledDate(startOfMonth)).toEqual(true);
     expect(wrapper.vm.isDisabledDate(future)).toEqual(true);
+    expect(wrapper.vm.isDisabledDate(middleOfMonth)).toEqual(false);
     expect(wrapper.vm.isDisabledDate(endOfMonth)).toEqual(true);
     expect(wrapper.vm.isDisabledDate(past)).toEqual(true);
   });

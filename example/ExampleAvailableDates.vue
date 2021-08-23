@@ -1,21 +1,14 @@
 <template>
   <div>
     <h2>Example Available Dates</h2>
-    <h4>Available date with "to"</h4>
+    <h4>Available date with "to" and "from"</h4>
     <pre>
       {
         to : new Date("2020 06 30"),
-      }
-    </pre>
-    <date-picker :dateInput="dateInput" :availableDates="availableDates1a"/>
-    <br />
-    <h4>Available date with "from"</h4>
-    <pre>
-      {
         from : new Date("2020 08 01"),
       }
     </pre>
-    <date-picker :dateInput="dateInput" :availableDates="availableDates1b"/>
+    <date-picker :dateInput="dateInput" :availableDates="availableDates1"/>
     <br />
     <h4>Available date with "ranges"</h4>
     <pre>
@@ -70,10 +63,8 @@ export default {
       dateInput: {
         placeholder: 'Select Date',
       },
-      availableDates1a: {
+      availableDates1: {
         to: new Date('2020 06 30'),
-      },
-      availableDates1b: {
         from: new Date('2020 08 01'),
       },
       availableDates2: {
