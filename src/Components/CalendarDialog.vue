@@ -136,14 +136,14 @@ export default {
     },
     disabledDates: {
       type: Object,
-      validator: PropsValidator.isValidDisabledDates,
+      validator: PropsValidator.isValidDateRestriction,
       default() {
         return {};
       },
     },
     availableDates: {
       type: Object,
-      validator: PropsValidator.isValidDisabledDates,
+      validator: PropsValidator.isValidDateRestriction,
       default() {
         return {};
       },
