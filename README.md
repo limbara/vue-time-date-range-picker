@@ -76,6 +76,7 @@ Below is props that're available in **DatePicker** Component
 | format                                | String        | DD/MM/YYYY HH:mm  | Format for display date input                           |
 | [same-date-format](#same-date-format) | Object        | refer below       | Format for display date input if start & end date same  |
 | [disabled-dates](#disabled-dates)     | Object        | refer below       | Disable certain dates                                   |
+| [available-dates](#available-dates)   | Object        | refer below       | Allow only certain dates                                   |
 | [date-input](#date-input)             | Object        |                   | Input configuration                                     |
 | show-helper-buttons                   | Boolean       |                   | Show helper buttons                                     |
 | [helper-buttons](#helper-buttons)     | [ ]Object     |                   | Custom helper button                                    |
@@ -95,6 +96,7 @@ Below is props that're available in **Calendar Dialog** Component
 | inline                                | Boolean         | false       | Use datepicker inline style                 |
 | language                              | String          | en          | Languange                                   |
 | [disabled-dates](#disabled-dates)     | Object          | refer below | Disable certain dates                       |
+| [available-dates](#available-dates)   | Object          | refer below | Allow only certain dates                    |
 | show-helper-buttons                   | Boolean         | true        | Show helper buttons                         |
 | [helper-buttons](#helper-buttons)     | [ ]Object       | [ ]         | Custom helper button                        |
 | [date-input](#c-date-input)           | Object          |             | Calendar input date configuration           |
@@ -135,6 +137,21 @@ Below is values that're available for props "disabled-dates"
 | to          | Date            |            | disable dates until this date                           |
 | ranges      | Object          |            | disable dates matching object of date "from" & "to"     |
 | custom      | Function        |            | disable dates with function                             |
+
+If accidentially both disabled dates and available dates are provided, disabled dates take priority.
+
+#### Available Dates
+Below is values that're available for props "available-dates"
+
+| Key         | Type            | Default    | Description                                             |
+|-------------|-----------------|------------|---------------------------------------------------------|
+| dates       | [ ]Date         |            | allow dates matching array of Date object               | 
+| from        | Date            |            | allow dates from this date                              |
+| to          | Date            |            | allow dates until this date                             |
+| ranges      | Object          |            | allow dates matching object of date "from" & "to"       |
+| custom      | Function        |            | allow dates with function                               |
+
+If accidentially both disabled dates and available dates are provided, disabled dates take priority.
 
 #### Helper Buttons
 Below is values that're available for props "helper-buttons"

@@ -61,38 +61,38 @@ describe('Props Validator', () => {
     expect(isValid).toBe(false);
   });
 
-  it('isValidDisabledDates should return true if no parameter or empty object', () => {
-    expect(PropsValidator.isValidDisabledDates()).toBe(true);
+  it('isValidDateRestriction should return true if no parameter or empty object', () => {
+    expect(PropsValidator.isValidDateRestriction()).toBe(true);
 
-    expect(PropsValidator.isValidDisabledDates({})).toBe(true);
+    expect(PropsValidator.isValidDateRestriction({})).toBe(true);
   });
 
-  it('isValidDisabledDates should return false if dates items is not date', () => {
-    const isValid = PropsValidator.isValidDisabledDates({
+  it('isValidDateRestriction should return false if dates items is not date', () => {
+    const isValid = PropsValidator.isValidDateRestriction({
       dates: ['2020-10-15'],
     });
 
     expect(isValid).toBe(false);
   });
 
-  it('isValidDisabledDates should return false if from is not date', () => {
-    const isValid = PropsValidator.isValidDisabledDates({
+  it('isValidDateRestriction should return false if from is not date', () => {
+    const isValid = PropsValidator.isValidDateRestriction({
       from: '2020-10-15',
     });
 
     expect(isValid).toBe(false);
   });
 
-  it('isValidDisabledDates should return false if to is not date', () => {
-    const isValid = PropsValidator.isValidDisabledDates({
+  it('isValidDateRestriction should return false if to is not date', () => {
+    const isValid = PropsValidator.isValidDateRestriction({
       to: '2020-10-15',
     });
 
     expect(isValid).toBe(false);
   });
 
-  it('isValidDisabledDates should return false if ranges is not valid', () => {
-    let isValid = PropsValidator.isValidDisabledDates({
+  it('isValidDateRestriction should return false if ranges is not valid', () => {
+    let isValid = PropsValidator.isValidDateRestriction({
       ranges: [
         {
           from: '2020-10-15',
@@ -103,7 +103,7 @@ describe('Props Validator', () => {
 
     expect(isValid).toBe(false);
 
-    isValid = PropsValidator.isValidDisabledDates({
+    isValid = PropsValidator.isValidDateRestriction({
       ranges: [
         {
           from: new Date('2020-10-15'),
@@ -115,16 +115,16 @@ describe('Props Validator', () => {
     expect(isValid).toBe(false);
   });
 
-  it('isValidDisabledDates should return false if custom is not function', () => {
-    const isValid = PropsValidator.isValidDisabledDates({
+  it('isValidDateRestriction should return false if custom is not function', () => {
+    const isValid = PropsValidator.isValidDateRestriction({
       custom: new Date('2020-10-15'),
     });
 
     expect(isValid).toBe(false);
   });
 
-  it('isValidDisabledDates should return true if all props is valid', () => {
-    const isValid = PropsValidator.isValidDisabledDates({
+  it('isValidDateRestriction should return true if all props is valid', () => {
+    const isValid = PropsValidator.isValidDateRestriction({
       dates: [new Date('2020-10-15')],
       from: new Date('2020-12-01'),
       to: new Date('2020-07-30'),

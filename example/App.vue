@@ -8,6 +8,8 @@
     <br />
     <example-disabled-dates />
     <br />
+    <example-available-dates />
+    <br />
     <example-helper-buttons />
     <br />
     <example-time-input-config />
@@ -27,6 +29,7 @@
 <script>
 import ExampleEvents from './ExampleEvents.vue';
 import ExampleDisabledDates from './ExampleDisabledDates.vue';
+import ExampleAvailableDates from './ExampleAvailableDates.vue';
 import ExampleHelperButtons from './ExampleHelperButtons.vue';
 import ExampleTimeInputConfig from './ExampleTimeInputConfig.vue';
 import ExampleDateInputConfig from './ExampleDateInputConfig.vue';
@@ -40,6 +43,7 @@ export default {
   components: {
     ExampleEvents,
     ExampleDisabledDates,
+    ExampleAvailableDates,
     ExampleHelperButtons,
     ExampleTimeInputConfig,
     ExampleDateInputConfig,

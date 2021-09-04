@@ -39,7 +39,7 @@ export default {
    * @param {Object} value
    * @returns {Boolean}
    */
-  isValidDisabledDates(value) {
+  isValidDateRestriction(value) {
     if (!value || Util.getObjectLength(value) === 0) return true;
 
     const {

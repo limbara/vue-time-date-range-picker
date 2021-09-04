@@ -26,6 +26,7 @@
       :selectedStartDate="selectedStartDate"
       :selectedEndDate="selectedEndDate"
       :disabledDates="disabledDates"
+      :availableDates="availableDates"
       :isMondayFirst="isMondayFirst"
       @select-date="selectDate"
       @select-disabled-date="selectDisabledDate"
@@ -135,7 +136,14 @@ export default {
     },
     disabledDates: {
       type: Object,
-      validator: PropsValidator.isValidDisabledDates,
+      validator: PropsValidator.isValidDateRestriction,
+      default() {
+        return {};
+      },
+    },
+    availableDates: {
+      type: Object,
+      validator: PropsValidator.isValidDateRestriction,
       default() {
         return {};
       },
