@@ -4,8 +4,8 @@
     <h4>Disabled date with "from" and "to"</h4>
     <pre>
       {
-        from : new Date("2020 08 01"),
-        to : new Date("2020 06 30"),
+        from : new Date("2021 09 01"),
+        to : new Date("2021 06 30"),
       }
     </pre>
     <date-picker :dateInput="dateInput" :disabledDates="disabledDates1" />
@@ -15,12 +15,12 @@
       {
         ranges: [
           {
-            from: new Date("2020 05 01"),
-            to: new Date("2020 05 31")
+            from: new Date("2021 05 01"),
+            to: new Date("2021 05 31")
           },
           {
-            from: new Date("2020 08 01"),
-            to: new Date("2020 08 31")
+            from: new Date("2021 09 01"),
+            to: new Date("2021 09 31")
           }
         ]
       }
@@ -31,9 +31,9 @@
     <pre>
       {
         dates: [
-          new Date("2020 08 01"),
-          new Date("2020 07 26"),
-          new Date("2020 08 05")
+          new Date("2021 09 01"),
+          new Date("2021 07 26"),
+          new Date("2021 09 05")
         ]
       }
     </pre>
@@ -64,26 +64,26 @@ export default {
         placeholder: 'Select Date',
       },
       disabledDates1: {
-        from: new Date('2020 08 01'),
-        to: new Date('2020 06 30'),
+        from: new Date('2021 09 01'),
+        to: new Date('2021 06 30'),
       },
       disabledDates2: {
         ranges: [
           {
-            from: new Date('2020 05 01'),
-            to: new Date('2020 05 31'),
+            from: new Date('2021 05 01'),
+            to: new Date('2021 05 31'),
           },
           {
-            from: new Date('2020 08 01'),
-            to: new Date('2020 08 31'),
+            from: new Date('2021 09 01'),
+            to: new Date('2021 09 31'),
           },
         ],
       },
       disabledDates3: {
         dates: [
-          new Date('2020 08 01'),
-          new Date('2020 07 26'),
-          new Date('2020 08 05'),
+          new Date('2021 09 01'),
+          new Date('2021 07 26'),
+          new Date('2021 09 05'),
         ],
       },
       disabledDates4: {

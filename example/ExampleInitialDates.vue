@@ -3,14 +3,14 @@
     <h2>Example Initial Dates</h2>
     <pre>
       {
-        initialDates: [new Date("2020 08 01 00:00"), new Date("2020 08 03 23:59")],
+        initialDates: [new Date("2021 09 01 00:00"), new Date("2021 09 03 23:59")],
       }
     </pre>
     <date-picker :dateInput="dateInput" :initialDates="dates1" />
     <br />
     <pre>
       {
-        initialDates: [new Date("2020 08 01 00:00"), new Date("2020 08 15 00:00")],
+        initialDates: [new Date("2021 09 01 00:00"), new Date("2021 09 15 00:00")],
       }
     </pre>
     <date-picker :dateInput="dateInput" :initialDates="dates2" />
@@ -29,8 +29,8 @@ export default {
       dateInput: {
         placeholder: 'Select Date',
       },
-      dates1: [new Date('2020 08 01 00:00'), new Date('2020 08 03 23:59')],
-      dates2: [new Date('2020 08 01 00:00'), new Date('2020 08 15 00:00')],
+      dates1: [new Date('2021 09 01 00:00'), new Date('2021 09 03 23:59')],
+      dates2: [new Date('2021 09 01 00:00'), new Date('2021 09 15 00:00')],
     };
   },
 };

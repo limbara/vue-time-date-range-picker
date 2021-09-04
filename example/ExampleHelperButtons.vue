@@ -9,18 +9,18 @@
       helperButtons: [
         {
           name: "Custom 1",
-          from: new Date("2020 08 01 00:00"),
-          to: new Date("2020 08 02 23:59"),
+          from: new Date("2021 09 01 00:00"),
+          to: new Date("2021 09 02 23:59"),
         },
         {
           name: "Custom 2",
-          from: new Date("2020 08 01 00:00"),
-          to: new Date("2020 08 03 15:00"),
+          from: new Date("2021 09 01 00:00"),
+          to: new Date("2021 09 03 15:00"),
         },
         {
           name: "Custom 3",
-          from: new Date("2020 08 01 00:00"),
-          to: new Date("2020 08 15 00:00"),
+          from: new Date("2021 09 01 00:00"),
+          to: new Date("2021 09 15 00:00"),
         },
       ],
     </pre>
@@ -47,18 +47,18 @@ export default {
       helperButtons: [
         {
           name: 'Custom 1',
-          from: new Date('2020 08 01 00:00'),
-          to: new Date('2020 08 02 23:59'),
+          from: new Date('2021 09 01 00:00'),
+          to: new Date('2021 09 02 23:59'),
         },
         {
           name: 'Custom 2',
-          from: new Date('2020 08 01 00:00'),
-          to: new Date('2020 08 03 15:00'),
+          from: new Date('2021 09 01 00:00'),
+          to: new Date('2021 09 03 15:00'),
         },
         {
           name: 'Custom 3',
-          from: new Date('2020 08 01 00:00'),
-          to: new Date('2020 08 15 00:00'),
+          from: new Date('2021 09 01 00:00'),
+          to: new Date('2021 09 15 00:00'),
         },
       ],
     };
