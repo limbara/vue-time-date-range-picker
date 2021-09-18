@@ -4,8 +4,8 @@
     <h4>Available date with "to" and "from"</h4>
     <pre>
       {
-        to : new Date("2021 06 30"),
-        from : new Date("2021 09 01"),
+        from: new Date('2021 06 30'),
+        to: new Date('2021 09 01')
       }
     </pre>
     <date-picker :dateInput="dateInput" :availableDates="availableDates1"/>
@@ -64,8 +64,8 @@ export default {
         placeholder: 'Select Date',
       },
       availableDates1: {
-        to: new Date('2021 06 30'),
-        from: new Date('2021 09 01'),
+        from: new Date('2021 06 30'),
+        to: new Date('2021 09 01'),
       },
       availableDates2: {
         ranges: [

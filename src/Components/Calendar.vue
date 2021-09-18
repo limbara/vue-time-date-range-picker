@@ -132,60 +132,76 @@ export default {
     },
     isNextDisabled() {
       if (this.disabledDates && this.disabledDates.from) {
+        const { from, to } = this.disabledDates;
+
+        // next is always available if there's 'to' date intersecting 'from' date
+        if (to && this.dateUtil.isAfter(to, from)) {
+          return false;
+        }
+
         const pageDate = this.dateUtil.fromUnix(this.pageTimestamp);
         return (
-          (this.dateUtil.month(this.disabledDates.from)
-          <= this.dateUtil.month(pageDate)
-        && this.dateUtil.year(this.disabledDates.from)
-          <= this.dateUtil.year(pageDate))
-        || this.dateUtil.year(this.disabledDates.from)
-          < this.dateUtil.year(pageDate)
+          (this.dateUtil.month(from) <= this.dateUtil.month(pageDate)
+            && this.dateUtil.year(from) <= this.dateUtil.year(pageDate))
+          || this.dateUtil.year(from) < this.dateUtil.year(pageDate)
         );
       }
+      // availableDates cannot interfere disabledDates
       if (
         Util.isEmptyObject(this.disabledDates)
         && this.availableDates
         && this.availableDates.to
-        && !this.availableDates.from
       ) {
+        const { from, to } = this.availableDates;
+
+        // next is always available if there's 'from' date intersecting 'to' date
+        if (from && this.dateUtil.isAfter(from, to)) {
+          return false;
+        }
+
         const pageDate = this.dateUtil.fromUnix(this.pageTimestamp);
         return (
-          (this.dateUtil.month(this.availableDates.to)
-          <= this.dateUtil.month(pageDate)
-        && this.dateUtil.year(this.availableDates.to)
-          <= this.dateUtil.year(pageDate))
-        || this.dateUtil.year(this.availableDates.to)
-          < this.dateUtil.year(pageDate)
+          (this.dateUtil.month(to) <= this.dateUtil.month(pageDate)
+            && this.dateUtil.year(to) <= this.dateUtil.year(pageDate))
+          || this.dateUtil.year(to) < this.dateUtil.year(pageDate)
         );
       }
       return false;
     },
     isPrevDisabled() {
       if (this.disabledDates && this.disabledDates.to) {
+        const { from, to } = this.disabledDates;
+
+        // prev is always available if there's 'from' date intersecting 'to' date
+        if (from && this.dateUtil.isBefore(from, to)) {
+          return false;
+        }
+
         const pageDate = this.dateUtil.fromUnix(this.pageTimestamp);
         return (
-          (this.dateUtil.month(this.disabledDates.to)
-          >= this.dateUtil.month(pageDate)
-        && this.dateUtil.year(this.disabledDates.to)
-          >= this.dateUtil.year(pageDate))
-        || this.dateUtil.year(this.disabledDates.to)
-          > this.dateUtil.year(pageDate)
+          (this.dateUtil.month(to) >= this.dateUtil.month(pageDate)
+            && this.dateUtil.year(to) >= this.dateUtil.year(pageDate))
+          || this.dateUtil.year(to) > this.dateUtil.year(pageDate)
         );
       }
+      // availableDates cannot interfere disabledDates
       if (
         Util.isEmptyObject(this.disabledDates)
         && this.availableDates
         && this.availableDates.from
-        && !this.availableDates.to
       ) {
+        const { from, to } = this.availableDates;
+
+        // prev is always available if there's 'to' date intersecting 'from' date
+        if (to && this.dateUtil.isBefore(to, from)) {
+          return false;
+        }
+
         const pageDate = this.dateUtil.fromUnix(this.pageTimestamp);
         return (
-          (this.dateUtil.month(this.availableDates.from)
-          >= this.dateUtil.month(pageDate)
-        && this.dateUtil.year(this.availableDates.from)
-          >= this.dateUtil.year(pageDate))
-        || this.dateUtil.year(this.availableDates.from)
-          > this.dateUtil.year(pageDate)
+          (this.dateUtil.month(from) >= this.dateUtil.month(pageDate)
+            && this.dateUtil.year(from) >= this.dateUtil.year(pageDate))
+          || this.dateUtil.year(from) > this.dateUtil.year(pageDate)
         );
       }
       return false;
@@ -213,7 +229,10 @@ export default {
       );
     },
     isDisabledDate(date) {
-      if (Util.isEmptyObject(this.disabledDates) && Util.isEmptyObject(this.availableDates)) {
+      if (
+        Util.isEmptyObject(this.disabledDates)
+        && Util.isEmptyObject(this.availableDates)
+      ) {
         return false;
       }
       let disabled = false;
@@ -221,6 +240,7 @@ export default {
         const {
           dates, from, to, ranges, custom,
         } = this.disabledDates;
+
         if (typeof dates !== 'undefined' && Array.isArray(dates)) {
           dates.forEach((d) => {
             if (this.dateUtil.isSameDate(d, date)) {
@@ -229,11 +249,12 @@ export default {
           });
           if (disabled) return true;
         }
+
         if (ranges !== 'undefined' && Array.isArray(ranges)) {
           ranges.forEach((range) => {
             if (
               this.dateUtil.isValidDate(range.from)
-            && this.dateUtil.isValidDate(range.to)
+              && this.dateUtil.isValidDate(range.to)
             ) {
               if (this.dateUtil.isSameOrBetween(date, range.from, range.to)) {
                 disabled = true;
@@ -242,18 +263,33 @@ export default {
           });
           if (disabled) return true;
         }
+
         if (
           this.dateUtil.isValidDate(from)
-        && this.dateUtil.isSameOrAfter(date, from)
+          && this.dateUtil.isValidDate(to)
+          && this.dateUtil.isBefore(from, to)
         ) {
-          disabled = true;
+          // 'from' date smaller than 'to' date,
+          // disabling dates only happens between 'from' & 'to'
+          if (this.dateUtil.isSameOrBetween(date, from, to)) {
+            disabled = true;
+          }
+        } else {
+          if (
+            this.dateUtil.isValidDate(from)
+            && this.dateUtil.isSameOrAfter(date, from)
+          ) {
+            disabled = true;
+          }
+
+          if (
+            this.dateUtil.isValidDate(to)
+            && this.dateUtil.isSameOrBefore(date, to)
+          ) {
+            disabled = true;
+          }
         }
-        if (
-          this.dateUtil.isValidDate(to)
-        && this.dateUtil.isSameOrBefore(date, to)
-        ) {
-          disabled = true;
-        }
+
         if (typeof custom === 'function' && custom(date)) {
           disabled = true;
         }
@@ -276,7 +312,7 @@ export default {
           ranges.forEach((range) => {
             if (
               this.dateUtil.isValidDate(range.from)
-            && this.dateUtil.isValidDate(range.to)
+              && this.dateUtil.isValidDate(range.to)
             ) {
               if (this.dateUtil.isSameOrBetween(date, range.from, range.to)) {
                 disabled = false;
@@ -287,17 +323,29 @@ export default {
         }
 
         if (
-          this.dateUtil.isValidDate(to)
-        && this.dateUtil.isSameOrBefore(date, to)
-        ) {
-          disabled = false;
-        }
-
-        if (
           this.dateUtil.isValidDate(from)
-        && this.dateUtil.isSameOrAfter(date, from)
+          && this.dateUtil.isValidDate(to)
+          && this.dateUtil.isBefore(from, to)
         ) {
-          disabled = false;
+          // 'from' date is smaller than 'to' date,
+          // enabling dates only happens between 'from' & 'to'
+          if (this.dateUtil.isSameOrBetween(date, from, to)) {
+            disabled = false;
+          }
+        } else {
+          if (
+            this.dateUtil.isValidDate(to)
+            && this.dateUtil.isSameOrBefore(date, to)
+          ) {
+            disabled = false;
+          }
+
+          if (
+            this.dateUtil.isValidDate(from)
+            && this.dateUtil.isSameOrAfter(date, from)
+          ) {
+            disabled = false;
+          }
         }
 
         if (typeof custom === 'function' && custom(date)) {
