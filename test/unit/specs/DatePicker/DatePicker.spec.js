@@ -1,16 +1,17 @@
 /* eslint-disable import/no-unresolved */
-import DatePicker from '@/Components/DatePicker';
-import CalendarDialog from '@/Components/CalendarDialog';
-import DateInput from '@/Components/DateInput';
 import { mount } from '@vue/test-utils';
+import DatePicker from '@/Components/DatePicker.vue';
+import CalendarDialog from '@/Components/CalendarDialog.vue';
+import DateInput from '@/Components/DateInput.vue';
 import 'regenerator-runtime';
 import '@testing-library/jest-dom';
 
 describe('Date Picker', () => {
   const datePickerClass = '.vdpr-datepicker';
 
-  let wrapper; let calendarDialog; let
-    dateInput;
+  let wrapper;
+  let calendarDialog;
+  let dateInput;
 
   beforeEach(() => {
     wrapper = mount(DatePicker, {

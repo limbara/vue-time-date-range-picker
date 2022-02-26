@@ -1,8 +1,8 @@
 /* eslint-disable import/no-unresolved */
-import CalendarDialog from '@/Components/CalendarDialog';
-import Calendar from '@/Components/Calendar.vue';
 import { mount } from '@vue/test-utils';
 import moment from 'moment';
+import CalendarDialog from '@/Components/CalendarDialog.vue';
+import Calendar from '@/Components/Calendar.vue';
 
 describe('Calendar Dialog : Calendar Implementation', () => {
   let wrapper; let

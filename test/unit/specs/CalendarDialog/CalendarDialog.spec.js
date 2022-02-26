@@ -1,10 +1,10 @@
 /* eslint-disable import/no-unresolved */
-import CalendarDialog from '@/Components/CalendarDialog';
+import { shallowMount, mount } from '@vue/test-utils';
+import CalendarDialog from '@/Components/CalendarDialog.vue';
 import Calendar from '@/Components/Calendar.vue';
 import SwitchButton from '@/Components/SwitchButton.vue';
 import CalendarInputDate from '@/Components/CalendarInputDate.vue';
 import CalendarInputTime from '@/Components/CalendarInputTime.vue';
-import { shallowMount, mount } from '@vue/test-utils';
 import 'regenerator-runtime';
 import '@testing-library/jest-dom';
 
@@ -35,7 +35,9 @@ describe('Calendar Dialog', () => {
       },
     });
 
-    expect(wrapper.vm.selectedStartDate).toEqual(new Date('2020 08 01 15:00:00'));
+    expect(wrapper.vm.selectedStartDate).toEqual(
+      new Date('2020 08 01 15:00:00'),
+    );
     expect(wrapper.vm.selectedEndDate).toEqual(new Date('2020 08 02 00:00:00'));
     expect(wrapper.vm.isAllDay).toEqual(false);
 

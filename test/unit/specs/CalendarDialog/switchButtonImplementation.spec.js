@@ -1,8 +1,8 @@
 /* eslint-disable import/no-unresolved */
-import CalendarDialog from '@/Components/CalendarDialog';
-import SwitchButton from '@/Components/SwitchButton.vue';
 import { mount } from '@vue/test-utils';
 import moment from 'moment';
+import CalendarDialog from '@/Components/CalendarDialog.vue';
+import SwitchButton from '@/Components/SwitchButton.vue';
 
 describe('Calendar Dialog : Switch Button Implementation', () => {
   const startDate = new Date('2020 07 01');
@@ -25,14 +25,10 @@ describe('Calendar Dialog : Switch Button Implementation', () => {
 
     expect(wrapper.vm.isAllDay).toEqual(true);
     expect(wrapper.vm.selectedStartDate).toEqual(
-      moment(startDate)
-        .startOf('day')
-        .toDate(),
+      moment(startDate).startOf('day').toDate(),
     );
     expect(wrapper.vm.selectedEndDate).toEqual(
-      moment(endDate)
-        .endOf('day')
-        .toDate(),
+      moment(endDate).endOf('day').toDate(),
     );
   });
 
@@ -52,14 +48,10 @@ describe('Calendar Dialog : Switch Button Implementation', () => {
 
     expect(wrapper.vm.isAllDay).toEqual(false);
     expect(wrapper.vm.selectedStartDate).toEqual(
-      moment(startDate)
-        .startOf('day')
-        .toDate(),
+      moment(startDate).startOf('day').toDate(),
     );
     expect(wrapper.vm.selectedEndDate).toEqual(
-      moment(endDate)
-        .startOf('day')
-        .toDate(),
+      moment(endDate).startOf('day').toDate(),
     );
   });
 });

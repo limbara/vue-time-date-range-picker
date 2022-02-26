@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
-import CalendarDialog from '@/Components/CalendarDialog';
 import { shallowMount } from '@vue/test-utils';
+import CalendarDialog from '@/Components/CalendarDialog.vue';
 
 describe('Calendar Dialog : helper buttons', () => {
   const buttonHelpersClass = '.vdpr-datepicker__calendar-button-helper';

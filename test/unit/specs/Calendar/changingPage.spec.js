@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
-import Calendar from '@/Components/Calendar.vue';
 import { shallowMount } from '@vue/test-utils';
 import moment from 'moment';
+import Calendar from '@/Components/Calendar.vue';
 import 'regenerator-runtime';
 
 describe('Calendar : Changing Page', () => {

@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
-import DateInput from '@/Components/DateInput.vue';
 import { shallowMount } from '@vue/test-utils';
+import DateInput from '@/Components/DateInput.vue';
 import 'regenerator-runtime';
 
 describe('Date Input', () => {

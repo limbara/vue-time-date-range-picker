@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
-import CalendarDialog from '@/Components/CalendarDialog';
 import { mount } from '@vue/test-utils';
+import CalendarDialog from '@/Components/CalendarDialog.vue';
 import 'regenerator-runtime';
 import '@testing-library/jest-dom';
 
