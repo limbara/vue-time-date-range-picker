@@ -1,13 +1,12 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
   mode: isProduction ? 'production' : 'development',
-  watch: !isProduction,
   entry: path.join(__dirname, 'example', 'index.js'),
   output: {
     path: path.join(__dirname, 'demo'),
@@ -15,7 +14,7 @@ module.exports = {
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, 'demo')
+      directory: path.join(__dirname, 'demo'),
     },
     compress: true,
     port: 9000,
@@ -46,7 +45,6 @@ module.exports = {
         test: /\.scss$/,
         use: [
           'vue-style-loader',
-          MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
           'sass-loader',
