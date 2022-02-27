@@ -2,6 +2,8 @@
 
 # vue-time-date-range-picker
 
+## Version-1.x
+
 A Vue Component to pick a ranged datetime in calendar. Built alongside Vue 2.x . 
 This datepicker utilize **moment** for translations.
 
@@ -22,7 +24,7 @@ Clone the repo and run 'npm install && npm run serve' for local demo
 ## Install
 
 ```bash
-npm i vue-time-date-range-picker
+npm i vue-time-date-range-picker@version-1
 ```
 
 ## Usage
@@ -50,7 +52,7 @@ Usage from CDN
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
-<script src="https://unpkg.com/vue-time-date-range-picker@1.5.0/dist/vdprDatePicker.js"></script>
+<script src="https://unpkg.com/vue-time-date-range-picker@1.5.1/dist/vdprDatePicker.js"></script>
 <script>
 const app = new Vue({
   el: '#app',

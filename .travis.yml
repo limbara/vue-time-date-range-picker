@@ -20,7 +20,9 @@ jobs:
         provider: npm
         email: "$NPM_EMAIL"
         api_token: "$NPM_TOKEN"
+        tag: "version-1"
         on:
+          branch: "version-1"
           tags: true
 branches:
   only:
