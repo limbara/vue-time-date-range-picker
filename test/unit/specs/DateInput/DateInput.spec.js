@@ -33,8 +33,8 @@ describe('Date Input', () => {
     expect(attrs.required).toBeTruthy();
   });
 
-  it('format dates', () => {
-    wrapper.setProps({
+  it('format dates', async () => {
+    await wrapper.setProps({
       format: 'DD/MM/YYYY HH:mm',
       sameDateFormat: {
         from: 'DD/MM/YYYY, HH:mm',
@@ -46,7 +46,7 @@ describe('Date Input', () => {
 
     expect(vm.formattedValue).toEqual('01/08/2020 00:00 - 15/08/2020 23:59');
 
-    wrapper.setProps({
+    await wrapper.setProps({
       selectedStartDate: new Date('2020 08 02 00:00'),
       selectedEndDate: new Date('2020 08 02 23:59'),
     });
@@ -60,8 +60,8 @@ describe('Date Input', () => {
     expect(wrapper.emitted('on-click')).toBeTruthy();
   });
 
-  it('change language', () => {
-    wrapper.setProps({
+  it('change language', async () => {
+    await wrapper.setProps({
       format: 'MMMM',
       language: 'id',
       selectedStartDate: new Date('2020 07 01 00:00'),
@@ -71,7 +71,7 @@ describe('Date Input', () => {
     expect(vm.formattedValue).toContain('Juli');
     expect(vm.formattedValue).toContain('Agustus');
 
-    wrapper.setProps({
+    await wrapper.setProps({
       format: 'MMMM',
       language: 'ms-my',
       selectedStartDate: new Date('2020 07 01 00:00'),

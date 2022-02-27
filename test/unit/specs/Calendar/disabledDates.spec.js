@@ -25,8 +25,8 @@ describe('Calendar : Disabled Dates', () => {
     expect(wrapper.emitted('select-disabled-date')).toBeTruthy();
   });
 
-  it("should disable dates 'from' a date & 'to' a date from disabledDates", () => {
-    wrapper.setProps({
+  it("should disable dates 'from' a date & 'to' a date from disabledDates", async () => {
+    await wrapper.setProps({
       disabledDates: {
         from: endOfMonth,
         to: startOfMonth,
@@ -52,24 +52,34 @@ describe('Calendar : Disabled Dates', () => {
     expect(wrapper.vm.isDisabledDate(past)).toEqual(true);
   });
 
-  it("can't change to disabled 'from' date & 'to' date", () => {
-    wrapper.setProps({
+  it("should not disable next button and previous button if disabled 'to' is after disabled 'from'", async () => {
+    await wrapper.setProps({
+      disabledDates: {
+        from: startOfMonth,
+        to: endOfMonth,
+      },
+    });
+
+    expect(wrapper.vm.isNextDisabled).toEqual(false);
+    expect(wrapper.vm.isPrevDisabled).toEqual(false);
+  });
+
+  it("can't change to disabled 'from' date & 'to' date", async () => {
+    await wrapper.setProps({
       disabledDates: {
         from: endOfMonth,
         to: startOfMonth,
       },
     });
 
-    const monthYear = moment(now).format('MMM YYYY');
-
     wrapper.vm.onPrevClick();
-    expect(wrapper.vm.monthYear === monthYear).toBe(true);
+    expect(wrapper.emitted()['on-prev-calendar']).toBeFalsy();
     wrapper.vm.onNextClick();
-    expect(wrapper.vm.monthYear === monthYear).toBe(true);
+    expect(wrapper.emitted()['on-next-calendar']).toBeFalsy();
   });
 
-  it("should disable dates 'dates' from disabledDates", () => {
-    wrapper.setProps({
+  it("should disable dates 'dates' from disabledDates", async () => {
+    await wrapper.setProps({
       disabledDates: {
         dates: [
           new Date('2020 08 01'),
@@ -84,8 +94,8 @@ describe('Calendar : Disabled Dates', () => {
     expect(wrapper.vm.isDisabledDate(new Date('2020 07 31'))).toEqual(true);
   });
 
-  it("should disabled dates 'ranges' from disabledDates", () => {
-    wrapper.setProps({
+  it("should disabled dates 'ranges' from disabledDates", async () => {
+    await wrapper.setProps({
       disabledDates: {
         ranges: [
           {
@@ -106,8 +116,8 @@ describe('Calendar : Disabled Dates', () => {
     expect(wrapper.vm.isDisabledDate(new Date('2023 08 01'))).toEqual(true);
   });
 
-  it("should disabled date 'custom' function from disabledDates", () => {
-    wrapper.setProps({
+  it("should disabled date 'custom' function from disabledDates", async () => {
+    await wrapper.setProps({
       disabledDates: {
         custom: (date) => date.getDate() % 2 === 0 // disable every even date
         ,

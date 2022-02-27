@@ -53,11 +53,15 @@ describe('Date Picker', () => {
   });
 
   it('toggle calendar dialog', async () => {
-    await dateInput.vm.$emit('on-click');
-    expect(calendarDialog.element).toBeVisible();
+    dateInput.vm.$emit('on-click');
+    await wrapper.vm.$nextTick();
 
-    await dateInput.vm.$emit('on-click');
-    expect(calendarDialog.element).not.toBeVisible();
+    expect(calendarDialog.isVisible()).toBe(true);
+
+    dateInput.vm.$emit('on-click');
+    await wrapper.vm.$nextTick();
+
+    expect(calendarDialog.isVisible()).toBe(false);
   });
 
   it('emit date-applied event', () => {

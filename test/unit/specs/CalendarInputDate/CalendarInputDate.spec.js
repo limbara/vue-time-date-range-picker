@@ -43,15 +43,15 @@ describe('Calendar Input Date', () => {
     expect(wrapper.vm.formattedValue).toEqual('');
   });
 
-  it('change language', () => {
-    wrapper.setProps({
+  it('change language', async () => {
+    await wrapper.setProps({
       language: 'id',
       format: 'MMMM',
     });
 
     expect(vm.formattedValue).toEqual('Agustus');
 
-    wrapper.setProps({
+    await wrapper.setProps({
       language: 'ms-my',
       format: 'MMMM',
     });

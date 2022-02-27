@@ -6,12 +6,8 @@ import 'regenerator-runtime';
 
 describe('Calendar : Available Dates', () => {
   const now = new Date();
-  const startOfMonth = moment(now)
-    .startOf('month')
-    .toDate();
-  const endOfMonth = moment(now)
-    .endOf('month')
-    .toDate();
+  const startOfMonth = moment(now).startOf('month').toDate();
+  const endOfMonth = moment(now).endOf('month').toDate();
 
   let wrapper;
 
@@ -19,22 +15,17 @@ describe('Calendar : Available Dates', () => {
     wrapper = shallowMount(Calendar);
   });
 
-  it("should make available dates 'to' a date & 'from' a date availableDates", () => {
-    wrapper.setProps({
+  it("should make available dates 'to' a date & 'from' a date availableDates", async () => {
+    await wrapper.setProps({
       availableDates: {
         from: endOfMonth,
         to: startOfMonth,
       },
     });
 
-    const future = moment(now)
-      .add(12, 'y')
-      .toDate();
-    const past = moment(now)
-      .subtract(20, 'y')
-      .toDate();
-    const middleOfMonth = moment(startOfMonth)
-      .add(14, 'd');
+    const future = moment(now).add(12, 'y').toDate();
+    const past = moment(now).subtract(20, 'y').toDate();
+    const middleOfMonth = moment(startOfMonth).add(14, 'd');
 
     expect(wrapper.vm.isNextDisabled).toEqual(false);
     expect(wrapper.vm.isPrevDisabled).toEqual(false);
@@ -46,19 +37,15 @@ describe('Calendar : Available Dates', () => {
     expect(wrapper.vm.isDisabledDate(past)).toEqual(false);
   });
 
-  it("should make available dates 'to' a date availableDates", () => {
-    wrapper.setProps({
+  it("should make available dates 'to' a date availableDates", async () => {
+    await wrapper.setProps({
       availableDates: {
         to: endOfMonth,
       },
     });
 
-    const future = moment(now)
-      .add(12, 'y')
-      .toDate();
-    const past = moment(now)
-      .subtract(20, 'y')
-      .toDate();
+    const future = moment(now).add(12, 'y').toDate();
+    const past = moment(now).subtract(20, 'y').toDate();
 
     expect(wrapper.vm.isNextDisabled).toEqual(true);
     expect(wrapper.vm.isPrevDisabled).toEqual(false);
@@ -69,19 +56,15 @@ describe('Calendar : Available Dates', () => {
     expect(wrapper.vm.isDisabledDate(past)).toEqual(false);
   });
 
-  it("should make available dates 'from' a date availableDates", () => {
-    wrapper.setProps({
+  it("should make available dates 'from' a date availableDates", async () => {
+    await wrapper.setProps({
       availableDates: {
         from: startOfMonth,
       },
     });
 
-    const future = moment(now)
-      .add(12, 'y')
-      .toDate();
-    const past = moment(now)
-      .subtract(20, 'y')
-      .toDate();
+    const future = moment(now).add(12, 'y').toDate();
+    const past = moment(now).subtract(20, 'y').toDate();
 
     expect(wrapper.vm.isNextDisabled).toEqual(false);
     expect(wrapper.vm.isPrevDisabled).toEqual(true);
@@ -92,8 +75,34 @@ describe('Calendar : Available Dates', () => {
     expect(wrapper.vm.isDisabledDate(past)).toEqual(true);
   });
 
-  it("can change to available 'to' date & 'from' date", () => {
-    wrapper.setProps({
+  it("should make available dates only between 'from' date and 'to' date if 'from' is smaller than 'to'", async () => {
+    await wrapper.setProps({
+      availableDates: {
+        from: startOfMonth,
+        to: endOfMonth,
+      },
+    });
+
+    const randomBetweenDate = new Date(
+      startOfMonth.getTime()
+        + Math.random() * (endOfMonth.getTime() - startOfMonth.getTime()),
+    );
+    const randomFutureDate = new Date(
+      endOfMonth.getTime()
+        + Math.random() * (endOfMonth.getTime() - startOfMonth.getTime()),
+    );
+    const randomPastDate = new Date(
+      startOfMonth.getTime()
+        - Math.random() * (endOfMonth.getTime() - startOfMonth.getTime()),
+    );
+
+    expect(wrapper.vm.isDisabledDate(randomBetweenDate)).toEqual(false);
+    expect(wrapper.vm.isDisabledDate(randomFutureDate)).toEqual(true);
+    expect(wrapper.vm.isDisabledDate(randomPastDate)).toEqual(true);
+  });
+
+  it("can change to available 'to' date & 'from' date", async () => {
+    await wrapper.setProps({
       availableDates: {
         from: endOfMonth,
         to: startOfMonth,
@@ -110,8 +119,8 @@ describe('Calendar : Available Dates', () => {
     expect(wrapper.vm.monthYear === monthYear).toBe(false);
   });
 
-  it("should allow dates 'dates' from availableDates", () => {
-    wrapper.setProps({
+  it("should allow dates 'dates' from availableDates", async () => {
+    await wrapper.setProps({
       availableDates: {
         dates: [
           new Date('2020 08 01'),
@@ -126,8 +135,8 @@ describe('Calendar : Available Dates', () => {
     expect(wrapper.vm.isDisabledDate(new Date('2020 07 31'))).toEqual(false);
   });
 
-  it("should allow dates 'ranges' from availableDates", () => {
-    wrapper.setProps({
+  it("should allow dates 'ranges' from availableDates", async () => {
+    await wrapper.setProps({
       availableDates: {
         ranges: [
           {
@@ -148,11 +157,10 @@ describe('Calendar : Available Dates', () => {
     expect(wrapper.vm.isDisabledDate(new Date('2023 08 01'))).toEqual(false);
   });
 
-  it("should allow date 'custom' function from availableDates", () => {
-    wrapper.setProps({
+  it("should allow date 'custom' function from availableDates", async () => {
+    await wrapper.setProps({
       availableDates: {
-        custom: (date) => date.getDate() % 2 === 0 // allow every even date
-        ,
+        custom: (date) => date.getDate() % 2 === 0, // allow every even date
       },
     });
 
@@ -161,8 +169,8 @@ describe('Calendar : Available Dates', () => {
     expect(wrapper.vm.isDisabledDate(new Date('2045 05 07'))).toEqual(true);
   });
 
-  it('should ignore availableDates if disabledDates is provided', () => {
-    wrapper.setProps({
+  it('should ignore availableDates if disabledDates is provided', async () => {
+    await wrapper.setProps({
       availableDates: {
         from: endOfMonth,
       },
@@ -171,12 +179,8 @@ describe('Calendar : Available Dates', () => {
       },
     });
 
-    const future = moment(now)
-      .add(12, 'y')
-      .toDate();
-    const past = moment(now)
-      .subtract(20, 'y')
-      .toDate();
+    const future = moment(now).add(12, 'y').toDate();
+    const past = moment(now).subtract(20, 'y').toDate();
 
     expect(wrapper.vm.isNextDisabled).toEqual(true);
     expect(wrapper.vm.isPrevDisabled).toEqual(false);

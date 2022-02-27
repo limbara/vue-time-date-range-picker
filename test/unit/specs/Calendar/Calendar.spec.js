@@ -52,8 +52,8 @@ describe('Calendar', () => {
     expect(vm.monthYear === currentMonthYear).toBe(true);
   });
 
-  it('changing language', () => {
-    wrapper.setProps({
+  it('changing language', async () => {
+    await wrapper.setProps({
       language: 'id',
     });
 
@@ -63,7 +63,7 @@ describe('Calendar', () => {
 
     expect(vm.monthYear).toContain(idMonth);
 
-    wrapper.setProps({
+    await wrapper.setProps({
       language: 'ms-my',
     });
 
@@ -74,10 +74,10 @@ describe('Calendar', () => {
     expect(vm.monthYear).toContain(myMonth);
   });
 
-  it('should render Monday first', () => {
+  it('should render Monday first', async () => {
     expect(vm.dayNames[0]).toBe('Sun');
 
-    wrapper.setProps({
+    await wrapper.setProps({
       isMondayFirst: true,
     });
 
