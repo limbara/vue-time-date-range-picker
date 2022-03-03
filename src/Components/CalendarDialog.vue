@@ -19,7 +19,9 @@
             onHelperClick(btn.from, btn.to);
           }
         "
-      >{{ btn.name }}</button>
+      >
+        {{ btn.name }}
+      </button>
     </div>
     <calendar
       :language="language"
@@ -90,7 +92,9 @@
           'vdpr-datepicker__button-submit',
         ]"
         @click="onClickButtonApply"
-      >{{ applyButtonLabel }}</button>
+      >
+        {{ applyButtonLabel }}
+      </button>
       <button
         :class="[
           'vdpr-datepicker__button',
@@ -98,7 +102,9 @@
           'vdpr-datepicker__button-reset',
         ]"
         @click="onClickButtonReset"
-      >{{ resetButtonLabel }}</button>
+      >
+        {{ resetButtonLabel }}
+      </button>
     </div>
   </div>
 </template>
@@ -221,6 +227,14 @@ export default {
       isAllDay,
     };
   },
+  emits: [
+    'on-apply',
+    'on-reset',
+    'select-date',
+    'select-disabled-date',
+    'on-prev-calendar',
+    'on-next-calendar',
+  ],
   computed: {
     dateUtil() {
       return new DateUtil(this.language);
@@ -423,5 +437,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../Styles/CalendarDialog.scss";
+@import '../Styles/CalendarDialog.scss';
 </style>

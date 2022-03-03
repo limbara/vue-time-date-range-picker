@@ -14,6 +14,9 @@ export default {
   props: {
     checked: Boolean,
   },
+  emits: [
+    'on-check-change',
+  ],
   methods: {
     onClick() {
       this.$emit('on-check-change', !this.checked);

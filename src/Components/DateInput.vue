@@ -33,6 +33,9 @@ export default {
     selectedStartDate: Date,
     selectedEndDate: Date,
   },
+  emits: [
+    'on-click',
+  ],
   computed: {
     dateUtil() {
       return new DateUtil(this.language);
@@ -70,8 +73,6 @@ export default {
     onClick() {
       this.$emit('on-click', true);
     },
-  },
-  mounted() {
   },
 };
 </script>

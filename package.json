@@ -42,7 +42,7 @@
   },
   "peerDependencies": {
     "moment": "^2.27.0",
-    "vue": "^2.6.11"
+    "vue": "^3.2.31"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",
@@ -69,9 +69,9 @@
     "sass-loader": "^12.6.0",
     "style-loader": "^3.3.1",
     "terser-webpack-plugin": "^5.3.1",
-    "vue": "^2.6.11",
+    "vue": "^3.2.31",
     "vue-jest": "^3.0.5",
-    "vue-loader": "^15.9.8",
+    "vue-loader": "^16.8.3",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^5.69.1",
     "webpack-cli": "^4.7.2",

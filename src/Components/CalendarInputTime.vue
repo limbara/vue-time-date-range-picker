@@ -40,6 +40,9 @@ export default {
       format: 'HH:mm',
     };
   },
+  emits: [
+    'on-change',
+  ],
   computed: {
     dateUtil() {
       return new DateUtil(this.language);

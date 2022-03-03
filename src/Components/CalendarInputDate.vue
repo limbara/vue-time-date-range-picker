@@ -25,6 +25,9 @@ export default {
       copyTimestamp: this.timestamp,
     };
   },
+  emits: [
+    'on-change',
+  ],
   watch: {
     timestamp(value) {
       this.copyTimestamp = value;

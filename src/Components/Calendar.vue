@@ -79,6 +79,12 @@ export default {
       pageTimestamp,
     };
   },
+  emits: [
+    'select-disabled-date',
+    'select-date',
+    'on-prev-calendar',
+    'on-next-calendar',
+  ],
   computed: {
     dateUtil() {
       return new DateUtil(this.language);

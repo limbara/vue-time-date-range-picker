@@ -111,6 +111,15 @@ export default {
       showCalendarDialog,
     };
   },
+  emits: [
+    'date-applied',
+    'datepicker-opened',
+    'datepicker-closed',
+    'on-prev-calendar',
+    'on-next-calendar',
+    'select-date',
+    'select-disabled-date',
+  ],
   computed: {
     dateUtil() {
       return new DateUtil(this.language);
