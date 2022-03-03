@@ -13,7 +13,7 @@ describe('Calendar : Initialized Dates', () => {
 
   beforeEach(() => {
     wrapper = shallowMount(Calendar, {
-      propsData: {
+      props: {
         selectedStartDate: startDate,
         selectedEndDate: endDate,
       },

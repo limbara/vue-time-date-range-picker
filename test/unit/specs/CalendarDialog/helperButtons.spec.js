@@ -8,7 +8,7 @@ describe('Calendar Dialog : helper buttons', () => {
 
   it('should render show helper button', () => {
     wrapper = shallowMount(CalendarDialog, {
-      propsData: {
+      props: {
         showHelperButtons: true,
       },
     });
@@ -19,7 +19,7 @@ describe('Calendar Dialog : helper buttons', () => {
 
   it('should not render show helper button', () => {
     wrapper = shallowMount(CalendarDialog, {
-      propsData: {
+      props: {
         showHelperButtons: false,
       },
     });
@@ -29,7 +29,7 @@ describe('Calendar Dialog : helper buttons', () => {
 
   it('should render custom helper buttons', () => {
     wrapper = shallowMount(CalendarDialog, {
-      propsData: {
+      props: {
         helperButtons: [
           {
             name: 'Custom Button',

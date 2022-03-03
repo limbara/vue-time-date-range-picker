@@ -28,6 +28,7 @@ export default {
     return {
       dateInput: {
         placeholder: 'Select Date',
+        required: true,
       },
       dates1: [new Date('2021 09 01 00:00'), new Date('2021 09 03 23:59')],
       dates2: [new Date('2021 09 01 00:00'), new Date('2021 09 15 00:00')],

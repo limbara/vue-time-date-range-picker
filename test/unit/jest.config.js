@@ -4,17 +4,13 @@
 const path = require('path');
 
 module.exports = {
-  collectCoverageFrom: [
-    'src/**/*.{js,vue}',
-    '!**/node_modules/**',
-  ],
+  testEnvironment: 'jsdom',
+
+  collectCoverageFrom: ['src/**/*.{js,vue}', '!**/node_modules/**'],
 
   coverageDirectory: '<rootDir>/test/unit/coverage',
 
-  moduleFileExtensions: [
-    'js',
-    'vue',
-  ],
+  moduleFileExtensions: ['js', 'vue'],
 
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
@@ -22,10 +18,8 @@ module.exports = {
 
   rootDir: path.resolve(__dirname, '../../'),
 
-  setupFiles: ['<rootDir>/test/unit/setup'],
-
   transform: {
     '^.+\\.js$': 'babel-jest',
-    '.*\\.(vue)$': 'vue-jest',
+    '.*\\.(vue)$': '@vue/vue3-jest',
   },
 };

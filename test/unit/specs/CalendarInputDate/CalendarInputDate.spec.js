@@ -11,7 +11,7 @@ describe('Calendar Input Date', () => {
 
   beforeEach(() => {
     wrapper = shallowMount(CalendarInputDate, {
-      propsData: {
+      props: {
         inputClass: 'date_input_class',
         timestamp: new Date(date).getTime() / 1000,
         format: 'DD/MM/YYYY',
@@ -35,7 +35,7 @@ describe('Calendar Input Date', () => {
 
   it("doesn't format date if timestamp is zero", () => {
     wrapper = shallowMount(CalendarInputDate, {
-      propsData: {
+      props: {
         timestamp: 0,
       },
     });

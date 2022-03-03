@@ -9,7 +9,7 @@ describe('Date Input', () => {
 
   beforeEach(() => {
     wrapper = shallowMount(DateInput, {
-      propsData: {
+      props: {
         placeholder: 'Select A Date',
         id: 'input_date',
         name: 'input_date',
@@ -30,7 +30,7 @@ describe('Date Input', () => {
     expect(attrs.id).toBe('input_date');
     expect(attrs.name).toBe('input_date');
     expect(attrs.class).toContain('input_class');
-    expect(attrs.required).toBeTruthy();
+    expect(attrs.required).toBe('');
   });
 
   it('format dates', async () => {

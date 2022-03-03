@@ -12,7 +12,7 @@ describe('Calendar Dialog : inline Implementation', () => {
 
   beforeEach(() => {
     wrapper = mount(CalendarDialog, {
-      propsData: {
+      props: {
         inline: true,
       },
     });

@@ -27,7 +27,7 @@ describe('Calendar Dialog', () => {
 
   it('should set correct data if initialized dates', () => {
     wrapper = shallowMount(CalendarDialog, {
-      propsData: {
+      props: {
         initialDates: [
           new Date('2020 08 01 15:00:00'),
           new Date('2020 08 02 00:00:00'),
@@ -42,7 +42,7 @@ describe('Calendar Dialog', () => {
     expect(wrapper.vm.isAllDay).toEqual(false);
 
     wrapper = shallowMount(CalendarDialog, {
-      propsData: {
+      props: {
         initialDates: [
           new Date('2020 08 01 00:00:00'),
           new Date('2020 08 02 23:59:59'),
@@ -55,7 +55,7 @@ describe('Calendar Dialog', () => {
 
   it('should render correct contents', () => {
     wrapper = mount(CalendarDialog, {
-      propsData: {
+      props: {
         initialDates: [
           new Date('2020 08 01 00:00:00'),
           new Date('2020 08 02 23:59:59'),
@@ -95,7 +95,7 @@ describe('Calendar Dialog', () => {
 
   it('should change switch button initial state', () => {
     wrapper = mount(CalendarDialog, {
-      propsData: {
+      props: {
         switchButtonInitial: true,
       },
     });
@@ -106,7 +106,7 @@ describe('Calendar Dialog', () => {
     expect(inputCheckbox.element).toBeChecked();
 
     wrapper = mount(CalendarDialog, {
-      propsData: {
+      props: {
         switchButtonInitial: false,
       },
     });
@@ -119,7 +119,7 @@ describe('Calendar Dialog', () => {
 
   it('should change switch button label', () => {
     wrapper = shallowMount(CalendarDialog, {
-      propsData: {
+      props: {
         switchButtonLabel: 'Seharian',
       },
     });
@@ -129,7 +129,7 @@ describe('Calendar Dialog', () => {
 
   it('should change apply button label', () => {
     wrapper = shallowMount(CalendarDialog, {
-      propsData: {
+      props: {
         applyButtonLabel: 'Use',
       },
     });
@@ -139,7 +139,7 @@ describe('Calendar Dialog', () => {
 
   it('should change reset button label', () => {
     wrapper = shallowMount(CalendarDialog, {
-      propsData: {
+      props: {
         resetButtonLabel: 'Restart',
       },
     });

@@ -8,7 +8,7 @@ describe('Switch Button', () => {
 
   beforeEach(() => {
     wrapper = shallowMount(SwitchButton, {
-      propsData: {
+      props: {
         checked: false,
       },
     });

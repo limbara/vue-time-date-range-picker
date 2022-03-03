@@ -41,7 +41,7 @@ describe('Calendar : Changing Page', () => {
 
   it('should show prev calendar page with initialized dates', () => {
     wrapper = shallowMount(Calendar, {
-      propsData: {
+      props: {
         selectedStartDate: startDate,
         selectedEndDate: endDate,
       },
@@ -58,7 +58,7 @@ describe('Calendar : Changing Page', () => {
 
   it('should show next calendar page with initialized dates', () => {
     wrapper = shallowMount(Calendar, {
-      propsData: {
+      props: {
         selectedStartDate: startDate,
         selectedEndDate: endDate,
       },

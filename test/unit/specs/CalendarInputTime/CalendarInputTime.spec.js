@@ -13,7 +13,7 @@ describe('Calendar Input Time', () => {
 
   beforeEach(() => {
     wrapper = shallowMount(CalendarInputTime, {
-      propsData: {
+      props: {
         inputClass: 'time_input_class',
         timestamp: new Date('2020 08 10 15:00:00').getTime() / 1000,
         step: 60,
@@ -41,7 +41,7 @@ describe('Calendar Input Time', () => {
 
   it("doesn't format time if timestamp is zero", () => {
     wrapper = shallowMount(CalendarInputTime, {
-      propsData: {
+      props: {
         timestamp: 0,
       },
     });
