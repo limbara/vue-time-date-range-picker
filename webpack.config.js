@@ -1,64 +1,71 @@
 const path = require('path');
-const { VueLoaderPlugin } = require('vue-loader')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   mode: 'production',
   entry: {
-    'vdprDatePicker': './src/Components/DatePicker.vue',
-    'vdprDatePicker.min': './src/Components/DatePicker.vue'
+    vdprDatePicker: './src/Components/DatePicker.vue',
+    'vdprDatePicker.min': './src/Components/DatePicker.vue',
   },
-  devtool: "source-map",
   output: {
+    clean: true,
     library: 'vdprDatePicker',
-    libraryTarget: 'umd', 
+    libraryTarget: 'umd',
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
   },
   optimization: {
     minimize: true,
+    usedExports: false,
     minimizer: [
       new TerserPlugin({
         include: /\.min\.js$/,
+        extractComments: false,
+        terserOptions: {
+          output: {
+            comments: false,
+          },
+          compress: {
+            drop_console: true,
+          },
+        },
       }),
     ],
   },
   externals: {
-    moment: 'moment'
+    moment: 'moment',
+    vue: 'vue'
   },
   module: {
     rules: [
       {
         test: /\.js$/,
+        loader: 'babel-loader',
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-        },
       },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-      },
-      {
-        test: /\.css$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'postcss-loader',
-        ],
+        exclude: /node_modules/,
       },
       {
         test: /\.scss$/,
         use: [
-          'vue-style-loader',
+          MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
-          'sass-loader'
+          'sass-loader',
         ],
       },
     ],
   },
   plugins: [
     new VueLoaderPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+    }),
   ],
+  devtool: 'source-map',
 };
