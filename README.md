@@ -38,6 +38,7 @@ Usage within JS project
 
 ```javascript
 import DatePicker, { CalendarDialog } from 'vue-time-date-range-picker/dist/vdprDatePicker'
+import 'vue-time-date-range-picker/dist/vdprDatePicker.min.css'
 
 export default {
   //...
@@ -52,21 +53,25 @@ You can use CalendarDialog Component if you want to implement your own input ele
 
 Usage from CDN
 ```html
-<div id="app">
-  <datepicker></datepicker>
-</div>
-<script src="https://unpkg.com/vue"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
-<script src="https://unpkg.com/vue-time-date-range-picker@1.5.0/dist/vdprDatePicker.js"></script>
-<script>
-const app = new Vue({
-  el: '#app',
-  components: {
-    'datepicker' : vdprDatePicker.default,
-    'calendar-dialog' : vdprDatePicker.CalendarDialog
-  }
-})
-</script>
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/vue-time-date-range-picker@2.0.0/dist/vdprDatePicker.min.css">
+</head>`
+<body>
+  <div id="app">
+    <datepicker></datepicker>
+  </div>
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
+  <script src="https://unpkg.com/vue-time-date-range-picker@2.0.0/dist/vdprDatePicker.js"></script>
+  <script>
+  const app = Vue.createApp({
+      components: {
+        'datepicker' : vdprDatePicker.default,
+        'calendar-dialog' : vdprDatePicker.CalendarDialog
+      }
+    }).mount("#app")
+  </script>
+</body>
 ```
 
 ## Available props
