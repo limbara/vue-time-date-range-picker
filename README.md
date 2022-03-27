@@ -10,7 +10,7 @@ This datepicker utilize **moment** for translations.
 | Vue.js version | Package version | Branch                                                                       |
 | :---           |:---------------:| ---:                                                                         | 
 | 2.x            |       1.x       | [1.x](https://github.com/limbara/vue-time-date-range-picker/tree/version-1)  |
-| 3.x            |       3.x       | `master`                                                                     |
+| 3.x            |       2.x       | `master`                                                                     |
 
 - [Demo](#demo)
 - [Install](#install)
