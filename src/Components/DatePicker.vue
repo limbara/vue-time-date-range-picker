@@ -138,6 +138,7 @@ export default {
     onReset() {
       this.selectedStartDate = null;
       this.selectedEndDate = null;
+      this.$emit('on-reset');
     },
     onClickDateInput() {
       if (this.inline) return;

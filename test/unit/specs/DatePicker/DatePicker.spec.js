@@ -110,4 +110,11 @@ describe('Date Picker', () => {
     calendarDialog.vm.$emit(e, date);
     expect(wrapper.emitted(e)[0]).toEqual([date]);
   });
+
+  it('emit on-reset', () => {
+    const e = 'on-reset'
+
+    calendarDialog.vm.$emit(e)
+    expect(wrapper.emitted(e)).toBeTruthy();
+  })
 });

@@ -17,6 +17,7 @@
       @datepicker-closed="datepickerClosed"
       @select-date="selectDate"
       @select-disabled-date="selectDisabledDate"
+      @on-reset="onReset"
     />
   </div>
 </template>
@@ -53,6 +54,9 @@ export default {
       this.events.push(
         new Event('date-applied', `${date1.toString()} - ${date2.toString()}`),
       );
+    },
+    onReset() {
+      this.events.push(new Event('on-reset', ''))
     },
     onPrevCalendar() {
       this.events.push(new Event('on-prev-calendar', ''));
