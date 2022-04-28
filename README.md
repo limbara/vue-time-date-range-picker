@@ -16,8 +16,8 @@ This datepicker utilize **moment** for translations.
 
 ## Demo
 
-codepen demo : https://codepen.io/limbara/pen/ZEQxoZZ 
-sandbox demo : https://codesandbox.io/s/example-vue-time-date-range-picker-byw7g
+codepen demo : https://codepen.io/limbara/pen/YzYmdXz 
+sandbox demo : https://codesandbox.io/s/determined-lumiere-oli22p
 
 Clone the repo and run 'npm install && npm run serve' for local demo
 
@@ -196,6 +196,7 @@ Below is events that're available in **DatePicker** Component
 | datepicker-closed     |               | Datepicker is closed                                        |
 | select-date           | Date, Date    | A date is selected in calendar. Output start & end date     |
 | select-disabled-date  | Date          | A disabled date is selected in calendar                     |
+| on-reset              |               | On reset selection                                          |
 
 Below is events that're available in **Calendar Dialog** Component 
 
@@ -206,6 +207,7 @@ Below is events that're available in **Calendar Dialog** Component
 | on-next-calendar      |               | On calendar page next                                       |
 | select-date           | Date, Date    | A date is selected in calendar. Output start & end date     |
 | select-disabled-date  | Date          | A disabled date is selected in calendar                     |
+| on-reset              |               | On reset selection                                          |
 
 ## Translations
 
