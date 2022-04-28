@@ -26,5 +26,5 @@ jobs:
           tags: true
 branches:
   only:
-    - master
+    - version-1
     - /^v[0-9]+.*$/
