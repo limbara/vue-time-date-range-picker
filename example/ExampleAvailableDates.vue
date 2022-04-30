@@ -4,8 +4,8 @@
     <h4>Available date with "to" and "from"</h4>
     <pre>
       {
-        from: new Date('2021 06 30'),
-        to: new Date('2021 09 01')
+        from: new Date('2022 06 30'),
+        to: new Date('2022 09 01')
       }
     </pre>
     <date-picker :dateInput="dateInput" :availableDates="availableDates1"/>
@@ -15,12 +15,12 @@
       {
         ranges: [
           {
-            from: new Date("2021 05 01"),
-            to: new Date("2021 05 31")
+            from: new Date("2022 05 01"),
+            to: new Date("2022 05 31")
           },
           {
-            from: new Date("2021 09 01"),
-            to: new Date("2021 09 31")
+            from: new Date("2022 09 01"),
+            to: new Date("2022 09 31")
           }
         ]
       }
@@ -31,9 +31,9 @@
     <pre>
       {
         dates: [
-          new Date('2021 09 01'),
-          new Date('2021 07 26'),
-          new Date('2021 09 05'),
+          new Date('2022 09 01'),
+          new Date('2022 07 26'),
+          new Date('2022 09 05'),
         ]
       }
     </pre>
@@ -64,26 +64,26 @@ export default {
         placeholder: 'Select Date',
       },
       availableDates1: {
-        from: new Date('2021 06 30'),
-        to: new Date('2021 09 01'),
+        from: new Date('2022 06 30'),
+        to: new Date('2022 09 01'),
       },
       availableDates2: {
         ranges: [
           {
-            from: new Date('2021 05 01'),
-            to: new Date('2021 05 31'),
+            from: new Date('2022 05 01'),
+            to: new Date('2022 05 31'),
           },
           {
-            from: new Date('2021 09 01'),
-            to: new Date('2021 09 31'),
+            from: new Date('2022 09 01'),
+            to: new Date('2022 09 31'),
           },
         ],
       },
       availableDates3: {
         dates: [
-          new Date('2021 09 01'),
-          new Date('2021 07 26'),
-          new Date('2021 09 05'),
+          new Date('2022 09 01'),
+          new Date('2022 07 26'),
+          new Date('2022 09 05'),
         ],
       },
       availableDates4: {
