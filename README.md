@@ -9,7 +9,7 @@ This datepicker utilize **moment** for translations.
 
 | Vue.js version | Package version | Branch                                                                       |
 | :---           |:---------------:| ---:                                                                         | 
-| 2.x            |       1.x       | [1.x](https://github.com/limbara/vue-time-date-range-picker/tree/version-1)  |
+| 2.x            |       1.x       | [version-1](https://github.com/limbara/vue-time-date-range-picker/tree/version-1)  |
 | 3.x            |       2.x       | `master`                                                                     |
 
 - [Demo](#demo)
@@ -206,6 +206,7 @@ Below is events that're available in **DatePicker** Component
 | datepicker-closed     |               | Datepicker is closed                                        |
 | select-date           | Date, Date    | A date is selected in calendar. Output start & end date     |
 | select-disabled-date  | Date          | A disabled date is selected in calendar                     |
+| on-reset              |               | On reset when button reset clicked                          |
 
 Below is events that're available in **Calendar Dialog** Component 
 
@@ -216,6 +217,7 @@ Below is events that're available in **Calendar Dialog** Component
 | on-next-calendar      |               | On calendar page next                                       |
 | select-date           | Date, Date    | A date is selected in calendar. Output start & end date     |
 | select-disabled-date  | Date          | A disabled date is selected in calendar                     |
+| on-reset              |               | On reset when button reset clicked                          |
 
 ## Translations
 
