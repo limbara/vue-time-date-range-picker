@@ -119,6 +119,7 @@ export default {
     'on-next-calendar',
     'select-date',
     'select-disabled-date',
+    'on-reset'
   ],
   computed: {
     dateUtil() {
@@ -147,6 +148,8 @@ export default {
     onReset() {
       this.selectedStartDate = null;
       this.selectedEndDate = null;
+
+      this.$emit('on-reset')
     },
     onClickDateInput() {
       if (this.inline) return;
