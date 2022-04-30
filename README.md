@@ -52,7 +52,7 @@ Usage from CDN
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
-<script src="https://unpkg.com/vue-time-date-range-picker@1.5.1/dist/vdprDatePicker.js"></script>
+<script src="https://unpkg.com/vue-time-date-range-picker@1.6.0/dist/vdprDatePicker.js"></script>
 <script>
 const app = new Vue({
   el: '#app',
