@@ -10,7 +10,7 @@
       },
     </pre>
     <pre>
-      .vdpr-datepicker /deep/ .my_custom_class {
+      .vdpr-datepicker :deep(.my_custom_class) {
         background-color: aqua !important;
       }
     </pre>
@@ -45,7 +45,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.vdpr-datepicker /deep/ .my_custom_class {
+.vdpr-datepicker :deep(.my_custom_class) {
   background-color: aqua !important;
 }
 </style>
