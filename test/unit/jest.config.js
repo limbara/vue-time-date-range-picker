@@ -6,6 +6,10 @@ const path = require('path');
 module.exports = {
   testEnvironment: 'jsdom',
 
+  testEnvironmentOptions: {
+    customExportConditions: ["node", "node-addons"],
+  },
+
   collectCoverageFrom: ['src/**/*.{js,vue}', '!**/node_modules/**'],
 
   coverageDirectory: '<rootDir>/test/unit/coverage',
@@ -20,6 +24,6 @@ module.exports = {
 
   transform: {
     '^.+\\.js$': 'babel-jest',
-    '.*\\.(vue)$': '@vue/vue3-jest',
+    "^.+\\.vue$": "@vue/vue3-jest",
   },
 };
