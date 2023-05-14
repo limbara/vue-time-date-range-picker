@@ -57,7 +57,7 @@
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-vue": "^7.20.0",
-    "html-webpack-plugin": "^4.3.0",
+    "html-webpack-plugin": "^5.5.1",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
     "mini-css-extract-plugin": "^2.7.5",
