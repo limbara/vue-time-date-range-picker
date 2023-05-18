@@ -8,7 +8,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  test-and-coverage:
+    name: Test And Coverage on ${{env.GITHUB_REF_NAME}}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -17,13 +18,15 @@ jobs:
           node-version: 18
       - run: npm ci
       - run: npm test
-
+      - uses: codecov/codecov-action@v3.1.4
+        with:
+          token: ${{secrets.CODECOV_TOKEN}}
+      
   publish:
-    needs: build
+    name: Publish on ${{env.GITHUB_REF_NAME}}
+    if: github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v')
+    needs: test-and-coverage
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
