@@ -1,7 +1,9 @@
 FROM node:18-bullseye
+RUN mkdir app && chown -R node:node /app
 WORKDIR /app
-COPY package.json package-lock.json .
+COPY --chown=node:node package.json package-lock.json ./
+USER node
 RUN npm install
-COPY . .
+COPY --chown=node:node . .
 EXPOSE 9000
 CMD ["npm", "run", "serve"]
