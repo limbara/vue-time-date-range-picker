@@ -54,7 +54,7 @@ You can use CalendarDialog Component if you want to implement your own input ele
 Usage from CDN
 ```html
 <head>
-  <link rel="stylesheet" href="https://unpkg.com/vue-time-date-range-picker@2.1.1/dist/vdprDatePicker.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/vue-time-date-range-picker@2.1.2/dist/vdprDatePicker.min.css">
 </head>`
 <body>
   <div id="app">
@@ -62,7 +62,7 @@ Usage from CDN
   </div>
   <script src="https://unpkg.com/vue"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
-  <script src="https://unpkg.com/vue-time-date-range-picker@2.1.1/dist/vdprDatePicker.js"></script>
+  <script src="https://unpkg.com/vue-time-date-range-picker@2.1.2/dist/vdprDatePicker.js"></script>
   <script>
   const app = Vue.createApp({
       components: {
