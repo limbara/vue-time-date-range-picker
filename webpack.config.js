@@ -1,4 +1,5 @@
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');  
 const { VueLoaderPlugin } = require('vue-loader')
 const TerserPlugin = require('terser-webpack-plugin');
 
@@ -13,7 +14,6 @@ module.exports = {
     library: 'vdprDatePicker',
     libraryTarget: 'umd', 
     filename: '[name].js',
-    path: path.resolve(__dirname, 'dist'),
   },
   optimization: {
     minimize: true,
@@ -51,14 +51,18 @@ module.exports = {
         test: /\.scss$/,
         use: [
           'vue-style-loader',
+          MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
-          'sass-loader'
+          'sass-loader',
         ],
       },
     ],
   },
   plugins: [
     new VueLoaderPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+    }),
   ],
 };
