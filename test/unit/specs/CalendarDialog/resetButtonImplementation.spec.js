@@ -1,9 +1,9 @@
-/* eslint-disable import/no-unresolved */
+
 import { mount } from '@vue/test-utils';
-import CalendarDialog from '@/Components/CalendarDialog.vue';
-import CalendarInputDate from '@/Components/CalendarInputDate.vue';
-import CalendarInputTime from '@/Components/CalendarInputTime.vue';
-import Calendar from '@/Components/Calendar.vue';
+import CalendarDialog from '@/components/CalendarDialog.vue';
+import CalendarInputDate from '@/components/CalendarInputDate.vue';
+import CalendarInputTime from '@/components/CalendarInputTime.vue';
+import Calendar from '@/components/Calendar.vue';
 import 'regenerator-runtime';
 
 describe('Calendar Dialog : Reset Button Implementation', () => {
