@@ -1,3 +1,5 @@
+@use "sass:color";
+
 $bg-calendar-highlighted: #3a86ff;
 $bg-calendar-not-selected: #eee;
 $bg-calendar-disabled: #a6a6a6;
@@ -89,7 +91,7 @@ $color-calendar-header: #333;
 
       &:hover {
         cursor: pointer;
-        background-color: darken($bg-calendar-not-selected, 5%);
+        background-color: color.adjust($bg-calendar-not-selected, $lightness: -5%, $space: hsl);
       }
     }
 
@@ -102,7 +104,7 @@ $color-calendar-header: #333;
       color: $color-calendar-highligted;
 
       &:hover {
-        background-color: darken($bg-calendar-highlighted, 5%);
+        background-color: color.adjust($bg-calendar-highlighted, $lightness: -5%, $space: hsl);
       }
     }
 

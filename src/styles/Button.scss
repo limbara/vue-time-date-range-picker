@@ -1,9 +1,21 @@
+@use "sass:color";
+
 $bg-button-default: white;
 $color-button-default: #333;
 $bg-button-submit: #3a86ff;
 $color-button-submit: white;
 $bg-button-reset: #ef233c;
 $color-button-reset: white;
+
+$button-border-color: color.adjust($bg-button-default,
+    $lightness: -10%,
+    $space: hsl);
+$button-submit-border-color: color.adjust($bg-button-submit,
+    $lightness: -10%,
+    $space: hsl);
+$button-reset-border-color: color.adjust($bg-button-reset,
+    $lightness: -10%,
+    $space: hsl);
 
 .vdpr-datepicker__button {
   cursor: pointer;
@@ -26,30 +38,30 @@ $color-button-reset: white;
   &-default {
     color: $color-button-default;
     background-color: $bg-button-default;
-    border-color: darken($bg-button-default, 10%);
+    border-color: $button-border-color;
 
     &:hover {
-      background-color: darken($bg-button-default, 10%);
+      background-color: $button-border-color;
     }
   }
 
   &-submit {
     color: $color-button-submit;
     background-color: $bg-button-submit;
-    border-color: darken($bg-button-submit, 10%);
+    border-color: $button-submit-border-color;
 
     &:hover {
-      background-color: darken($bg-button-submit, 10%);
+      background-color: $button-submit-border-color;
     }
   }
 
   &-reset {
     color: $color-button-reset;
     background-color: $bg-button-reset;
-    border-color: darken($bg-button-reset, 10%);
+    border-color: $button-reset-border-color;
 
     &:hover {
-      background-color: darken($bg-button-reset, 10%);
+      background-color: $button-reset-border-color;
     }
   }
 }
