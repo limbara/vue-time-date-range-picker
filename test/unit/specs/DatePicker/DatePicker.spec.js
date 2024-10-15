@@ -1,8 +1,8 @@
-/* eslint-disable import/no-unresolved */
+
 import { mount } from '@vue/test-utils';
-import DatePicker from '@/Components/DatePicker.vue';
-import CalendarDialog from '@/Components/CalendarDialog.vue';
-import DateInput from '@/Components/DateInput.vue';
+import DatePicker from '@/components/DatePicker.vue';
+import CalendarDialog from '@/components/CalendarDialog.vue';
+import DateInput from '@/components/DateInput.vue';
 import 'regenerator-runtime';
 import '@testing-library/jest-dom';
 

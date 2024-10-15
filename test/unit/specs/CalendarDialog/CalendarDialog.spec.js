@@ -1,23 +1,22 @@
-/* eslint-disable import/no-unresolved */
-import { shallowMount, mount } from '@vue/test-utils';
-import CalendarDialog from '@/Components/CalendarDialog.vue';
-import Calendar from '@/Components/Calendar.vue';
-import SwitchButton from '@/Components/SwitchButton.vue';
-import CalendarInputDate from '@/Components/CalendarInputDate.vue';
-import CalendarInputTime from '@/Components/CalendarInputTime.vue';
-import 'regenerator-runtime';
-import '@testing-library/jest-dom';
+import { shallowMount, mount } from "@vue/test-utils";
+import CalendarDialog from "@/components/CalendarDialog.vue";
+import Calendar from "@/components/Calendar.vue";
+import SwitchButton from "@/components/SwitchButton.vue";
+import CalendarInputDate from "@/components/CalendarInputDate.vue";
+import CalendarInputTime from "@/components/CalendarInputTime.vue";
+import "regenerator-runtime";
+import "@testing-library/jest-dom";
 
-describe('Calendar Dialog', () => {
-  const datePickerDialogClass = '.vdpr-datepicker__calendar-dialog';
-  const datePickerActionsClass = '.vdpr-datepicker__calendar-actions';
-  const datePickerHelperButtons = '.vdpr-datepicker__calendar-button-helper';
-  const datePickerButtonSubmit = '.vdpr-datepicker__button-submit';
-  const datePickerButtonReset = '.vdpr-datepicker__button-reset';
+describe("Calendar Dialog", () => {
+  const datePickerDialogClass = ".vdpr-datepicker__calendar-dialog";
+  const datePickerActionsClass = ".vdpr-datepicker__calendar-actions";
+  const datePickerHelperButtons = ".vdpr-datepicker__calendar-button-helper";
+  const datePickerButtonSubmit = ".vdpr-datepicker__button-submit";
+  const datePickerButtonReset = ".vdpr-datepicker__button-reset";
 
   let wrapper;
 
-  it('should have correct default data', () => {
+  it("should have correct default data", () => {
     wrapper = shallowMount(CalendarDialog);
 
     expect(wrapper.vm.selectedStartDate).toEqual(null);
@@ -25,27 +24,27 @@ describe('Calendar Dialog', () => {
     expect(wrapper.vm.isAllDay).toEqual(false);
   });
 
-  it('should set correct data if initialized dates', () => {
+  it("should set correct data if initialized dates", () => {
     wrapper = shallowMount(CalendarDialog, {
       props: {
         initialDates: [
-          new Date('2020 08 01 15:00:00'),
-          new Date('2020 08 02 00:00:00'),
+          new Date("2020 08 01 15:00:00"),
+          new Date("2020 08 02 00:00:00"),
         ],
       },
     });
 
     expect(wrapper.vm.selectedStartDate).toEqual(
-      new Date('2020 08 01 15:00:00'),
+      new Date("2020 08 01 15:00:00")
     );
-    expect(wrapper.vm.selectedEndDate).toEqual(new Date('2020 08 02 00:00:00'));
+    expect(wrapper.vm.selectedEndDate).toEqual(new Date("2020 08 02 00:00:00"));
     expect(wrapper.vm.isAllDay).toEqual(false);
 
     wrapper = shallowMount(CalendarDialog, {
       props: {
         initialDates: [
-          new Date('2020 08 01 00:00:00'),
-          new Date('2020 08 02 23:59:59'),
+          new Date("2020 08 01 00:00:00"),
+          new Date("2020 08 02 23:59:59"),
         ],
       },
     });
@@ -53,15 +52,15 @@ describe('Calendar Dialog', () => {
     expect(wrapper.vm.isAllDay).toEqual(true);
   });
 
-  it('should render correct contents', () => {
+  it("should render correct contents", () => {
     wrapper = mount(CalendarDialog, {
       props: {
         initialDates: [
-          new Date('2020 08 01 00:00:00'),
-          new Date('2020 08 02 23:59:59'),
+          new Date("2020 08 01 00:00:00"),
+          new Date("2020 08 02 23:59:59"),
         ],
         dateInput: {
-          format: 'DD/MM/YYYY',
+          format: "DD/MM/YYYY",
         },
       },
     });
@@ -82,18 +81,18 @@ describe('Calendar Dialog', () => {
     expect(inputDates).toHaveLength(2);
     expect(inputTimes).toHaveLength(2);
 
-    const inputDateStart = inputDates.at(0).find('input');
-    const inputDateEnd = inputDates.at(1).find('input');
-    const inputTimeStart = inputTimes.at(0).find('input');
-    const inputTimeEnd = inputTimes.at(1).find('input');
+    const inputDateStart = inputDates.at(0).find("input");
+    const inputDateEnd = inputDates.at(1).find("input");
+    const inputTimeStart = inputTimes.at(0).find("input");
+    const inputTimeEnd = inputTimes.at(1).find("input");
 
-    expect(inputDateStart.element.value).toEqual('01/08/2020');
-    expect(inputDateEnd.element.value).toEqual('02/08/2020');
-    expect(inputTimeStart.element.value).toEqual('00:00');
-    expect(inputTimeEnd.element.value).toEqual('23:59');
+    expect(inputDateStart.element.value).toEqual("01/08/2020");
+    expect(inputDateEnd.element.value).toEqual("02/08/2020");
+    expect(inputTimeStart.element.value).toEqual("00:00");
+    expect(inputTimeEnd.element.value).toEqual("23:59");
   });
 
-  it('should change switch button initial state', () => {
+  it("should change switch button initial state", () => {
     wrapper = mount(CalendarDialog, {
       props: {
         switchButtonInitial: true,
@@ -101,7 +100,7 @@ describe('Calendar Dialog', () => {
     });
 
     let comSwitchButton = wrapper.findComponent(SwitchButton);
-    let inputCheckbox = comSwitchButton.find('input');
+    let inputCheckbox = comSwitchButton.find("input");
 
     expect(inputCheckbox.element).toBeChecked();
 
@@ -112,48 +111,48 @@ describe('Calendar Dialog', () => {
     });
 
     comSwitchButton = wrapper.findComponent(SwitchButton);
-    inputCheckbox = comSwitchButton.find('input');
+    inputCheckbox = comSwitchButton.find("input");
 
     expect(inputCheckbox.element).not.toBeChecked();
   });
 
-  it('should change switch button label', () => {
+  it("should change switch button label", () => {
     wrapper = shallowMount(CalendarDialog, {
       props: {
-        switchButtonLabel: 'Seharian',
+        switchButtonLabel: "Seharian",
       },
     });
 
-    expect(wrapper.find(datePickerActionsClass).html()).toContain('Seharian');
+    expect(wrapper.find(datePickerActionsClass).html()).toContain("Seharian");
   });
 
-  it('should change apply button label', () => {
+  it("should change apply button label", () => {
     wrapper = shallowMount(CalendarDialog, {
       props: {
-        applyButtonLabel: 'Use',
+        applyButtonLabel: "Use",
       },
     });
 
-    expect(wrapper.find(datePickerButtonSubmit).html()).toContain('Use');
+    expect(wrapper.find(datePickerButtonSubmit).html()).toContain("Use");
   });
 
-  it('should change reset button label', () => {
+  it("should change reset button label", () => {
     wrapper = shallowMount(CalendarDialog, {
       props: {
-        resetButtonLabel: 'Restart',
+        resetButtonLabel: "Restart",
       },
     });
 
-    expect(wrapper.find(datePickerButtonReset).html()).toContain('Restart');
+    expect(wrapper.find(datePickerButtonReset).html()).toContain("Restart");
   });
 
-  it('emit on-apply when button apply clicked', async () => {
+  it("emit on-apply when button apply clicked", async () => {
     wrapper = mount(CalendarDialog);
 
     const button = wrapper.find(datePickerButtonSubmit);
 
-    await button.trigger('click');
+    await button.trigger("click");
 
-    expect(wrapper.emitted('on-apply')).toBeTruthy();
+    expect(wrapper.emitted("on-apply")).toBeTruthy();
   });
 });

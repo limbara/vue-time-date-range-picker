@@ -1,7 +1,6 @@
-/* eslint-disable import/no-unresolved */
 import { shallowMount } from '@vue/test-utils';
 import moment from 'moment';
-import Calendar from '@/Components/Calendar.vue';
+import Calendar from '@/components/Calendar.vue';
 import 'regenerator-runtime';
 
 describe('Calendar : Available Dates', () => {
