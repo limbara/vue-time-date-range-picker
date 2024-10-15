@@ -1,3 +1,4 @@
-FROM node:18-bullseye-slim
+FROM node:20.18-bullseye-slim
+RUN apt-get update && \
+  apt-get install gitk -y
 USER node
-EXPOSE 9000

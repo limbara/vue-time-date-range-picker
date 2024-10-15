@@ -1,6 +1,6 @@
-/* eslint-disable import/no-unresolved */
+
 import { shallowMount } from '@vue/test-utils';
-import SwitchButton from '@/Components/SwitchButton.vue';
+import SwitchButton from '@/components/SwitchButton.vue';
 import 'regenerator-runtime';
 
 describe('Switch Button', () => {

@@ -1,7 +1,7 @@
-/* eslint-disable import/no-unresolved */
+
 import { mount } from '@vue/test-utils';
-import CalendarDialog from '@/Components/CalendarDialog.vue';
-import CalendarInputTime from '@/Components/CalendarInputTime.vue';
+import CalendarDialog from '@/components/CalendarDialog.vue';
+import CalendarInputTime from '@/components/CalendarInputTime.vue';
 
 describe('Calendar Dialog : Calendar Input Time Implementation', () => {
   const startDate = new Date('2020 07 01 01:00:00');

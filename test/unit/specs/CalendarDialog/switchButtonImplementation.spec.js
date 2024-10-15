@@ -1,8 +1,8 @@
-/* eslint-disable import/no-unresolved */
+
 import { mount } from '@vue/test-utils';
 import moment from 'moment';
-import CalendarDialog from '@/Components/CalendarDialog.vue';
-import SwitchButton from '@/Components/SwitchButton.vue';
+import CalendarDialog from '@/components/CalendarDialog.vue';
+import SwitchButton from '@/components/SwitchButton.vue';
 
 describe('Calendar Dialog : Switch Button Implementation', () => {
   const startDate = new Date('2020 07 01');

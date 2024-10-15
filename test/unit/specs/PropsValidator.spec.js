@@ -1,4 +1,4 @@
-import PropsValidator from '../../../src/Utils/PropsValidator';
+import PropsValidator from '@utils/PropsValidator';
 
 describe('Props Validator', () => {
   it('isValidInitialDates should return true if no parameter or empty array', () => {

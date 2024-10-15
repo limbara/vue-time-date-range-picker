@@ -1,6 +1,6 @@
-/* eslint-disable import/no-unresolved */
+
 import { shallowMount } from '@vue/test-utils';
-import CalendarInputDate from '@/Components/CalendarInputDate.vue';
+import CalendarInputDate from '@/components/CalendarInputDate.vue';
 import 'regenerator-runtime';
 
 describe('Calendar Input Date', () => {
