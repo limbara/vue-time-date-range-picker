@@ -1,108 +1,58 @@
 <template>
-  <div
-    class="vdpr-datepicker__calendar-dialog"
-    :class="{
-      'vdpr-datepicker__calendar-dialog--inline': this.inline,
-    }"
-  >
+  <div class="vdpr-datepicker__calendar-dialog" :class="{
+    'vdpr-datepicker__calendar-dialog--inline': this.inline,
+  }">
     <div class="vdpr-datepicker__calendar-button-helper" v-if="helpers.length">
-      <button
-        v-for="btn in helpers"
-        :key="'btn' + btn.name"
-        :class="[
-          'vdpr-datepicker__button',
-          'vdpr-datepicker__button--block',
-          'vdpr-datepicker__button-default',
-        ]"
-        @click="
-          () => {
-            onHelperClick(btn.from, btn.to);
-          }
-        "
-      >
+      <button v-for="btn in helpers" :key="'btn' + btn.name" :class="[
+        'vdpr-datepicker__button',
+        'vdpr-datepicker__button--block',
+        'vdpr-datepicker__button-default',
+      ]" @click="() => {
+        onHelperClick(btn.from, btn.to);
+      }
+        ">
         {{ btn.name }}
       </button>
     </div>
-    <calendar
-      :language="language"
-      :selectedStartDate="selectedStartDate"
-      :selectedEndDate="selectedEndDate"
-      :disabledDates="disabledDates"
-      :availableDates="availableDates"
-      :isMondayFirst="isMondayFirst"
-      @select-date="selectDate"
-      @select-disabled-date="selectDisabledDate"
-      @on-prev-calendar="onPrevCalendar"
-      @on-next-calendar="onNextCalendar"
-    />
+    <calendar :language="language" :selectedStartDate="selectedStartDate" :selectedEndDate="selectedEndDate"
+      :disabledDates="disabledDates" :availableDates="availableDates" :isMondayFirst="isMondayFirst"
+      @select-date="selectDate" @select-disabled-date="selectDisabledDate" @on-prev-calendar="onPrevCalendar"
+      @on-next-calendar="onNextCalendar" />
     <div class="vdpr-datepicker__calendar-actions">
       <div class="vdpr-datepicker__calendar-input-wrapper">
         <span>{{ switchButtonLabel }}</span>
-        <switch-button :checked="isAllDay" @on-check-change="onCheckChange" />
+        <switch-button :checked="isAllDay" @change="onCheckChange" />
       </div>
       <div class="vdpr-datepicker__calendar-input-wrapper">
         <span>{{ dateInput.labelStarts }}</span>
-        <calendar-input-date
-          :format="dateInput.format"
-          :inputClass="dateInput.inputClass"
-          :timestamp="unixSelectedStartDate"
-          :language="language"
-          @on-change="onStartInputDateChange"
-        />
+        <calendar-input-date :format="dateInput.format" :inputClass="dateInput.inputClass"
+          :timestamp="unixSelectedStartDate" :language="language" @on-change="onStartInputDateChange" />
       </div>
-      <div
-        class="vdpr-datepicker__calendar-input-wrapper vdpr-datepicker__calendar-input-wrapper--end"
-      >
-        <calendar-input-time
-          v-show="isVisibleTimeInput"
-          :step="timeInput.step"
-          :readonly="timeInput.readonly"
-          :inputClass="timeInput.inputClass"
-          :timestamp="unixSelectedStartDate"
-          @on-change="onTimeStartInputChange"
-        />
+      <div class="vdpr-datepicker__calendar-input-wrapper vdpr-datepicker__calendar-input-wrapper--end">
+        <calendar-input-time v-show="isVisibleTimeInput" :step="timeInput.step" :readonly="timeInput.readonly"
+          :inputClass="timeInput.inputClass" :timestamp="unixSelectedStartDate" @on-change="onTimeStartInputChange" />
       </div>
       <div class="vdpr-datepicker__calendar-input-wrapper">
         <span>{{ dateInput.labelEnds }}</span>
-        <calendar-input-date
-          :format="dateInput.format"
-          :inputClass="dateInput.inputClass"
-          :timestamp="unixSelectedEndDate"
-          :language="language"
-          @on-change="onEndDateInputDateChange"
-        />
+        <calendar-input-date :format="dateInput.format" :inputClass="dateInput.inputClass"
+          :timestamp="unixSelectedEndDate" :language="language" @on-change="onEndDateInputDateChange" />
       </div>
-      <div
-        class="vdpr-datepicker__calendar-input-wrapper vdpr-datepicker__calendar-input-wrapper--end"
-      >
-        <calendar-input-time
-          v-show="isVisibleTimeInput"
-          :step="timeInput.step"
-          :readonly="timeInput.readonly"
-          :inputClass="timeInput.inputClass"
-          :timestamp="unixSelectedEndDate"
-          @on-change="onTimeEndInputChange"
-        />
+      <div class="vdpr-datepicker__calendar-input-wrapper vdpr-datepicker__calendar-input-wrapper--end">
+        <calendar-input-time v-show="isVisibleTimeInput" :step="timeInput.step" :readonly="timeInput.readonly"
+          :inputClass="timeInput.inputClass" :timestamp="unixSelectedEndDate" @on-change="onTimeEndInputChange" />
       </div>
-      <button
-        v-show="isVisibleButtonApply"
-        :class="[
-          'vdpr-datepicker__button',
-          'vdpr-datepicker__button--block',
-          'vdpr-datepicker__button-submit',
-        ]"
-        @click="onClickButtonApply"
-      >
+      <button v-show="isVisibleButtonApply" :class="[
+        'vdpr-datepicker__button',
+        'vdpr-datepicker__button--block',
+        'vdpr-datepicker__button-submit',
+      ]" @click="onClickButtonApply">
         {{ applyButtonLabel }}
       </button>
-      <button
-        :class="[
-          'vdpr-datepicker__button',
-          'vdpr-datepicker__button--block',
-          'vdpr-datepicker__button-reset',
-        ]"
-        @click="onClickButtonReset"
-      >
+      <button :class="[
+        'vdpr-datepicker__button',
+        'vdpr-datepicker__button--block',
+        'vdpr-datepicker__button-reset',
+      ]" @click="onClickButtonReset">
         {{ resetButtonLabel }}
       </button>
     </div>
@@ -113,8 +63,8 @@
 import PropsValidator from '@utils/PropsValidator';
 import DateUtil from '@utils/DateUtil';
 import Calendar from './Calendar.vue';
-import SwitchButton from './SwitchButton.vue';
-import CalendarInputDate from './CalendarInputDate.vue';
+import SwitchButton from './SwitchButton/SwitchButton.vue';
+import CalendarInputDate from './CalendarInputDate/CalendarInputDate.vue';
 import CalendarInputTime from './CalendarInputTime.vue';
 
 export default {
@@ -250,7 +200,10 @@ export default {
       if (!this.selectedStartDate) {
         return 0;
       }
-      return this.dateUtil.toUnix(this.selectedStartDate);
+
+      const timestamp = this.dateUtil.toUnix(this.selectedStartDate)
+      console.log(timestamp)
+      return timestamp;
     },
     unixSelectedEndDate() {
       if (!this.selectedEndDate) {
@@ -266,7 +219,9 @@ export default {
     },
   },
   methods: {
-    onCheckChange(check) {
+    onCheckChange(event) {
+      console.log(event)
+      const check = event.target.checked
       this.isAllDay = check;
       if (!this.selectedStartDate || !this.selectedEndDate) return;
 
@@ -318,6 +273,7 @@ export default {
       this.$emit('on-reset');
     },
     selectDate(date) {
+      console.log(date)
       let startDate = this.selectedStartDate;
       let endDate = this.selectedEndDate;
       if (

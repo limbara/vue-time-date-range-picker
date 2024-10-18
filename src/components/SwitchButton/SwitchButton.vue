@@ -1,6 +1,6 @@
 <template>
   <label class="vdpr-datepicker__switch">
-    <input type="checkbox" :checked="checked" @click="onClick" />
+    <input type="checkbox" :checked="checked" @change="(e) => emit('change', e)" />
     <span class="vdpr-datepicker__switch-slider"></span>
   </label>
 </template>
@@ -12,7 +12,9 @@ export default {
 </script>
 
 <script lang="ts" setup>
+import { switchButtonEmits, switchButtonProps } from './types';
 
+defineProps(switchButtonProps)
 
-const props = defineProps
+const emit = defineEmits(switchButtonEmits)
 </script>

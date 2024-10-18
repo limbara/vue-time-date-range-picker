@@ -1,16 +1,14 @@
-import { EventProp } from '@utils/helpers'
-import { ComponentObjectPropsOptions } from 'vue'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { ExtractPropTypes } from "vue";
 
-export type SwitchButtonPropsType = ComponentObjectPropsOptions<{
-  checked: Boolean,
-  onClick: EventProp<[Event]>
-}>
-
-export const SwitchButtonProps: SwitchButtonPropsType = {
+export const switchButtonProps = definePropOptions({
   checked: {
-
+    type: Boolean,
   },
-  onClick: {
-    
-  }
-}
+});
+
+export type SwitchButtonProps = ExtractPropTypes<typeof switchButtonProps>;
+
+export const switchButtonEmits = defineEmitOptions({
+  change: (_e: Event) => true,
+});
