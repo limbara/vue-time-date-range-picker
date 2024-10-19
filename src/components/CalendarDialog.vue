@@ -47,7 +47,7 @@
           :inputClass="dateInput.inputClass"
           :timestamp="unixSelectedStartDate"
           :language="language"
-          @on-change="onStartInputDateChange"
+          @change="onStartInputDateChange"
         />
       </div>
       <div
@@ -69,7 +69,7 @@
           :inputClass="dateInput.inputClass"
           :timestamp="unixSelectedEndDate"
           :language="language"
-          @on-change="onEndDateInputDateChange"
+          @change="onEndDateInputDateChange"
         />
       </div>
       <div
@@ -114,7 +114,7 @@ import PropsValidator from '@utils/PropsValidator';
 import DateUtil from '@utils/DateUtil';
 import Calendar from './Calendar.vue';
 import SwitchButton from './SwitchButton/SwitchButton.vue';
-import CalendarInputDate from './CalendarInputDate.vue';
+import CalendarInputDate from './CalendarInputDate/CalendarInputDate.vue';
 import CalendarInputTime from './CalendarInputTime.vue';
 
 export default {
