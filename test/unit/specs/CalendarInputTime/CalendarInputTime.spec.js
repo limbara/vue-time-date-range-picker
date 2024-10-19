@@ -1,6 +1,6 @@
 
 import { shallowMount } from '@vue/test-utils';
-import CalendarInputTime from '@/components/CalendarInputTime.vue';
+import CalendarInputTime from '@/components/CalendarInputTime/CalendarInputTime.vue';
 import 'regenerator-runtime';
 
 describe('Calendar Input Time', () => {
@@ -49,29 +49,29 @@ describe('Calendar Input Time', () => {
     expect(wrapper.vm.formattedValue).toEqual('');
   });
 
-  it('emit on-change button up', async () => {
+  it('emit change button up', async () => {
     await wrapper.find(upButtonClass).trigger('click');
 
-    expect(wrapper.emitted('on-change')[0]).toEqual([new Date('2020 08 10 16:00:00')]);
+    expect(wrapper.emitted('change')[0]).toEqual([new Date('2020 08 10 16:00:00')]);
   });
 
-  it('emit on-change button-down', async () => {
+  it('emit change button-down', async () => {
     await wrapper.find(downButtonClass).trigger('click');
 
-    expect(wrapper.emitted('on-change')[0]).toEqual([new Date('2020 08 10 14:00:00')]);
+    expect(wrapper.emitted('change')[0]).toEqual([new Date('2020 08 10 14:00:00')]);
   });
 
-  it('emit on-change when input change', async () => {
+  it('emit change when input change', async () => {
     const input = wrapper.find(inputElemClass);
 
     input.element.value = '20:00';
 
     await input.trigger('change');
 
-    expect(wrapper.emitted('on-change')[0]).toEqual([new Date('2020 08 10 20:00:00')]);
+    expect(wrapper.emitted('change')[0]).toEqual([new Date('2020 08 10 20:00:00')]);
   });
 
-  it("doesn't emit on-change if input invalid", async () => {
+  it("doesn't emit change if input invalid", async () => {
     const input = wrapper.find(inputElemClass);
 
     input.element.value = 'ww:00';

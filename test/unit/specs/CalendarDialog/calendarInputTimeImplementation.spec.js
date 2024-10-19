@@ -1,7 +1,7 @@
 
 import { mount } from '@vue/test-utils';
 import CalendarDialog from '@/components/CalendarDialog.vue';
-import CalendarInputTime from '@/components/CalendarInputTime.vue';
+import CalendarInputTime from '@/components/CalendarInputTime/CalendarInputTime.vue';
 
 describe('Calendar Dialog : Calendar Input Time Implementation', () => {
   const startDate = new Date('2020 07 01 01:00:00');
@@ -26,7 +26,7 @@ describe('Calendar Dialog : Calendar Input Time Implementation', () => {
   });
 
   it('set date when input time start submitted', () => {
-    const e = 'on-change';
+    const e = 'change';
 
     inputTimeStart.vm.$emit(e, new Date('2020 07 01 02:00:00'));
 
@@ -40,7 +40,7 @@ describe('Calendar Dialog : Calendar Input Time Implementation', () => {
   });
 
   it('set date when input time end submitted', () => {
-    const e = 'on-change';
+    const e = 'change';
 
     inputTimeTo.vm.$emit(e, new Date('2020 07 01 20:00:00'));
 
@@ -54,7 +54,7 @@ describe('Calendar Dialog : Calendar Input Time Implementation', () => {
   });
 
   it('set date when input time start change', () => {
-    const e = 'on-change';
+    const e = 'change';
 
     inputTimeStart.vm.$emit(e, new Date('2020 07 01 00:00:00'));
 
@@ -68,7 +68,7 @@ describe('Calendar Dialog : Calendar Input Time Implementation', () => {
   });
 
   it('set date when input time end change', () => {
-    const e = 'on-change';
+    const e = 'change';
 
     inputTimeTo.vm.$emit(e, new Date('2020 07 01 16:00:00'));
 
