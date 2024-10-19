@@ -2,7 +2,7 @@ import { shallowMount, mount } from "@vue/test-utils";
 import CalendarDialog from "@/components/CalendarDialog.vue";
 import Calendar from "@/components/Calendar.vue";
 import SwitchButton from "@/components/SwitchButton/SwitchButton.vue";
-import CalendarInputDate from "@/components/CalendarInputDate.vue";
+import CalendarInputDate from "@/components/CalendarInputDate/CalendarInputDate.vue";
 import CalendarInputTime from "@/components/CalendarInputTime.vue";
 import "regenerator-runtime";
 import "@testing-library/jest-dom";
