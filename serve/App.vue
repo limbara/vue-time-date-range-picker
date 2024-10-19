@@ -18,7 +18,7 @@ import ExampleIsMondayFirst from './ExampleIsMondayFirst.vue';
 <template>
   <div>
     <Datepicker />
-    <br><br>
+    <!-- <br><br>
     <example-initial-dates />
     <br />
     <example-language />
@@ -41,6 +41,6 @@ import ExampleIsMondayFirst from './ExampleIsMondayFirst.vue';
     <br />
     <example-is-monday-first />
     <br />
-    <example-inline />
+    <example-inline /> -->
   </div>
 </template>

@@ -59,7 +59,7 @@
           :readonly="timeInput.readonly"
           :inputClass="timeInput.inputClass"
           :timestamp="unixSelectedStartDate"
-          @on-change="onTimeStartInputChange"
+          @change="onTimeStartInputChange"
         />
       </div>
       <div class="vdpr-datepicker__calendar-input-wrapper">
@@ -81,7 +81,7 @@
           :readonly="timeInput.readonly"
           :inputClass="timeInput.inputClass"
           :timestamp="unixSelectedEndDate"
-          @on-change="onTimeEndInputChange"
+          @change="onTimeEndInputChange"
         />
       </div>
       <button
@@ -115,7 +115,7 @@ import DateUtil from '@utils/DateUtil';
 import Calendar from './Calendar.vue';
 import SwitchButton from './SwitchButton/SwitchButton.vue';
 import CalendarInputDate from './CalendarInputDate/CalendarInputDate.vue';
-import CalendarInputTime from './CalendarInputTime.vue';
+import CalendarInputTime from './CalendarInputTime/CalendarInputTime.vue';
 
 export default {
   components: {
