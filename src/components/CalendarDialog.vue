@@ -38,7 +38,7 @@
     <div class="vdpr-datepicker__calendar-actions">
       <div class="vdpr-datepicker__calendar-input-wrapper">
         <span>{{ switchButtonLabel }}</span>
-        <switch-button :checked="isAllDay" @on-check-change="onCheckChange" />
+        <switch-button :checked="isAllDay" @change="onCheckChange" />
       </div>
       <div class="vdpr-datepicker__calendar-input-wrapper">
         <span>{{ dateInput.labelStarts }}</span>
@@ -113,7 +113,7 @@
 import PropsValidator from '@utils/PropsValidator';
 import DateUtil from '@utils/DateUtil';
 import Calendar from './Calendar.vue';
-import SwitchButton from './SwitchButton.vue';
+import SwitchButton from './SwitchButton/SwitchButton.vue';
 import CalendarInputDate from './CalendarInputDate.vue';
 import CalendarInputTime from './CalendarInputTime.vue';
 
@@ -266,7 +266,9 @@ export default {
     },
   },
   methods: {
-    onCheckChange(check) {
+    onCheckChange(e) {
+      const check = e.target.checked
+
       this.isAllDay = check;
       if (!this.selectedStartDate || !this.selectedEndDate) return;
 
