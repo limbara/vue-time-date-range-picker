@@ -112,7 +112,7 @@
 <script>
 import PropsValidator from '@utils/PropsValidator';
 import DateUtil from '@utils/DateUtil';
-import Calendar from './Calendar.vue';
+import Calendar from './Calendar/Calendar.vue';
 import SwitchButton from './SwitchButton/SwitchButton.vue';
 import CalendarInputDate from './CalendarInputDate/CalendarInputDate.vue';
 import CalendarInputTime from './CalendarInputTime/CalendarInputTime.vue';
