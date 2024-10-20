@@ -45,7 +45,7 @@
 import PropsValidator from '@utils/PropsValidator';
 import DateUtil from '@utils/DateUtil';
 import DateInput from './DateInput.vue';
-import CalendarDialog from './CalendarDialog.vue';
+import CalendarDialog from './CalendarDialog/CalendarDialog.vue';
 
 export default {
   components: {
