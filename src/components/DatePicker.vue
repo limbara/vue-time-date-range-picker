@@ -13,7 +13,7 @@
       :id="dateInput.id"
       :placeholder="dateInput.placeholder"
       :required="dateInput.required"
-      @on-click="onClickDateInput"
+      @click="onClickDateInput"
     />
     <calendar-dialog
       v-show="showingCalendarDialog"
@@ -44,7 +44,7 @@
 <script>
 import PropsValidator from '@utils/PropsValidator';
 import DateUtil from '@utils/DateUtil';
-import DateInput from './DateInput.vue';
+import DateInput from './DateInput/DateInput.vue';
 import CalendarDialog from './CalendarDialog/CalendarDialog.vue';
 
 export default {
