@@ -1,6 +1,6 @@
 import { mount } from "@vue/test-utils";
 import moment from "moment";
-import CalendarDialog from "@/components/CalendarDialog.vue";
+import CalendarDialog from "@/components/CalendarDialog/CalendarDialog.vue";
 import SwitchButton from "@/components/SwitchButton/SwitchButton.vue";
 
 describe("Calendar Dialog : Switch Button Implementation", () => {
@@ -10,12 +10,10 @@ describe("Calendar Dialog : Switch Button Implementation", () => {
 
   it("change date to start of day & end of day if check true", () => {
     wrapper = mount(CalendarDialog, {
-      data() {
-        return {
-          selectedStartDate: startDate,
-          selectedEndDate: endDate,
-          isAllDay: false,
-        };
+      attachTo: document.body,
+      props: {
+        initialDates: [startDate, endDate],
+        switchButtonInitial: false,
       },
     });
 
@@ -33,12 +31,10 @@ describe("Calendar Dialog : Switch Button Implementation", () => {
 
   it("change date to start of day & start of day if check false", () => {
     wrapper = mount(CalendarDialog, {
-      data() {
-        return {
-          selectedStartDate: startDate,
-          selectedEndDate: endDate,
-          isAllDay: true,
-        };
+      attachTo: document.body,
+      props: {
+        initialDates: [startDate, endDate],
+        isAllDay: true,
       },
     });
 

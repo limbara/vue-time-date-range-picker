@@ -1,7 +1,7 @@
 
 import { mount } from '@vue/test-utils';
 import DatePicker from '@/components/DatePicker.vue';
-import CalendarDialog from '@/components/CalendarDialog.vue';
+import CalendarDialog from '@/components/CalendarDialog/CalendarDialog.vue';
 import DateInput from '@/components/DateInput.vue';
 import 'regenerator-runtime';
 import '@testing-library/jest-dom';

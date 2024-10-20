@@ -1,6 +1,6 @@
 import { mount } from "@vue/test-utils";
 import moment from "moment";
-import CalendarDialog from "@/components/CalendarDialog.vue";
+import CalendarDialog from "@/components/CalendarDialog/CalendarDialog.vue";
 import Calendar from "@/components/Calendar/Calendar.vue";
 
 describe("Calendar Dialog : Calendar Implementation", () => {
@@ -30,13 +30,10 @@ describe("Calendar Dialog : Calendar Implementation", () => {
 
   it("emit select-date event & apply correct date when allDays is true", () => {
     wrapper = mount(CalendarDialog, {
-      data() {
-        return {
-          selectedStartDate: null,
-          selectedEndDate: null,
-          isAllDay: true,
-        };
-      },
+      attachTo: document.body,
+      props: {
+        switchButtonInitial: true,
+      }
     });
 
     calendar = wrapper.findComponent(Calendar);

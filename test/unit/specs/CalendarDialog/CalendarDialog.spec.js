@@ -1,5 +1,5 @@
 import { shallowMount, mount } from "@vue/test-utils";
-import CalendarDialog from "@/components/CalendarDialog.vue";
+import CalendarDialog from "@/components/CalendarDialog/CalendarDialog.vue";
 import Calendar from "@/components/Calendar/Calendar.vue";
 import SwitchButton from "@/components/SwitchButton/SwitchButton.vue";
 import CalendarInputDate from "@/components/CalendarInputDate/CalendarInputDate.vue";
@@ -94,6 +94,7 @@ describe("Calendar Dialog", () => {
 
   it("should change switch button initial state", () => {
     wrapper = mount(CalendarDialog, {
+      attachTo: document.body,
       props: {
         switchButtonInitial: true,
       },

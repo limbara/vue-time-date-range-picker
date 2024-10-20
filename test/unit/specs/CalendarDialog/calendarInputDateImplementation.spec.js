@@ -1,6 +1,6 @@
 
 import { mount } from '@vue/test-utils';
-import CalendarDialog from '@/components/CalendarDialog.vue';
+import CalendarDialog from '@/components/CalendarDialog/CalendarDialog.vue';
 import CalendarInputDate from '@/components/CalendarInputDate/CalendarInputDate.vue';
 
 describe('Calendar Dialog : Calendar Input Date Implementation', () => {
@@ -11,12 +11,9 @@ describe('Calendar Dialog : Calendar Input Date Implementation', () => {
 
   beforeEach(() => {
     wrapper = mount(CalendarDialog, {
-      data() {
-        return {
-          selectedStartDate: startDate,
-          selectedEndDate: endDate,
-        };
-      },
+      props: {
+        initialDates: [startDate, endDate],
+      }
     });
     const inputDates = wrapper.findAllComponents(CalendarInputDate);
 
