@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
 import moment from "moment";
 import CalendarDialog from "@/components/CalendarDialog.vue";
-import Calendar from "@/components/Calendar.vue";
+import Calendar from "@/components/Calendar/Calendar.vue";
 
 describe("Calendar Dialog : Calendar Implementation", () => {
   let wrapper;
