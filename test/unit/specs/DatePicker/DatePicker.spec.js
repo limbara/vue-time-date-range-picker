@@ -1,6 +1,6 @@
 
 import { mount } from '@vue/test-utils';
-import DatePicker from '@/components/DatePicker.vue';
+import DatePicker from '@/components/DatePicker/DatePicker.vue';
 import CalendarDialog from '@/components/CalendarDialog/CalendarDialog.vue';
 import DateInput from '@/components/DateInput/DateInput.vue';
 import 'regenerator-runtime';
