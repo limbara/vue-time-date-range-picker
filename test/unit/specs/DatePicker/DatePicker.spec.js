@@ -2,7 +2,7 @@
 import { mount } from '@vue/test-utils';
 import DatePicker from '@/components/DatePicker.vue';
 import CalendarDialog from '@/components/CalendarDialog/CalendarDialog.vue';
-import DateInput from '@/components/DateInput.vue';
+import DateInput from '@/components/DateInput/DateInput.vue';
 import 'regenerator-runtime';
 import '@testing-library/jest-dom';
 
@@ -53,12 +53,12 @@ describe('Date Picker', () => {
   });
 
   it('toggle calendar dialog', async () => {
-    dateInput.vm.$emit('on-click');
+    dateInput.vm.$emit('click');
     await wrapper.vm.$nextTick();
 
     expect(calendarDialog.isVisible()).toBe(true);
 
-    dateInput.vm.$emit('on-click');
+    dateInput.vm.$emit('click');
     await wrapper.vm.$nextTick();
 
     expect(calendarDialog.isVisible()).toBe(false);
@@ -73,10 +73,10 @@ describe('Date Picker', () => {
   });
 
   it('emit datepicker-opened event', () => {
-    dateInput.vm.$emit('on-click');
+    dateInput.vm.$emit('click');
     expect(wrapper.emitted('datepicker-opened')).toBeTruthy();
 
-    dateInput.vm.$emit('on-click');
+    dateInput.vm.$emit('click');
     expect(wrapper.emitted('datepicker-closed')).toBeTruthy();
   });
 
