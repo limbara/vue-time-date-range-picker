@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { calendarProps } from "@/Calendar/types";
-import { CalendarInputDateProps } from "@/CalendarInputDate/types";
-import { CalendarInputTimeProps } from "@/CalendarInputTime/types";
-import { FromToRange } from "@/commonTypes";
+import { CalendarInputDateProps } from "@components/CalendarInputDate/types";
+import { CalendarInputTimeProps } from "@components/CalendarInputTime/types";
+import { FromToRange } from "@components/commonTypes";
+import { calendarProps } from "@components/Calendar/types";
 import PropsValidator from "@utils/PropsValidator";
 import { ExtractPropTypes, PropType } from "vue";
 

@@ -1,5 +1,5 @@
-import DatePicker from "@/DatePicker/DatePicker.vue";
-import CalendarDialog from "@/CalendarDialog/CalendarDialog.vue";
+import DatePicker from "@components/DatePicker/DatePicker.vue";
+import CalendarDialog from "@components/CalendarDialog/CalendarDialog.vue";
 
 Object.assign(DatePicker, {
   CalendarDialog,

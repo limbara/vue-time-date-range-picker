@@ -1,4 +1,4 @@
 import "./globalSideEffect.ts";
 
-export { default } from "@/DatePicker/DatePicker.vue";
-export { default as CalendarDialog } from "@/CalendarDialog/CalendarDialog.vue";
+export { default } from "@components/DatePicker/DatePicker.vue";
+export { default as CalendarDialog } from "@components/CalendarDialog/CalendarDialog.vue";

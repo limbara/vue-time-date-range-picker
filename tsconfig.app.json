@@ -8,7 +8,7 @@
     "rootDir": ".",
     "outDir": "dist",
     "paths": {
-      "@/*": ["./src/components/*"],
+      "@components/*": ["./src/components/*"],
       "@utils/*": ["./src/utils/*"]
     },
 
@@ -27,5 +27,12 @@
     "noFallthroughCasesInSwitch": true,
     "typeRoots": ["./node_modules/@types", "./**/*.d.ts"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "serve/**/*.ts",
+    "serve/**/*.tsx",
+    "serve/**/*.vue"
+  ]
 }

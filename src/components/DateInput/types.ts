@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import PropsValidator from "@utils/PropsValidator";
-import { ClassValue, FromToRange } from "@/commonTypes";
+import { ClassValue, FromToRange } from "@components/commonTypes";
 import { ExtractPropTypes, PropType } from "vue";
 
 type SameDateFormatConfig = Partial<FromToRange<string>>;

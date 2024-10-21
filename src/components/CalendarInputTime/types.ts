@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ClassValue } from "@/commonTypes";
+import { ClassValue } from "@components/commonTypes";
 import { ExtractPropTypes, PropType } from "vue";
 
 export const calendarInputTimeProps = {

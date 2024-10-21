@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { calendarDialogProps } from "@/CalendarDialog/types";
-import { DateInputProps, dateInputProps } from "@/DateInput/types";
+import { calendarDialogProps } from "@components/CalendarDialog/types";
+import { DateInputProps, dateInputProps } from "@components/DateInput/types";
 import { ExtractPropTypes, PropType } from "vue";
 
 type DatePickerDateInputProps = Partial<

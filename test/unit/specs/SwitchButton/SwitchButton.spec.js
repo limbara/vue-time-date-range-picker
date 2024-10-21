@@ -1,5 +1,5 @@
 import { shallowMount } from "@vue/test-utils";
-import SwitchButton from "@/components/SwitchButton/SwitchButton.vue";
+import SwitchButton from "@components/SwitchButton/SwitchButton.vue";
 import "regenerator-runtime";
 
 describe("Switch Button", () => {
