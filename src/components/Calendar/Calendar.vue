@@ -79,7 +79,7 @@ const isDisabledDate = computed(() => (date: Date) => {
       dates, from, to, ranges, custom,
     } = props.disabledDates;
 
-    if (typeof dates !== 'undefined' && Array.isArray(dates)) {
+    if (Array.isArray(dates)) {
       dates.forEach((d) => {
         if (dateUtil.value.isSameDate(d, date)) {
           disabled = true;
@@ -88,7 +88,7 @@ const isDisabledDate = computed(() => (date: Date) => {
       if (disabled) return true;
     }
 
-    if (ranges !== 'undefined' && Array.isArray(ranges)) {
+    if (Array.isArray(ranges)) {
       ranges.forEach((range) => {
         if (
           dateUtil.value.isValidDate(range.from)
@@ -137,7 +137,7 @@ const isDisabledDate = computed(() => (date: Date) => {
       dates, from, to, ranges, custom,
     } = props.availableDates;
 
-    if (typeof dates !== 'undefined' && Array.isArray(dates)) {
+    if (Array.isArray(dates)) {
       dates.forEach((d) => {
         if (dateUtil.value.isSameDate(d, date)) {
           disabled = false;
@@ -146,7 +146,7 @@ const isDisabledDate = computed(() => (date: Date) => {
       if (disabled) return true;
     }
 
-    if (ranges !== 'undefined' && Array.isArray(ranges)) {
+    if (Array.isArray(ranges)) {
       ranges.forEach((range) => {
         if (
           dateUtil.value.isValidDate(range.from)
