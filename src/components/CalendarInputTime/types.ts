@@ -1,21 +1,26 @@
-import { ExtractPropTypes } from "vue";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { ClassValue } from "@/commonTypes";
+import { ExtractPropTypes, PropType } from "vue";
 
-export const calendarInputTimeProps = definePropOptions({
-  inputClass: [String, Object, Array],
+export const calendarInputTimeProps = {
+  inputClass: [String, Object, Array] as PropType<ClassValue>,
   readonly: {
-    type: Boolean,
+    type: Boolean as PropType<boolean>,
     default: false,
   },
   timestamp: {
-    type: Number,
+    type: Number as PropType<number>,
     default: 0,
   },
-  language: String,
+  language: {
+    type: String as PropType<string>,
+    default: "en",
+  },
   step: {
-    type: Number,
+    type: Number as PropType<number>,
     default: 60, // in minutes
   },
-});
+};
 
 export type CalendarInputTimeProps = ExtractPropTypes<
   typeof calendarInputTimeProps

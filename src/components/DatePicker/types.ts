@@ -1,55 +1,37 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import PropsValidator from "@utils/PropsValidator";
-import { ExtractPropTypes } from "vue";
+import { calendarDialogProps } from "@/CalendarDialog/types";
+import { DateInputProps, dateInputProps } from "@/DateInput/types";
+import { ExtractPropTypes, PropType } from "vue";
 
-export const datePickerProps = definePropOptions({
-  initialDates: {
-    type: Array,
-    validator: PropsValidator.isValidInitialDate,
-    default() {
-      return [];
-    },
-  },
-  inline: {
-    type: Boolean,
-    default: false,
-  },
-  language: {
-    type: String,
-    default: "en",
-  },
-  format: {
-    type: String,
-    default: "DD/MM/YYYY HH:mm",
-  },
-  sameDateFormat: {
-    type: Object,
-    validator: PropsValidator.isValidSameDateFormat,
-    default() {
-      return {
-        from: "DD/MM/YYYY, HH:mm",
-        to: "HH:mm",
-      };
-    },
-  },
+type DatePickerDateInputProps = Partial<
+  Pick<
+    DateInputProps,
+    "inputClass" | "refName" | "name" | "placeholder" | "id" | "required"
+  >
+>;
+
+export const datePickerProps = {
+  initialDates: calendarDialogProps.initialDates,
+  inline: calendarDialogProps.inline,
+  language: calendarDialogProps.language,
+  format: dateInputProps.format,
+  sameDateFormat: dateInputProps.sameDateFormat,
   dateInput: {
-    type: Object,
-    default() {
-      return {};
-    },
+    type: Object as PropType<DatePickerDateInputProps>,
+    default: () => ({} as DatePickerDateInputProps),
   },
-  disabledDates: Object,
-  availableDates: Object,
-  showHelperButtons: Boolean,
-  helperButtons: Array,
-  calendarDateInput: Object,
-  calendarTimeInput: Object,
-  switchButtonLabel: String,
-  switchButtonInitial: Boolean,
-  applyButtonLabel: String,
-  resetButtonLabel: String,
-  isMondayFirst: Boolean,
-});
+  disabledDates: calendarDialogProps.disabledDates,
+  availableDates: calendarDialogProps.availableDates,
+  showHelperButtons: calendarDialogProps.showHelperButtons,
+  helperButtons: calendarDialogProps.helperButtons,
+  calendarDateInput: calendarDialogProps.dateInput,
+  calendarTimeInput: calendarDialogProps.timeInput,
+  switchButtonLabel: calendarDialogProps.switchButtonLabel,
+  switchButtonInitial: calendarDialogProps.switchButtonInitial,
+  applyButtonLabel: calendarDialogProps.applyButtonLabel,
+  resetButtonLabel: calendarDialogProps.resetButtonLabel,
+  isMondayFirst: calendarDialogProps.isMondayFirst,
+};
 
 export type DatePickerProps = ExtractPropTypes<typeof datePickerProps>;
 

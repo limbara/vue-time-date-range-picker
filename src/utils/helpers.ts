@@ -1,4 +1,3 @@
- 
 import { PropType } from "vue";
 
 export type InferRecord<T extends object> = {

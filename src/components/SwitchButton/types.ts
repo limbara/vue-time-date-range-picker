@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { ExtractPropTypes } from "vue";
 
-export const switchButtonProps = definePropOptions({
+export const switchButtonProps = {
   checked: {
     type: Boolean,
   },
-});
+};
 
 export type SwitchButtonProps = ExtractPropTypes<typeof switchButtonProps>;
 

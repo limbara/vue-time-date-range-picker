@@ -1,91 +1,87 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { calendarProps } from "@/Calendar/types";
+import { CalendarInputDateProps } from "@/CalendarInputDate/types";
+import { CalendarInputTimeProps } from "@/CalendarInputTime/types";
+import { FromToRange } from "@/commonTypes";
 import PropsValidator from "@utils/PropsValidator";
-import { ExtractPropTypes } from "vue";
+import { ExtractPropTypes, PropType } from "vue";
 
-export const calendarDialogProps = definePropOptions({
+type HelperButtonShape = Readonly<
+  {
+    name: string;
+  } & FromToRange<Date>
+>;
+
+type TimeInputProps = Partial<
+  Pick<CalendarInputTimeProps, "inputClass" | "readonly" | "step">
+>;
+
+type DateInputProps = Partial<
+  Pick<CalendarInputDateProps, "format" | "inputClass"> & {
+    labelStarts: string;
+    labelEnds: string;
+  }
+>;
+
+export const calendarDialogProps = {
+  language: calendarProps.language,
+  disabledDates: calendarProps.disabledDates,
+  availableDates: calendarProps.availableDates,
+  isMondayFirst: calendarProps.isMondayFirst,
   inline: {
-    type: Boolean,
+    type: Boolean as PropType<boolean>,
     default: false,
   },
   initialDates: {
-    type: Array,
+    type: Array as unknown as PropType<[Date, Date]>,
     validator: PropsValidator.isValidInitialDate,
-    default() {
-      return [];
-    },
-  },
-  language: {
-    type: String,
-    default: "en",
-  },
-  disabledDates: {
-    type: Object,
-    validator: PropsValidator.isValidDateRestriction,
-    default() {
-      return {};
-    },
-  },
-  availableDates: {
-    type: Object,
-    validator: PropsValidator.isValidDateRestriction,
-    default() {
-      return {};
-    },
+    default: () => [] as unknown as [Date, Date],
   },
   showHelperButtons: {
-    type: Boolean,
+    type: Boolean as PropType<boolean>,
     default: true,
   },
   helperButtons: {
-    type: Array,
+    type: Array as unknown as PropType<Array<HelperButtonShape>>,
     validator: PropsValidator.isValidHelperButtons,
-    default() {
-      return [];
-    },
+    default: () => [] as unknown as Array<HelperButtonShape>,
   },
   timeInput: {
-    type: Object,
-    default() {
-      return {
+    type: Object as PropType<TimeInputProps>,
+    default: () =>
+      ({
         inputClass: null,
         readonly: false,
-        step: 60, // in minutes
-      };
-    },
+        step: 60,
+      } as TimeInputProps),
   },
   dateInput: {
-    type: Object,
-    default() {
-      return {
+    type: Object as PropType<DateInputProps>,
+    default: () =>
+      ({
+        inputClass: null,
         labelStarts: "Starts",
         labelEnds: "Ends",
-        inputClass: null,
         format: "DD/MM/YYYY",
-        readonly: false,
-      };
-    },
+      } as DateInputProps),
   },
   switchButtonLabel: {
-    type: String,
+    type: String as PropType<string>,
     default: "All Days",
   },
   switchButtonInitial: {
-    type: Boolean,
+    type: Boolean as PropType<boolean>,
     default: false,
   },
   applyButtonLabel: {
-    type: String,
+    type: String as PropType<string>,
     default: "Apply",
   },
   resetButtonLabel: {
-    type: String,
+    type: String as PropType<string>,
     default: "Reset",
   },
-  isMondayFirst: {
-    type: Boolean,
-    default: false,
-  },
-});
+};
 
 export type CalendarDialogProps = ExtractPropTypes<typeof calendarDialogProps>;
 
@@ -98,4 +94,4 @@ export const calendarDialogEmits = defineEmitOptions({
   "on-next-calendar": (_e: Event) => true,
 });
 
-export type CalendarDialogEmits = typeof calendarDialogEmits
+export type CalendarDialogEmits = typeof calendarDialogEmits;
