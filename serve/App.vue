@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Datepicker from '../src/components/DatePicker.vue'
+import Datepicker from '../src/components/DatePicker/DatePicker.vue'
 import ExampleEvents from './ExampleEvents.vue';
 import ExampleDisabledDates from './ExampleDisabledDates.vue';
 import ExampleAvailableDates from './ExampleAvailableDates.vue';
@@ -18,7 +18,7 @@ import ExampleIsMondayFirst from './ExampleIsMondayFirst.vue';
 <template>
   <div>
     <Datepicker />
-    <!-- <br><br>
+    <br><br>
     <example-initial-dates />
     <br />
     <example-language />
@@ -41,6 +41,6 @@ import ExampleIsMondayFirst from './ExampleIsMondayFirst.vue';
     <br />
     <example-is-monday-first />
     <br />
-    <example-inline /> -->
+    <example-inline />
   </div>
 </template>
