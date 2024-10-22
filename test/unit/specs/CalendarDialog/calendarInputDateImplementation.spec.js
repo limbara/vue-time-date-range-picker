@@ -1,7 +1,7 @@
 
 import { mount } from '@vue/test-utils';
-import CalendarDialog from '@/components/CalendarDialog.vue';
-import CalendarInputDate from '@/components/CalendarInputDate.vue';
+import CalendarDialog from '@components/CalendarDialog/CalendarDialog.vue';
+import CalendarInputDate from '@components/CalendarInputDate/CalendarInputDate.vue';
 
 describe('Calendar Dialog : Calendar Input Date Implementation', () => {
   const startDate = new Date('2020 07 01');
@@ -11,12 +11,9 @@ describe('Calendar Dialog : Calendar Input Date Implementation', () => {
 
   beforeEach(() => {
     wrapper = mount(CalendarDialog, {
-      data() {
-        return {
-          selectedStartDate: startDate,
-          selectedEndDate: endDate,
-        };
-      },
+      props: {
+        initialDates: [startDate, endDate],
+      }
     });
     const inputDates = wrapper.findAllComponents(CalendarInputDate);
 
@@ -25,7 +22,7 @@ describe('Calendar Dialog : Calendar Input Date Implementation', () => {
   });
 
   it('set date when input from date submitted', () => {
-    const e = 'on-change';
+    const e = 'change';
     inputDateFrom.vm.$emit(e, new Date('2020 07 02'));
 
     expect(wrapper.vm.selectedStartDate).toEqual(new Date('2020 07 02'));
@@ -38,7 +35,7 @@ describe('Calendar Dialog : Calendar Input Date Implementation', () => {
   });
 
   it('set date when input to date submitted', () => {
-    const e = 'on-change';
+    const e = 'change';
     inputDateTo.vm.$emit(e, new Date('2020 07 02'));
 
     expect(wrapper.vm.selectedStartDate).toEqual(new Date('2020 07 01'));

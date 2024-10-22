@@ -8,7 +8,7 @@
     "rootDir": ".",
     "outDir": "dist",
     "paths": {
-      "@/*": ["./src/components/*"],
+      "@components/*": ["./src/components/*"],
       "@utils/*": ["./src/utils/*"]
     },
 
@@ -24,12 +24,15 @@
     "strict": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "typeRoots": ["./node_modules/@types", "./**/*.d.ts"]
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "src/vite-env.d.ts"
+    "serve/**/*.ts",
+    "serve/**/*.tsx",
+    "serve/**/*.vue"
   ]
 }
