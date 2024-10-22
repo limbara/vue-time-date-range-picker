@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Datepicker from '../src/components/DatePicker.vue'
+import Datepicker from '@components/DatePicker/DatePicker.vue'
 import ExampleEvents from './ExampleEvents.vue';
 import ExampleDisabledDates from './ExampleDisabledDates.vue';
 import ExampleAvailableDates from './ExampleAvailableDates.vue';

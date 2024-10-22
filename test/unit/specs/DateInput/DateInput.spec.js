@@ -1,6 +1,6 @@
 
 import { shallowMount } from '@vue/test-utils';
-import DateInput from '@/components/DateInput.vue';
+import DateInput from '@components/DateInput/DateInput.vue';
 import 'regenerator-runtime';
 
 describe('Date Input', () => {
@@ -57,7 +57,7 @@ describe('Date Input', () => {
   it('emits on click', async () => {
     await wrapper.find('input').trigger('click');
 
-    expect(wrapper.emitted('on-click')).toBeTruthy();
+    expect(wrapper.emitted('click')).toBeTruthy();
   });
 
   it('change language', async () => {

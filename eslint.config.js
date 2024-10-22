@@ -24,5 +24,10 @@ export default [
       'jest/prefer-expect-assertions': 'off',
     },
   },
-  { ignores: ["**/babel.config.cjs", "**/vite.config.ts", "**/jest.config.ts", "dist/**", "node_modules/**"] }
+  { ignores: ["**/babel.config.cjs", "**/vite.config.ts", "**/jest.config.ts", "dist/**", "node_modules/**"] },
+  {
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off'
+    }
+  }
 ];
