@@ -3,10 +3,15 @@ import { CalendarInputDateProps } from "@components/CalendarInputDate/types";
 import { CalendarInputTimeProps } from "@components/CalendarInputTime/types";
 import { FromToRange } from "@components/commonTypes";
 import { calendarProps } from "@components/Calendar/types";
-import PropsValidator from "@utils/PropsValidator";
 import { ExtractPropTypes, PropType } from "vue";
+import {
+  isValidHelperButtons,
+  isValidInitialDate,
+} from "@utils/propsValidator";
 
-type HelperButtonShape = Readonly<
+export type InitialDate = [Date, Date];
+
+export type HelperButtonShape = Readonly<
   {
     name: string;
   } & FromToRange<Date>
@@ -33,9 +38,9 @@ export const calendarDialogProps = {
     default: false,
   },
   initialDates: {
-    type: Array as unknown as PropType<[Date, Date]>,
-    validator: PropsValidator.isValidInitialDate,
-    default: () => [] as unknown as [Date, Date],
+    type: Array as unknown as PropType<InitialDate>,
+    validator: isValidInitialDate,
+    default: () => [] as unknown as InitialDate,
   },
   showHelperButtons: {
     type: Boolean as PropType<boolean>,
@@ -43,7 +48,7 @@ export const calendarDialogProps = {
   },
   helperButtons: {
     type: Array as unknown as PropType<Array<HelperButtonShape>>,
-    validator: PropsValidator.isValidHelperButtons,
+    validator: isValidHelperButtons,
     default: () => [] as unknown as Array<HelperButtonShape>,
   },
   timeInput: {
