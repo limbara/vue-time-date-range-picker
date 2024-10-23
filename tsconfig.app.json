@@ -25,7 +25,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "typeRoots": ["./node_modules/@types", "./**/*.d.ts"]
+    "typeRoots": ["./node_modules/@types", "./**/*.d.ts"],
+
+    "composite": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo"
   },
   "include": [
     "src/**/*.ts",
@@ -34,5 +37,6 @@
     "serve/**/*.ts",
     "serve/**/*.tsx",
     "serve/**/*.vue"
-  ]
+  ],
+  "exclude": ["**/*.spec.ts"]
 }
