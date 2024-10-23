@@ -1,7 +1,9 @@
 {
   "extends": "./tsconfig.app.json",
-  "include": ["tests/**/*"],
+  "include": ["**/*.spec.ts", "src/**/*"],
+  "exclude": [],
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo"
+    "composite": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.test.tsbuildinfo"
   }
 }
