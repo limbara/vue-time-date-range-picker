@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import PropsValidator from "@utils/PropsValidator";
 import { ClassValue, FromToRange } from "@components/commonTypes";
+import { isValidSameDateFormat } from "@utils/propsValidator";
 import { ExtractPropTypes, PropType } from "vue";
 
-type SameDateFormatConfig = Partial<FromToRange<string>>;
+export type SameDateFormatConfig = FromToRange<string>;
 
 export const dateInputProps = {
   inputClass: [String, Object, Array] as PropType<ClassValue>,
@@ -19,7 +19,7 @@ export const dateInputProps = {
   },
   sameDateFormat: {
     type: Object as PropType<SameDateFormatConfig>,
-    validator: PropsValidator.isValidSameDateFormat,
+    validator: isValidSameDateFormat,
     default: () =>
       ({
         from: "DD/MM/YYYY, HH:mm",

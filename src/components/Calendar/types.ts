@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import PropsValidator from "@utils/PropsValidator";
 import { ExtractPropTypes, PropType } from "vue";
 import { FromToRange } from "../commonTypes";
+import { isValidDateAvailabilityConfig } from "@utils/propsValidator";
 
 export type Day = {
   date: Date;
@@ -14,7 +14,7 @@ export type Day = {
   isFaded: boolean;
 };
 
-type DatesAvailabilityConfig = Partial<
+export type DatesAvailabilityConfig = Partial<
   {
     dates: Array<Date>;
     ranges: Array<FromToRange<Date>>;
@@ -31,12 +31,12 @@ export const calendarProps = {
   },
   disabledDates: {
     type: Object as PropType<DatesAvailabilityConfig>,
-    validator: PropsValidator.isValidDateRestriction,
+    validator: isValidDateAvailabilityConfig,
     default: () => ({} as DatesAvailabilityConfig),
   },
   availableDates: {
     type: Object as PropType<DatesAvailabilityConfig>,
-    validator: PropsValidator.isValidDateRestriction,
+    validator: isValidDateAvailabilityConfig,
     default: () => ({} as DatesAvailabilityConfig),
   },
   isMondayFirst: {

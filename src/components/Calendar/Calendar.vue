@@ -38,7 +38,7 @@ export default {
 
 <script lang="ts" setup>
 import DateUtil from '@utils/DateUtil';
-import Util from '@utils/Util';
+import { isEmptyObject } from '@utils/helpers';
 import { calendarEmits, calendarProps, Day } from './types';
 import { computed, ref } from 'vue';
 
@@ -68,13 +68,13 @@ const monthYear = computed(() => {
 
 const isDisabledDate = computed(() => (date: Date) => {
   if (
-    Util.isEmptyObject(props.disabledDates)
-    && Util.isEmptyObject(props.availableDates)
+    isEmptyObject(props.disabledDates)
+    && isEmptyObject(props.availableDates)
   ) {
     return false;
   }
   let disabled = false;
-  if (!Util.isEmptyObject(props.disabledDates)) {
+  if (!isEmptyObject(props.disabledDates)) {
     const {
       dates, from, to, ranges, custom,
     } = props.disabledDates;
@@ -131,7 +131,7 @@ const isDisabledDate = computed(() => (date: Date) => {
     if (typeof custom === 'function' && custom(date)) {
       disabled = true;
     }
-  } else if (!Util.isEmptyObject(props.availableDates)) {
+  } else if (!isEmptyObject(props.availableDates)) {
     disabled = true;
     const {
       dates, from, to, ranges, custom,
@@ -256,7 +256,7 @@ const isNextDisabled = computed(() => {
   }
   // availableDates cannot interfere disabledDates
   if (
-    Util.isEmptyObject(props.disabledDates)
+    isEmptyObject(props.disabledDates)
     && props.availableDates
     && props.availableDates.to
   ) {
@@ -294,7 +294,7 @@ const isPrevDisabled = computed(() => {
   }
   // availableDates cannot interfere disabledDates
   if (
-    Util.isEmptyObject(props.disabledDates)
+    isEmptyObject(props.disabledDates)
     && props.availableDates
     && props.availableDates.from
   ) {
