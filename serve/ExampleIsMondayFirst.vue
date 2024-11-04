@@ -5,19 +5,10 @@
   </div>
 </template>
 
-<script>
-import DatePicker from '@components/DatePicker/DatePicker.vue';
+<script lang="ts" setup>
+import DatePicker from "./StatefullDatepicker.vue";
 
-export default {
-  components: {
-    DatePicker,
-  },
-  data() {
-    return {
-      dateInput: {
-        placeholder: 'Select Date',
-      },
-    };
-  },
+const dateInput = {
+  placeholder: "Select Date",
 };
 </script>

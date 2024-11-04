@@ -1,13 +1,15 @@
 
-import { mount } from '@vue/test-utils';
+import { mount, VueWrapper } from '@vue/test-utils';
 import CalendarDialog from '@components/CalendarDialog/CalendarDialog.vue';
 import CalendarInputTime from '@components/CalendarInputTime/CalendarInputTime.vue';
 
 describe('Calendar Dialog : Calendar Input Time Implementation', () => {
   const startDate = new Date('2020 07 01 01:00:00');
   const endDate = new Date('2020 07 01 15:00:00');
-  let wrapper; let inputTimeStart; let
-    inputTimeTo;
+
+  let wrapper: ReturnType<typeof mount<typeof CalendarDialog>>; 
+  let inputTimeStart: VueWrapper<InstanceType<typeof CalendarInputTime>>; 
+  let inputTimeTo: VueWrapper<InstanceType<typeof CalendarInputTime>>;;
 
   beforeEach(() => {
     wrapper = mount(CalendarDialog, {
@@ -18,9 +20,8 @@ describe('Calendar Dialog : Calendar Input Time Implementation', () => {
     });
     const inputs = wrapper.findAllComponents(CalendarInputTime);
 
-    inputTimeStart = inputs.at(0);
-
-    inputTimeTo = inputs.at(1);
+    inputTimeStart = inputs.at(0)!;
+    inputTimeTo = inputs.at(1)!;
   });
 
   it('set date when input time start submitted', () => {

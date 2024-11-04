@@ -32,30 +32,19 @@
   </div>
 </template>
 
-<script>
-import DatePicker from '@components/DatePicker/DatePicker.vue';
+<script lang="ts" setup>
+import { computed, ref } from "vue";
+import DatePicker from "./StatefullDatepicker.vue";
 
-export default {
-  components: {
-    DatePicker,
-  },
-  data() {
-    return {
-      language: 'id',
-      dateInput: {
-        placeholder: 'Select Date',
-      },
-    };
-  },
-  computed: {
-    displayLang() {
-      return `Current Language ${this.language}`;
-    },
-  },
-  methods: {
-    changeLanguage(lang) {
-      this.language = lang;
-    },
-  },
+const language = ref("id");
+
+const dateInput = {
+  placeholder: "Select Date",
+};
+
+const displayLang = computed(() => `Current Language ${language.value}`);
+
+const changeLanguage = (lang: string) => {
+  language.value = lang;
 };
 </script>

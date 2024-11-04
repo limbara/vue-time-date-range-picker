@@ -3,8 +3,7 @@ import CalendarInputDate from "@components/CalendarInputDate/CalendarInputDate.v
 import "regenerator-runtime";
 
 describe("Calendar Input Date", () => {
-  let wrapper;
-  let vm;
+  let wrapper: ReturnType<typeof shallowMount<typeof CalendarInputDate>>;
 
   const date = "2020 08 10";
 
@@ -16,8 +15,6 @@ describe("Calendar Input Date", () => {
         format: "DD/MM/YYYY",
       },
     });
-
-    vm = wrapper.vm;
   });
 
   it("should render correct contents", () => {
@@ -29,7 +26,7 @@ describe("Calendar Input Date", () => {
   });
 
   it("format date", () => {
-    expect(vm.formattedValue).toEqual("10/08/2020");
+    expect(wrapper.find('input').element.value).toEqual("10/08/2020");
   });
 
   it("doesn't format date if timestamp is zero", () => {

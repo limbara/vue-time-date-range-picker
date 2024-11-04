@@ -1,20 +1,30 @@
 import {
   HelperButtonShape,
-  InitialDate,
 } from "@components/CalendarDialog/types";
 
-import { DatesAvailabilityConfig } from "@components/Calendar/types";
 import { isEmptyObject, isObjectDate } from "./helpers";
 import { SameDateFormatConfig } from "@components/DateInput/types";
+import { DatesAvailabilityConfig } from "@composables/useCalendarDateUtil";
+import { InitialDate } from "@composables/useSelectedDates";
 
 export const isValidInitialDate = (value: InitialDate | undefined | null) => {
   if (!value || (value as Array<unknown>).length === 0) return true;
 
-  const [from, to] = value;
+  const [from, to] = value;  
 
-  return (
-    isObjectDate(from) && isObjectDate(to) && to.getTime() >= from.getTime()
-  );
+  if (from && to) {
+    return isObjectDate(from) && isObjectDate(to) && to.getTime() >= from.getTime()
+  }
+
+  if (from) {
+    return isObjectDate(from)
+  }
+
+  if (to) {
+    return isObjectDate(to)
+  }
+
+  return true
 };
 
 export const isValidHelperButtons = (

@@ -4,12 +4,10 @@ import CalendarInputTime from '@components/CalendarInputTime/CalendarInputTime.v
 import 'regenerator-runtime';
 
 describe('Calendar Input Time', () => {
-  const inputElemClass = '.vdpr-datepicker__calendar-input-time-elem';
   const upButtonClass = '.vdpr-datepicker__calendar-input-time-control-up';
   const downButtonClass = '.vdpr-datepicker__calendar-input-time-control-down';
 
-  let wrapper; let
-    vm;
+  let wrapper: ReturnType<typeof shallowMount<typeof CalendarInputTime>>; 
 
   beforeEach(() => {
     wrapper = shallowMount(CalendarInputTime, {
@@ -19,24 +17,22 @@ describe('Calendar Input Time', () => {
         step: 60,
       },
     });
-
-    vm = wrapper.vm;
   });
 
   it('should render correct contents', () => {
-    expect(wrapper.find(inputElemClass).exists()).toBe(true);
+    expect(wrapper.find('input').exists()).toBe(true);
 
     expect(wrapper.find(upButtonClass).exists()).toBe(true);
 
     expect(wrapper.find(downButtonClass).exists()).toBe(true);
 
-    const attrs = wrapper.find(inputElemClass).attributes();
+    const attrs = wrapper.find('input').attributes();
 
     expect(attrs.class).toContain('time_input_class');
   });
 
   it('format time', () => {
-    expect(vm.formattedValue).toEqual('15:00');
+    expect(wrapper.find('input').element.value).toEqual('15:00');
   });
 
   it("doesn't format time if timestamp is zero", () => {
@@ -46,33 +42,33 @@ describe('Calendar Input Time', () => {
       },
     });
 
-    expect(wrapper.vm.formattedValue).toEqual('');
+    expect(wrapper.find('input').element.value).toEqual('');
   });
 
   it('emit change button up', async () => {
     await wrapper.find(upButtonClass).trigger('click');
 
-    expect(wrapper.emitted('change')[0]).toEqual([new Date('2020 08 10 16:00:00')]);
+    expect(wrapper.emitted('change')?.[0]).toEqual([new Date('2020 08 10 16:00:00')]);
   });
 
   it('emit change button-down', async () => {
     await wrapper.find(downButtonClass).trigger('click');
 
-    expect(wrapper.emitted('change')[0]).toEqual([new Date('2020 08 10 14:00:00')]);
+    expect(wrapper.emitted('change')?.[0]).toEqual([new Date('2020 08 10 14:00:00')]);
   });
 
   it('emit change when input change', async () => {
-    const input = wrapper.find(inputElemClass);
+    const input = wrapper.find('input');
 
     input.element.value = '20:00';
 
     await input.trigger('change');
 
-    expect(wrapper.emitted('change')[0]).toEqual([new Date('2020 08 10 20:00:00')]);
+    expect(wrapper.emitted('change')?.[0]).toEqual([new Date('2020 08 10 20:00:00')]);
   });
 
   it("doesn't emit change if input invalid", async () => {
-    const input = wrapper.find(inputElemClass);
+    const input = wrapper.find('input');
 
     input.element.value = 'ww:00';
 

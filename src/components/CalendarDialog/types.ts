@@ -5,11 +5,13 @@ import { FromToRange } from "@components/commonTypes";
 import { calendarProps } from "@components/Calendar/types";
 import { ExtractPropTypes, PropType } from "vue";
 import {
+  isValidDateAvailabilityConfig,
   isValidHelperButtons,
   isValidInitialDate,
 } from "@utils/propsValidator";
-
-export type InitialDate = [Date, Date];
+import { InitialDate } from "@composables/useSelectedDates";
+import { Nullable } from "@utils/helpers";
+import { DatesAvailabilityConfig } from "@composables/useCalendarDateUtil";
 
 export type HelperButtonShape = Readonly<
   {
@@ -30,10 +32,17 @@ type DateInputProps = Partial<
 
 export const calendarDialogProps = {
   language: calendarProps.language,
-  disabledDates: calendarProps.disabledDates,
-  availableDates: calendarProps.availableDates,
-  isMondayFirst: calendarProps.isMondayFirst,
-  inline: {
+  disabledDates: {
+    type: Object as PropType<DatesAvailabilityConfig>,
+    validator: isValidDateAvailabilityConfig,
+    default: () => ({} as DatesAvailabilityConfig),
+  },
+  availableDates: {
+    type: Object as PropType<DatesAvailabilityConfig>,
+    validator: isValidDateAvailabilityConfig,
+    default: () => ({} as DatesAvailabilityConfig),
+  },
+  isMondayFirst: {
     type: Boolean as PropType<boolean>,
     default: false,
   },
@@ -41,6 +50,10 @@ export const calendarDialogProps = {
     type: Array as unknown as PropType<InitialDate>,
     validator: isValidInitialDate,
     default: () => [] as unknown as InitialDate,
+  },
+  inline: {
+    type: Boolean as PropType<boolean>,
+    default: false,
   },
   showHelperButtons: {
     type: Boolean as PropType<boolean>,
@@ -58,7 +71,7 @@ export const calendarDialogProps = {
         inputClass: null,
         readonly: false,
         step: 60,
-      } as TimeInputProps),
+      } as unknown as TimeInputProps),
   },
   dateInput: {
     type: Object as PropType<DateInputProps>,
@@ -68,7 +81,7 @@ export const calendarDialogProps = {
         labelStarts: "Starts",
         labelEnds: "Ends",
         format: "DD/MM/YYYY",
-      } as DateInputProps),
+      } as unknown as DateInputProps),
   },
   switchButtonLabel: {
     type: String as PropType<string>,
@@ -93,7 +106,7 @@ export type CalendarDialogProps = ExtractPropTypes<typeof calendarDialogProps>;
 export const calendarDialogEmits = defineEmitOptions({
   "on-apply": (_startDate: Date, _endDate: Date) => true,
   "on-reset": (_e: Event) => true,
-  "select-date": (_startDate: Date, _endDate: Date) => true,
+  "select-date": (_startDate: Nullable<Date>, _endDate: Nullable<Date>) => true,
   "select-disabled-date": (_date: Date) => true,
   "on-prev-calendar": (_e: Event) => true,
   "on-next-calendar": (_e: Event) => true,

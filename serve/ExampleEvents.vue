@@ -2,8 +2,12 @@
   <div>
     <h2>Example Events</h2>
     <ol class="event-list">
-      <li v-for="event in events" :key="event.name+event.time.getTime()" class="event-list__item">
-        {{event.name}} - {{event.value}}
+      <li
+        v-for="event in events"
+        :key="event.name + event.time.getTime()"
+        class="event-list__item"
+      >
+        {{ event.name }} - {{ event.value }}
       </li>
     </ol>
     <date-picker
@@ -22,71 +26,72 @@
   </div>
 </template>
 
-<script>
-import DatePicker from '@components/DatePicker/DatePicker.vue';
+<script lang="ts" setup>
+import { onMounted, ref } from "vue";
+import DatePicker from "./StatefullDatepicker.vue";
+import { Nullable } from "@utils/helpers";
 
 class Event {
-  constructor(name, value) {
+  name: string;
+  value: any;
+  time: Date;
+
+  constructor(name: string, value: any) {
     this.name = name;
     this.value = value;
     this.time = new Date();
   }
 }
 
-export default {
-  components: {
-    DatePicker,
-  },
-  data() {
-    return {
-      dateInput: {
-        placeholder: 'Select Date',
-      },
-      showHelperButtons: true,
-      events: [],
-      disabledDates: {
-        to: new Date(new Date().setDate(1)),
-      },
-    };
-  },
-  methods: {
-    dateApplied(date1, date2) {
-      this.events.push(
-        new Event('date-applied', `${date1.toString()} - ${date2.toString()}`),
-      );
-    },
-    onReset() {
-      this.events.push(new Event('on-reset', ''));
-    },
-    onPrevCalendar() {
-      this.events.push(new Event('on-prev-calendar', ''));
-    },
-    onNextCalendar() {
-      this.events.push(new Event('on-next-calendar', ''));
-    },
-    datepickerOpened() {
-      this.events.push(new Event('datepicker-opened', ''));
-    },
-    datepickerClosed() {
-      this.events.push(new Event('datepicker-closed', ''));
-    },
-    selectDate(date1, date2) {
-      this.events.push(
-        new Event('select-date', `${date1.toString()} - ${date2.toString()}`),
-      );
-    },
-    selectDisabledDate(date) {
-      this.events.push(new Event('select-disabled-date', date.toString()));
-    },
-    clearEvents() {
-      const date = new Date();
-      this.events = this.events.filter((event) => date.getTime() < event.time.getTime() + 5000);
-    },
-  },
-  mounted() {
-    setInterval(this.clearEvents, 1000);
-  },
+const dateInput = {
+  placeholder: "Select Date",
 };
+const showHelperButtons = true;
+const events = ref<Array<Event>>([]);
+const disabledDates = {
+  to: new Date(new Date().setDate(1)),
+};
+
+const dateApplied = (date1: Date, date2: Date) => {
+  events.value.push(
+    new Event("date-applied", `${date1?.toString()} - ${date2?.toString()}`)
+  );
+};
+const onReset = () => {
+  events.value.push(new Event("on-reset", ""));
+};
+
+const onPrevCalendar = () => {
+  events.value.push(new Event("on-prev-calendar", ""));
+};
+const onNextCalendar = () => {
+  events.value.push(new Event("on-next-calendar", ""));
+};
+const datepickerOpened = () => {
+  events.value.push(new Event("datepicker-opened", ""));
+};
+const datepickerClosed = () => {
+  events.value.push(new Event("datepicker-closed", ""));
+};
+const selectDate = (date1: Nullable<Date>, date2: Nullable<Date>) => {
+  events.value.push(
+    new Event("select-date", `${date1?.toString()} - ${date2?.toString()}`)
+  );
+};
+const selectDisabledDate = (date: Date) => {
+  events.value.push(new Event("select-disabled-date", date?.toString()));
+};
+
+const clearEvents = () => {
+  const date = new Date();
+  events.value = events.value.filter(
+    (event) => date.getTime() < event.time.getTime() + 5000
+  );
+};
+
+onMounted(() => {
+  setInterval(clearEvents, 1000);
+});
 </script>
 
 <style lang="scss" scoped>

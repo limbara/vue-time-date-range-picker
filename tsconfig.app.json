@@ -9,6 +9,7 @@
     "outDir": "dist",
     "paths": {
       "@components/*": ["./src/components/*"],
+      "@composables/*": ["./src/composables/*"],
       "@utils/*": ["./src/utils/*"]
     },
 
@@ -21,7 +22,7 @@
     "jsx": "preserve",
 
     /* Linting */
-    "strict": false,
+    "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,

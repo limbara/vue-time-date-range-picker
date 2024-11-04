@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { calendarDialogProps } from "@components/CalendarDialog/types";
 import { DateInputProps, dateInputProps } from "@components/DateInput/types";
+import { Nullable } from "@utils/helpers";
 import { ExtractPropTypes, PropType } from "vue";
 
 type DatePickerDateInputProps = Partial<
@@ -41,7 +42,7 @@ export const datePickerEmits = defineEmitOptions({
   "datepicker-closed": () => true,
   "on-prev-calendar": (_e: Event) => true,
   "on-next-calendar": (_e: Event) => true,
-  "select-date": (_startDate: Date, _endDate: Date) => true,
+  "select-date": (_startDate: Nullable<Date>, _endDate: Nullable<Date>) => true,
   "select-disabled-date": (_date: Date) => true,
   "on-reset": (_e: Event) => true,
 });

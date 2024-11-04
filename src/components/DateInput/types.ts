@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { ClassValue, FromToRange } from "@components/commonTypes";
+import { Nullable } from "@utils/helpers";
 import { isValidSameDateFormat } from "@utils/propsValidator";
 import { ExtractPropTypes, PropType } from "vue";
 
@@ -30,8 +31,8 @@ export const dateInputProps = {
     type: String as PropType<string>,
     default: "en",
   },
-  selectedStartDate: Date as PropType<Date>,
-  selectedEndDate: Date as PropType<Date>,
+  selectedStartDate: Date as PropType<Nullable<Date>>,
+  selectedEndDate: Date as PropType<Nullable<Date>>,
 };
 
 export type DateInputProps = ExtractPropTypes<typeof dateInputProps>;

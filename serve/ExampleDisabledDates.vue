@@ -4,8 +4,8 @@
     <h4>Disabled date with "from" and "to"</h4>
     <pre>
       {
-        from : new Date("2022 09 01"),
-        to : new Date("2022 06 30"),
+        from : new Date("2024 09 01"),
+        to : new Date("2024 06 30"),
       }
     </pre>
     <date-picker :dateInput="dateInput" :disabledDates="disabledDates1" />
@@ -15,12 +15,12 @@
       {
         ranges: [
           {
-            from: new Date("2022 05 01"),
-            to: new Date("2022 05 31")
+            from: new Date("2024 05 01"),
+            to: new Date("2024 05 31")
           },
           {
-            from: new Date("2022 09 01"),
-            to: new Date("2022 09 31")
+            from: new Date("2024 09 01"),
+            to: new Date("2024 09 31")
           }
         ]
       }
@@ -31,9 +31,9 @@
     <pre>
       {
         dates: [
-          new Date("2022 09 01"),
-          new Date("2022 07 26"),
-          new Date("2022 09 05")
+          new Date("2024 09 01"),
+          new Date("2024 07 26"),
+          new Date("2024 09 05")
         ]
       }
     </pre>
@@ -51,47 +51,38 @@
   </div>
 </template>
 
-<script>
-import DatePicker from '@components/DatePicker/DatePicker.vue';
+<script lang="ts" setup>
+import DatePicker from "./StatefullDatepicker.vue";
 
-export default {
-  components: {
-    DatePicker,
-  },
-  data() {
-    return {
-      dateInput: {
-        placeholder: 'Select Date',
-      },
-      disabledDates1: {
-        from: new Date('2022 09 01'),
-        to: new Date('2022 06 30'),
-      },
-      disabledDates2: {
-        ranges: [
-          {
-            from: new Date('2022 05 01'),
-            to: new Date('2022 05 31'),
-          },
-          {
-            from: new Date('2022 09 01'),
-            to: new Date('2022 09 31'),
-          },
-        ],
-      },
-      disabledDates3: {
-        dates: [
-          new Date('2022 09 01'),
-          new Date('2022 07 26'),
-          new Date('2022 09 05'),
-        ],
-      },
-      disabledDates4: {
-        custom(date) {
-          return date.getDay() === 1;
-        },
-      },
-    };
+const dateInput = {
+  placeholder: "Select Date",
+};
+const disabledDates1 = {
+  from: new Date("2024 09 01"),
+  to: new Date("2024 06 30"),
+};
+const disabledDates2 = {
+  ranges: [
+    {
+      from: new Date("2024 05 01"),
+      to: new Date("2024 05 31"),
+    },
+    {
+      from: new Date("2024 09 01"),
+      to: new Date("2024 09 31"),
+    },
+  ],
+};
+const disabledDates3 = {
+  dates: [
+    new Date("2024 09 01"),
+    new Date("2024 07 26"),
+    new Date("2024 09 05"),
+  ],
+};
+const disabledDates4 = {
+  custom(date: Date) {
+    return date.getDay() === 1;
   },
 };
 </script>

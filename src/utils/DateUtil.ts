@@ -16,6 +16,10 @@ export default class {
       .toDate();
   }
 
+  now(): Date {
+    return moment().locale(this.lang).toDate();
+  }
+
   getDayNames() {
     return this.localMoment.localeData().weekdays();
   }
@@ -42,6 +46,12 @@ export default class {
     return moment(date).locale(this.lang).format(format);
   }
 
+  /**
+   * Check if date is the same on DD MM YYYY level
+   * @param date1 
+   * @param date2 
+   * @returns 
+   */
   isSameDate(date1: Date, date2: Date) {
     return (
       moment(date1).format("DD MM YYYY") === moment(date2).format("DD MM YYYY")
@@ -53,14 +63,14 @@ export default class {
     const endToDate = moment(toDate).endOf("day");
 
     return (
-      moment(fromDate).format("DD MM YYYY HH:mm") ===
-        startFromDate.format("DD MM YYYY HH:mm") &&
-      moment(toDate).format("DD MM YYYY HH:mm") ===
-        endToDate.format("DD MM YYYY HH:mm")
+      moment(fromDate).format("DD MM YYYY HH:mm:ss") ===
+        startFromDate.format("DD MM YYYY HH:mm:ss") &&
+      moment(toDate).format("DD MM YYYY HH:mm:ss") ===
+        endToDate.format("DD MM YYYY HH:mm:ss")
     );
   }
 
-  isValidDate(date: Date) {
+  isValidDate(date: any): date is Date {
     return isObjectDate(date) && moment(date).isValid();
   }
 
@@ -78,6 +88,16 @@ export default class {
 
   endOf(date: Date, of: moment.unitOfTime.StartOf) {
     return moment(date).locale(this.lang).endOf(of).toDate();
+  }
+
+  /**
+   * Check if date is the same as comparing date
+   * @param date 
+   * @param comparingDate 
+   * @returns 
+   */
+  isSame(date: Date, comparingDate: Date) {
+    return moment(date).isSame(comparingDate)
   }
 
   /**

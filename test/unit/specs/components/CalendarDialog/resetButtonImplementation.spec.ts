@@ -1,5 +1,5 @@
 
-import { mount } from '@vue/test-utils';
+import { DOMWrapper, mount } from '@vue/test-utils';
 import CalendarDialog from '@components/CalendarDialog/CalendarDialog.vue';
 import CalendarInputDate from '@components/CalendarInputDate/CalendarInputDate.vue';
 import CalendarInputTime from '@components/CalendarInputTime/CalendarInputTime.vue';
@@ -10,8 +10,8 @@ describe('Calendar Dialog : Reset Button Implementation', () => {
   const datePickerButtonReset = '.vdpr-datepicker__button-reset';
   const startDate = new Date('2021 06 01');
   const endDate = new Date('2021 06 30');
-  let wrapper; let
-    resetButton;
+  let wrapper: ReturnType<typeof mount<typeof CalendarDialog>>; 
+  let resetButton: DOMWrapper<HTMLElementTagNameMap['button']>;
 
   beforeEach(() => {
     wrapper = mount(CalendarDialog, {
@@ -48,8 +48,8 @@ describe('Calendar Dialog : Reset Button Implementation', () => {
 
     await resetButton.trigger('click');
 
-    expect(inputStartDate.find('.vdpr-datepicker__calendar-input-date-elem').element.value).toBe('');
-    expect(inputEndDate.find('.vdpr-datepicker__calendar-input-date-elem').element.value).toBe('');
+    expect(inputStartDate?.find('input').element.value).toBe('');
+    expect(inputEndDate?.find('input').element.value).toBe('');
   });
 
   it('reset input time value', async () => {
@@ -59,8 +59,8 @@ describe('Calendar Dialog : Reset Button Implementation', () => {
 
     await resetButton.trigger('click');
 
-    expect(inputStartTime.find('.vdpr-datepicker__calendar-input-time-elem').element.value).toBe('');
-    expect(inputEndTime.find('.vdpr-datepicker__calendar-input-time-elem').element.value).toBe('');
+    expect(inputStartTime?.find('input').element.value).toBe('');
+    expect(inputEndTime?.find('input').element.value).toBe('');
   });
 
   it('reset calendar highlighted day', async () => {

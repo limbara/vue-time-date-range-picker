@@ -6,34 +6,40 @@
         inline: true,
       }
     </pre>
-    <button @click="toogleInline">Toogle Inline</button>
+    <div>Value {{ value }}</div>
+    <br /><br />
+    <button @click="toggleInline">Toogle Inline</button>
     <br />
     <br />
-    <date-picker :dateInput="dateInput" :inline="inline" :showHelperButtons="true" />
+    <date-picker
+      :dateInput="dateInput"
+      :inline="inline"
+      :showHelperButtons="true"
+      @select-date="(...params) => (initialDates = params)"
+      @date-applied="(...params) => (initialDates = params)"
+      @on-reset="() => (initialDates = [null, null])"
+    />
     <p>I'm Below</p>
   </div>
 </template>
 
-<script>
-import DatePicker from '@components/DatePicker/DatePicker.vue';
+<script lang="ts" setup>
+import { computed, ref } from "vue";
+import DatePicker from "./StatefullDatepicker.vue";
+import { InitialDate } from "@composables/useSelectedDates";
 
-export default {
-  components: {
-    DatePicker,
-  },
-  data() {
-    return {
-      dateInput: {
-        placeholder: 'Select Date',
-        id: 'my_date_input',
-      },
-      inline: true,
-    };
-  },
-  methods: {
-    toogleInline() {
-      this.inline = !this.inline;
-    },
-  },
+const dateInput = {
+  placeholder: "Select Date",
+  id: "my_date_input",
+};
+
+const inline = ref(true);
+
+const initialDates = ref<InitialDate>([null, null]);
+
+const value = computed(() => initialDates.value?.map(x => x?.toString()))
+
+const toggleInline = () => {
+  inline.value = !inline.value;
 };
 </script>

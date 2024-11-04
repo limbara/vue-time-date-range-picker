@@ -1,6 +1,6 @@
-import { DatesAvailabilityConfig } from "@components/Calendar/types";
-import { InitialDate } from "@components/CalendarDialog/types";
 import { SameDateFormatConfig } from "@components/DateInput/types";
+import { DatesAvailabilityConfig } from "@composables/useCalendarDateUtil";
+import { InitialDate } from "@composables/useSelectedDates";
 import * as PropsValidator from "@utils/propsValidator";
 
 describe("Props Validator", () => {
@@ -17,10 +17,16 @@ describe("Props Validator", () => {
       ).toBe(true);
     });
 
-    it("should return false if value contain only 1 date", () => {
+    it("should return true if value contain only startDate", () => {
       expect(
-        PropsValidator.isValidInitialDate([new Date("2024-12-12")] as unknown as InitialDate)
-      ).toBe(false);
+        PropsValidator.isValidInitialDate([new Date("2024-12-12"), null])
+      ).toBe(true);
+    });
+
+    it("should return true if value contain only endDate", () => {
+      expect(
+        PropsValidator.isValidInitialDate([null, new Date("2024-12-12")])
+      ).toBe(true);
     });
 
     it("should return false if value is not a Date", () => {

@@ -19,24 +19,15 @@
   </div>
 </template>
 
-<script>
-import DatePicker from '@components/DatePicker/DatePicker.vue';
+<script lang="ts" setup>
+import DatePicker from "./StatefullDatepicker.vue";
 
-export default {
-  components: {
-    DatePicker,
-  },
-  data() {
-    return {
-      dateInput: {
-        placeholder: 'Select Date',
-      },
-      format: 'DD MM YYYY hh:mm',
-      sameDateFormat: {
-        from: 'DD MM YYYY, hh:mm',
-        to: 'hh:mm',
-      },
-    };
-  },
+const dateInput = {
+  placeholder: "Select Date",
+};
+const format = "DD MM YYYY hh:mm";
+const sameDateFormat = {
+  from: "DD MM YYYY, hh:mm",
+  to: "hh:mm",
 };
 </script>

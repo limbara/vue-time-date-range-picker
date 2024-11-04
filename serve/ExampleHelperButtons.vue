@@ -9,18 +9,18 @@
       helperButtons: [
         {
           name: "Custom 1",
-          from: new Date("2022 09 01 00:00"),
-          to: new Date("2022 09 02 23:59"),
+          from: new Date("2024 09 01 00:00"),
+          to: new Date("2024 09 02 23:59"),
         },
         {
           name: "Custom 2",
-          from: new Date("2022 09 01 00:00"),
-          to: new Date("2022 09 03 15:00"),
+          from: new Date("2024 09 01 00:00"),
+          to: new Date("2024 09 03 15:00"),
         },
         {
           name: "Custom 3",
-          from: new Date("2022 09 01 00:00"),
-          to: new Date("2022 09 15 00:00"),
+          from: new Date("2024 09 01 00:00"),
+          to: new Date("2024 09 15 00:00"),
         },
       ],
     </pre>
@@ -32,36 +32,28 @@
   </div>
 </template>
 
-<script>
-import DatePicker from '@components/DatePicker/DatePicker.vue';
+<script lang="ts" setup>
+import DatePicker from "./StatefullDatepicker.vue";
 
-export default {
-  components: {
-    DatePicker,
-  },
-  data() {
-    return {
-      dateInput: {
-        placeholder: 'Select Date',
-      },
-      helperButtons: [
-        {
-          name: 'Custom 1',
-          from: new Date('2022 09 01 00:00'),
-          to: new Date('2022 09 02 23:59'),
-        },
-        {
-          name: 'Custom 2',
-          from: new Date('2022 09 01 00:00'),
-          to: new Date('2022 09 03 15:00'),
-        },
-        {
-          name: 'Custom 3',
-          from: new Date('2022 09 01 00:00'),
-          to: new Date('2022 09 15 00:00'),
-        },
-      ],
-    };
-  },
+const dateInput = {
+  placeholder: "Select Date",
 };
+
+const helperButtons = [
+  {
+    name: "Custom 1",
+    from: new Date("2024 09 01 00:00"),
+    to: new Date("2024 09 02 23:59"),
+  },
+  {
+    name: "Custom 2",
+    from: new Date("2024 09 01 00:00"),
+    to: new Date("2024 09 03 15:00"),
+  },
+  {
+    name: "Custom 3",
+    from: new Date("2024 09 01 00:00"),
+    to: new Date("2024 09 15 00:00"),
+  },
+];
 </script>

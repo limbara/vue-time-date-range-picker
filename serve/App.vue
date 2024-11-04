@@ -1,24 +1,22 @@
 <script setup lang="ts">
-import Datepicker from '@components/DatePicker/DatePicker.vue'
-import ExampleEvents from './ExampleEvents.vue';
-import ExampleDisabledDates from './ExampleDisabledDates.vue';
-import ExampleAvailableDates from './ExampleAvailableDates.vue';
-import ExampleHelperButtons from './ExampleHelperButtons.vue';
-import ExampleTimeInputConfig from './ExampleTimeInputConfig.vue';
-import ExampleDateInputConfig from './ExampleDateInputConfig.vue';
-import ExampleDateFormat from './ExampleDateFormat.vue';
-import ExampleInitialDates from './ExampleInitialDates.vue';
-import ExampleLanguage from './ExampleLanguage.vue';
-import ExampleInline from './ExampleInline.vue';
-import ExampleIsMondayFirst from './ExampleIsMondayFirst.vue';
-
-
+import DatePicker from "./StatefullDatepicker.vue";
+import ExampleEvents from "./ExampleEvents.vue";
+import ExampleDisabledDates from "./ExampleDisabledDates.vue";
+import ExampleAvailableDates from "./ExampleAvailableDates.vue";
+import ExampleHelperButtons from "./ExampleHelperButtons.vue";
+import ExampleTimeInputConfig from "./ExampleTimeInputConfig.vue";
+import ExampleDateInputConfig from "./ExampleDateInputConfig.vue";
+import ExampleDateFormat from "./ExampleDateFormat.vue";
+import ExampleInitialDates from "./ExampleInitialDates.vue";
+import ExampleLanguage from "./ExampleLanguage.vue";
+import ExampleInline from "./ExampleInline.vue";
+import ExampleIsMondayFirst from "./ExampleIsMondayFirst.vue";
 </script>
 
 <template>
   <div>
-    <Datepicker />
-    <br><br>
+    <date-picker />
+    <br /><br />
     <example-initial-dates />
     <br />
     <example-language />
