@@ -99,13 +99,14 @@ Below is props that're available in **DatePicker** Component
 
 | Prop                                  | Type          | Default           | Description                                             |
 |---------------------------------------|---------------|-------------------|---------------------------------------------------------|
+| v-model                               | [Date,Date] / null|               | v-model binding                                         |
 | initial-dates                         | [Date, Date]  |                   | Initial value for the datepicker                        |
 | inline                                | Boolean       | false             | Use datepicker inline style                             |
 | language                              | String        | en                | Languange                                               |
 | format                                | String        | DD/MM/YYYY HH:mm  | Format for display date input                           |
 | [same-date-format](#same-date-format) | Object        | refer below       | Format for display date input if start & end date same  |
 | [disabled-dates](#disabled-dates)     | Object        | refer below       | Disable certain dates                                   |
-| [available-dates](#available-dates)   | Object        | refer below       | Allow only certain dates                                   |
+| [available-dates](#available-dates)   | Object        | refer below       | Allow only certain dates                                |
 | [date-input](#date-input)             | Object        |                   | Input configuration                                     |
 | show-helper-buttons                   | Boolean       |                   | Show helper buttons                                     |
 | [helper-buttons](#helper-buttons)     | [ ]Object     |                   | Custom helper button                                    |
