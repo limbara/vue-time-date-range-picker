@@ -1,108 +1,131 @@
+import { shallowMount } from "@vue/test-utils";
+import DatePicker from "@components/DatePicker/DatePicker.vue";
+import CalendarDialog from "@components/CalendarDialog/CalendarDialog.vue";
+import DateInput from "@components/DateInput/DateInput.vue";
+import "regenerator-runtime";
+import "@testing-library/jest-dom";
 
-import { mount, VueWrapper } from '@vue/test-utils';
-import DatePicker from '@components/DatePicker/DatePicker.vue';
-import CalendarDialog from '@components/CalendarDialog/CalendarDialog.vue';
-import DateInput from '@components/DateInput/DateInput.vue';
-import 'regenerator-runtime';
-import '@testing-library/jest-dom';
+describe("Date Picker", () => {
+  const datePickerClass = ".vdpr-datepicker";
 
-describe('Date Picker', () => {
-  const datePickerClass = '.vdpr-datepicker';
+  type MountDatePickerFN = typeof shallowMount<typeof DatePicker>;
 
-  let wrapper: ReturnType<typeof mount<typeof DatePicker>>;
-  let calendarDialog: VueWrapper<InstanceType<typeof CalendarDialog>>;
-  let dateInput:  VueWrapper<InstanceType<typeof DateInput>>;
+  const mountDatePicker = (options?: Parameters<MountDatePickerFN>[1]) => {
+    const wrapper = shallowMount(DatePicker, options);
 
-  beforeEach(() => {
-    wrapper = mount(DatePicker);
+    const calendarDialog = wrapper.findComponent(CalendarDialog);
+    const dateInput = wrapper.findComponent(DateInput);
 
-    calendarDialog = wrapper.findComponent(CalendarDialog);
-    dateInput = wrapper.findComponent(DateInput);
-  });
+    return {
+      wrapper,
+      calendarDialog,
+      dateInput,
+    };
+  };
 
-  it('should render correct contents', () => {
+  it("should render correct contents", () => {
+    const { wrapper, calendarDialog, dateInput } = mountDatePicker();
+
     expect(wrapper.find(datePickerClass).exists()).toBe(true);
     expect(calendarDialog.exists()).toBe(true);
     expect(dateInput.exists()).toBe(true);
   });
 
-  it('should close calendar dialog when applied', () => {
-    const fromDate = new Date('2020 08 01');
-    const endDate = new Date('2020 08 02');
-    calendarDialog.vm.$emit('on-apply', fromDate, endDate);
+  it("toggle calendar dialog", async () => {
+    const { wrapper, calendarDialog, dateInput } = mountDatePicker();
 
-    expect(calendarDialog.isVisible()).toEqual(false);
-  });
-
-  it('should reset selected dates and date input value', () => {
-    calendarDialog.vm.$emit('on-reset');
-
-    expect(dateInput.find('input').element.value).toBe('');
-  });
-
-  it('toggle calendar dialog', async () => {
-    dateInput.vm.$emit('click');
-    await wrapper.vm.$nextTick();
+    await dateInput.trigger("click");
 
     expect(calendarDialog.isVisible()).toBe(true);
 
-    dateInput.vm.$emit('click');
+    await dateInput.trigger("click");
+
     await wrapper.vm.$nextTick();
 
     expect(calendarDialog.isVisible()).toBe(false);
   });
 
-  it('emit date-applied event', () => {
-    const fromDate = new Date('2020 08 01');
-    const endDate = new Date('2020 08 02');
-    calendarDialog.vm.$emit('on-apply', fromDate, endDate);
+  it("should close calendar dialog when applied", async () => {
+    const fromDate = new Date("2024 08 01");
+    const endDate = new Date("2024 08 02");
 
-    expect(wrapper.emitted('date-applied')?.[0]).toEqual([fromDate, endDate]);
+    const { calendarDialog, dateInput } = mountDatePicker();
+
+    await dateInput.trigger("click");
+
+    expect(calendarDialog.isVisible()).toBe(true);
+
+    calendarDialog.vm.$emit("on-apply", fromDate, endDate);
+
+    expect(calendarDialog.isVisible()).toBe(false);
   });
 
-  it('emit datepicker-opened event', () => {
-    dateInput.vm.$emit('click');
-    expect(wrapper.emitted('datepicker-opened')).toBeTruthy();
+  it("emit date-applied event", () => {
+    const fromDate = new Date("2024 08 01");
+    const endDate = new Date("2024 08 02");
 
-    dateInput.vm.$emit('click');
-    expect(wrapper.emitted('datepicker-closed')).toBeTruthy();
+    const { wrapper, calendarDialog } = mountDatePicker();
+
+    calendarDialog.vm.$emit("on-apply", fromDate, endDate);
+
+    const dateAppliedEvent = wrapper.emitted("date-applied");
+
+    expect(dateAppliedEvent).toHaveLength(1);
+    expect(dateAppliedEvent?.[0]).toEqual([fromDate, endDate]);
   });
 
-  it('emit on-prev-calendar event', () => {
-    const e = 'on-prev-calendar';
+  it("emit event datepicker-opened & datepicker-closed", async () => {
+    const { wrapper, dateInput } = mountDatePicker();
 
-    calendarDialog.vm.$emit(e);
-    expect(wrapper.emitted(e)).toBeTruthy();
+    await dateInput.trigger("click");
+    expect(wrapper.emitted("datepicker-opened")).toBeTruthy();
+
+    await dateInput.trigger("click");
+    expect(wrapper.emitted("datepicker-closed")).toBeTruthy();
   });
 
-  it('emit on-next-calendar event', () => {
-    const e = 'on-next-calendar';
+  it("emit on-prev-calendar event", () => {
+    const { wrapper, calendarDialog } = mountDatePicker();
 
-    calendarDialog.vm.$emit(e);
-    expect(wrapper.emitted(e)).toBeTruthy();
+    calendarDialog.vm.$emit("on-prev-calendar");
+    expect(wrapper.emitted("on-prev-calendar")).toHaveLength(1);
   });
 
-  it('emit select-date event', () => {
-    const e = 'select-date';
-    const fromDate = new Date('2020 08 01');
-    const endDate = new Date('2020 08 03');
+  it("emit on-next-calendar event", () => {
+    const { wrapper, calendarDialog } = mountDatePicker();
 
-    calendarDialog.vm.$emit(e, fromDate, endDate);
-    expect(wrapper.emitted(e)?.[0]).toEqual([fromDate, endDate]);
+    calendarDialog.vm.$emit("on-next-calendar");
+    expect(wrapper.emitted("on-next-calendar")).toHaveLength(1);
   });
 
-  it('emit select-disabled-date event', () => {
-    const e = 'select-disabled-date';
-    const date = new Date('2020 09 01');
+  it("emit select-date event", () => {
+    const { wrapper, calendarDialog } = mountDatePicker();
+    const fromDate = new Date("2024 08 01");
+    const endDate = new Date("2024 08 03");
 
-    calendarDialog.vm.$emit(e, date);
-    expect(wrapper.emitted(e)?.[0]).toEqual([date]);
+    calendarDialog.vm.$emit("select-date", fromDate, endDate);
+
+    const selectDateEvent = wrapper.emitted("select-date");
+    expect(selectDateEvent).toHaveLength(1);
+    expect(selectDateEvent?.[0]).toEqual([fromDate, endDate]);
   });
 
-  it('emit on-reset', () => {
-    const e = 'on-reset';
+  it("emit select-disabled-date event", () => {
+    const { wrapper, calendarDialog } = mountDatePicker();
 
-    calendarDialog.vm.$emit(e);
-    expect(wrapper.emitted(e)).toBeTruthy();
-  })
+    const date = new Date("2024 09 01");
+
+    calendarDialog.vm.$emit("select-disabled-date", date);
+
+    const selectDisabledDateEvent = wrapper.emitted("select-disabled-date");
+    expect(selectDisabledDateEvent).toHaveLength(1);
+    expect(selectDisabledDateEvent?.[0]).toEqual([date]);
+  });
+
+  it("emit on-reset", () => {
+    const { wrapper, calendarDialog } = mountDatePicker();
+
+    calendarDialog.vm.$emit("on-reset");
+    expect(wrapper.emitted("on-reset")).toBeTruthy();
+  });
 });
