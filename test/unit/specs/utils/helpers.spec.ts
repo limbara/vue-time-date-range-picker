@@ -1,4 +1,4 @@
-import { isEmptyLiteralObject, isObjectDate } from "@utils/helpers";
+import { isEmptyLiteralObject, isObjectDate, omit } from "@utils/helpers";
 
 describe("helpers", () => {
   describe("isObjectDate", () => {
@@ -33,6 +33,24 @@ describe("helpers", () => {
 
     it("should return false if literal object is not empty", () => {
       expect(isEmptyLiteralObject({ value: true })).toBe(false);
+    });
+  });
+
+  describe("omit", () => {
+    it("should omit certain exclude keys from object", () => {
+      expect(
+        omit(
+          {
+            a: 1,
+            b: 2,
+            c: 3,
+          },
+          ["a"]
+        )
+      ).toEqual({
+        b: 2,
+        c: 3,
+      });
     });
   });
 });
