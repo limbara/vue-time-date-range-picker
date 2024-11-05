@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    name: Test And Coverage on ${{github.ref_name}}
+    name: CI Test ${{github.ref_name}}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -18,4 +18,6 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
+      - run: npm run build
+      - run: npm run lint
       - run: npm test
