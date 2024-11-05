@@ -3,8 +3,8 @@
     <date-input
       :type="showingDateInput ? 'text' : 'hidden'"
       :language="language"
-      :selectedStartDate="initialDates[0]"
-      :selectedEndDate="initialDates[1]"
+      :selectedStartDate="modelValue?.[0] ?? initialDates?.[0]"
+      :selectedEndDate="modelValue?.[1] ?? initialDates?.[1]"
       :format="format"
       :sameDateFormat="sameDateFormat"
       :refName="dateInput.refName"
@@ -19,7 +19,7 @@
       v-show="showingCalendarDialog"
       :language="language"
       :inline="inline"
-      :initialDates="initialDates"
+      :initialDates="modelValue ?? initialDates"
       :disabledDates="disabledDates"
       :availableDates="availableDates"
       :showHelperButtons="showHelperButtons"
@@ -68,6 +68,8 @@ const showingCalendarDialog = computed(() => {
 });
 
 const onApply: CalendarDialogEmits["on-apply"] = (startDate, endDate) => {
+  emit("update:model-value", [startDate, endDate]);
+
   if (startDate && endDate) {
     emit("date-applied", startDate, endDate);
 
@@ -80,6 +82,8 @@ const onApply: CalendarDialogEmits["on-apply"] = (startDate, endDate) => {
 };
 
 const onReset = (e: Event) => {
+  emit("update:model-value", null);
+
   emit("on-reset", e);
 };
 
@@ -107,7 +111,10 @@ const onSelectDate: CalendarDialogEmits["select-date"] = (
   startDate,
   endDate
 ) => {
+  emit("update:model-value", [startDate, endDate]);
+
   emit("select-date", startDate, endDate);
+  
   return true;
 };
 

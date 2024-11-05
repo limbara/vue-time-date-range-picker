@@ -49,13 +49,15 @@ describe("Date Picker", () => {
     const fromDate = new Date("2024 08 01");
     const endDate = new Date("2024 08 02");
 
-    const { calendarDialog, dateInput } = mountDatePicker();
+    const { wrapper, calendarDialog, dateInput } = mountDatePicker();
 
     await dateInput.trigger("click");
 
     expect(calendarDialog.isVisible()).toBe(true);
 
     calendarDialog.vm.$emit("on-apply", fromDate, endDate);
+
+    await wrapper.vm.$nextTick();
 
     expect(calendarDialog.isVisible()).toBe(false);
   });
@@ -127,5 +129,46 @@ describe("Date Picker", () => {
 
     calendarDialog.vm.$emit("on-reset");
     expect(wrapper.emitted("on-reset")).toBeTruthy();
+  });
+
+  describe("update v-model:modelValue correctly", () => {
+    it("emit event update:model-value, when select date is triggered", () => {
+      const { wrapper, calendarDialog } = mountDatePicker();
+
+      const from = new Date("2024 11 01");
+      const to = new Date("2024 11 10");
+
+      calendarDialog.vm.$emit("select-date", from, to);
+
+      const updateModelValueEvent = wrapper.emitted("update:model-value");
+
+      expect(updateModelValueEvent).toHaveLength(1);
+      expect(updateModelValueEvent?.[0]).toEqual([[from, to]]);
+    });
+
+    it("emit event update:model-value, when event date apply triggered", () => {
+      const { wrapper, calendarDialog } = mountDatePicker();
+
+      const from = new Date("2024 11 01");
+      const to = new Date("2024 11 10");
+
+      calendarDialog.vm.$emit("on-apply", from, to);
+
+      const updateModelValueEvent = wrapper.emitted("update:model-value");
+
+      expect(updateModelValueEvent).toHaveLength(1);
+      expect(updateModelValueEvent?.[0]).toEqual([[from, to]]);
+    });
+
+    it("emit event update:model-value, when event reset triggered", () => {
+      const { wrapper, calendarDialog } = mountDatePicker();
+
+      calendarDialog.vm.$emit("on-reset");
+
+      const updateModelValueEvent = wrapper.emitted("update:model-value");
+
+      expect(updateModelValueEvent).toHaveLength(1);
+      expect(updateModelValueEvent?.[0]).toEqual([null]);
+    });
   });
 });
