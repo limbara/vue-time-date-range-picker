@@ -1,4 +1,4 @@
-import { isObjectDate } from "@utils/helpers";
+import { isEmptyLiteralObject, isObjectDate } from "@utils/helpers";
 
 describe("helpers", () => {
   describe("isObjectDate", () => {
@@ -23,6 +23,16 @@ describe("helpers", () => {
       value.forEach((v) => {
         expect(isObjectDate(v)).toEqual(false);
       });
+    });
+  });
+
+  describe("isEmptyLiteralObject", () => {
+    it("should return true if literal object is empty", () => {
+      expect(isEmptyLiteralObject({})).toBe(true);
+    });
+
+    it("should return false if literal object is not empty", () => {
+      expect(isEmptyLiteralObject({ value: true })).toBe(false);
     });
   });
 });
