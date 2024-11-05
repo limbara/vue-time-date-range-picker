@@ -1,6 +1,6 @@
 import { FromToRange } from "@components/commonTypes";
 import DateUtil from "@utils/DateUtil";
-import { isEmptyObject } from "@utils/helpers";
+import { isEmptyLiteralObject } from "@utils/helpers";
 import { computed, ref, ToRefs } from "vue";
 
 export type Day = {
@@ -38,7 +38,7 @@ export const useCalendar = (props: UseCalendarProps) => {
   const disableDateCheckFunction = computed(() => {
     if (
       !props?.disabledDates?.value ||
-      isEmptyObject(props?.disabledDates?.value)
+      isEmptyLiteralObject(props?.disabledDates?.value)
     )
       return null;
 
@@ -51,7 +51,7 @@ export const useCalendar = (props: UseCalendarProps) => {
   const enableDateCheckFunction = computed(() => {
     if (
       !props?.availableDates?.value ||
-      isEmptyObject(props?.availableDates?.value)
+      isEmptyLiteralObject(props?.availableDates?.value)
     )
       return null;
 
@@ -87,7 +87,7 @@ export const useCalendar = (props: UseCalendarProps) => {
     const disabledDatesConfig = props?.disabledDates?.value ?? {};
     const availableDatesConfig = props?.availableDates?.value ?? {};
 
-    if (!isEmptyObject(disabledDatesConfig)) {
+    if (!isEmptyLiteralObject(disabledDatesConfig)) {
       const { from, to } = disabledDatesConfig;
 
       if (!from) {
@@ -107,8 +107,8 @@ export const useCalendar = (props: UseCalendarProps) => {
     }
     // availableDates cannot interfere disabledDates
     if (
-      isEmptyObject(disabledDatesConfig) &&
-      !isEmptyObject(availableDatesConfig)
+      isEmptyLiteralObject(disabledDatesConfig) &&
+      !isEmptyLiteralObject(availableDatesConfig)
     ) {
       const { from, to } = availableDatesConfig;
 
@@ -135,7 +135,7 @@ export const useCalendar = (props: UseCalendarProps) => {
     const disabledDatesConfig = props?.disabledDates?.value ?? {};
     const availableDatesConfig = props?.availableDates?.value ?? {};
 
-    if (!isEmptyObject(disabledDatesConfig)) {
+    if (!isEmptyLiteralObject(disabledDatesConfig)) {
       const { from, to } = disabledDatesConfig;
 
       if (!to) {
@@ -155,8 +155,8 @@ export const useCalendar = (props: UseCalendarProps) => {
     }
     // availableDates cannot interfere disabledDates
     if (
-      isEmptyObject(disabledDatesConfig) &&
-      !isEmptyObject(availableDatesConfig)
+      isEmptyLiteralObject(disabledDatesConfig) &&
+      !isEmptyLiteralObject(availableDatesConfig)
     ) {
       const { from, to } = availableDatesConfig;
 

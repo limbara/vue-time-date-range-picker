@@ -2,7 +2,7 @@ import {
   HelperButtonShape,
 } from "@components/CalendarDialog/types";
 
-import { isEmptyObject, isObjectDate } from "./helpers";
+import { isEmptyLiteralObject, isObjectDate } from "./helpers";
 import { SameDateFormatConfig } from "@components/DateInput/types";
 import { DatesAvailabilityConfig } from "@composables/useCalendarDateUtil";
 import { InitialDate } from "@composables/useSelectedDates";
@@ -44,7 +44,7 @@ export const isValidHelperButtons = (
 export const isValidDateAvailabilityConfig = (
   value: DatesAvailabilityConfig | undefined | null
 ) => {
-  if (!value || isEmptyObject(value)) return true;
+  if (!value || isEmptyLiteralObject(value)) return true;
 
   const { dates, from, to, ranges, custom } = value;
 
@@ -70,7 +70,7 @@ export const isValidSameDateFormat = (
 ) => {
   if (!value) return true;
 
-  if (isEmptyObject(value)) return false;
+  if (isEmptyLiteralObject(value)) return false;
 
   const { from, to } = value;
 

@@ -42,7 +42,7 @@ export const isObjectDate = (value: any): value is Date => {
  * @param value
  * @returns
  */
-export const isEmptyObject = <T extends object>(value: T): boolean => {
+export const isEmptyLiteralObject = <T extends object>(value: T): boolean => {
   return isPlainObject(value) && Object.keys(value).length === 0;
 };
 
