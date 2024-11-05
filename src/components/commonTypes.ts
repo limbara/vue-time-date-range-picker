@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 export type FromToRange<F, T = F> = {
   from: F;
   to: T;
