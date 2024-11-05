@@ -408,7 +408,7 @@ const onNextCalendar = (e: Event) => {
 defineExpose({
   selectedStartDate,
   selectedEndDate,
-  isAllDay,
+  isAllDayChecked,
   dayNames,
   days,
   isPrevPageDisabled,

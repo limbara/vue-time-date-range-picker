@@ -60,7 +60,7 @@ describe("Calendar Input Date", () => {
 
     await wrapper.find("input").trigger("change");
 
-    expect(wrapper.emitted("change")[0]).toEqual([new Date("2020 10 24")]);
+    expect(wrapper.emitted("change")?.[0]).toEqual([new Date("2020 10 24")]);
   });
 
   it("doesn't emit change if input invalid", async () => {

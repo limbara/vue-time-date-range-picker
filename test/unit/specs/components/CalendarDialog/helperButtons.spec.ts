@@ -1,12 +1,11 @@
+import { shallowMount } from "@vue/test-utils";
+import CalendarDialog from "@components/CalendarDialog/CalendarDialog.vue";
 
-import { shallowMount } from '@vue/test-utils';
-import CalendarDialog from '@components/CalendarDialog/CalendarDialog.vue';
-
-describe('Calendar Dialog : helper buttons', () => {
-  const buttonHelpersClass = '.vdpr-datepicker__calendar-button-helper';
+describe("Calendar Dialog : helper buttons", () => {
+  const buttonHelpersClass = ".vdpr-datepicker__calendar-button-helper";
   let wrapper;
 
-  it('should render show helper button', () => {
+  it("should render defaults helper buttons", () => {
     wrapper = shallowMount(CalendarDialog, {
       props: {
         showHelperButtons: true,
@@ -14,10 +13,19 @@ describe('Calendar Dialog : helper buttons', () => {
     });
 
     expect(wrapper.find(buttonHelpersClass).exists()).toBe(true);
-    expect(wrapper.find(buttonHelpersClass).element.children.length).toEqual(8);
+
+    const helperButtons = wrapper.find(buttonHelpersClass).findAll("button");
+
+    const defaultHelpersButtons = wrapper.vm.getDefaultHelpers();
+
+    expect(helperButtons.length).toEqual(defaultHelpersButtons.length);
+
+    helperButtons.forEach((b, i) => {
+      expect(b.text()).toBe(defaultHelpersButtons[i].name);
+    });
   });
 
-  it('should not render show helper button', () => {
+  it("should not render show helper button", () => {
     wrapper = shallowMount(CalendarDialog, {
       props: {
         showHelperButtons: false,
@@ -27,14 +35,14 @@ describe('Calendar Dialog : helper buttons', () => {
     expect(wrapper.find(buttonHelpersClass).exists()).toBe(false);
   });
 
-  it('should render custom helper buttons', () => {
+  it("should render custom helper buttons", () => {
     wrapper = shallowMount(CalendarDialog, {
       props: {
         helperButtons: [
           {
-            name: 'Custom Button',
-            from: new Date('2020 09 20'),
-            to: new Date('2020 09 15'),
+            name: "Custom Button",
+            from: new Date("2020 09 20"),
+            to: new Date("2020 09 15"),
           },
         ],
       },
@@ -43,34 +51,35 @@ describe('Calendar Dialog : helper buttons', () => {
     expect(wrapper.find(buttonHelpersClass).element.children.length).toEqual(1);
   });
 
-  it('should apply date when helper button clicked', () => {
-    let from = new Date('2020 08 01');
-    let to = new Date('2020 08 20');
+  it("should emit event select-date when clicked", async () => {
+    const name = "Custom Button";
+    const from = new Date("2020 08 01");
+    const to = new Date("2020 08 20");
 
-    wrapper = shallowMount(CalendarDialog);
+    wrapper = shallowMount(CalendarDialog, {
+      props: {
+        helperButtons: [
+          {
+            name,
+            from,
+            to,
+          },
+        ],
+      },
+    });
 
-    wrapper.vm.onHelperClick(from, to);
+    const helperButtons = wrapper.find(buttonHelpersClass).findAll("button");
 
-    expect(wrapper.vm.selectedStartDate).toEqual(from);
-    expect(wrapper.vm.selectedEndDate).toEqual(to);
-    expect(wrapper.vm.isAllDay).toEqual(false);
+    const customButton = helperButtons.find((e) => e.text() === name);
 
-    from = new Date('2020 07 01 00:00:00');
-    to = new Date('2020 07 31 23:59:59');
+    expect(customButton).toBeDefined();
 
-    wrapper.vm.onHelperClick(from, to);
+    await customButton?.trigger("click");
 
-    expect(wrapper.vm.isAllDay).toEqual(true);
-  });
+    const selectDateEvent = wrapper.emitted("select-date");
 
-  it('should emit select-date event', () => {
-    wrapper = shallowMount(CalendarDialog);
-
-    const from = new Date('2020 07 01 00:00:00');
-    const to = new Date('2020 07 31 23:59:59');
-
-    wrapper.vm.onHelperClick(from, to);
-
-    expect(wrapper.emitted('select-date')[0]).toEqual([from, to]);
+    expect(selectDateEvent).toBeDefined();
+    expect(selectDateEvent).toHaveLength(1);
+    expect(selectDateEvent?.[0]).toEqual([from, to]);
   });
 });

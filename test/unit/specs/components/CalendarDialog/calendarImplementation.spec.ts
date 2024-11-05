@@ -1,89 +1,158 @@
-import { mount, VueWrapper } from "@vue/test-utils";
+import { shallowMount } from "@vue/test-utils";
 import moment from "moment";
 import CalendarDialog from "@components/CalendarDialog/CalendarDialog.vue";
 import Calendar from "@components/Calendar/Calendar.vue";
+import { InitialDate } from "@composables/useSelectedDates";
 
 describe("Calendar Dialog : Calendar Implementation", () => {
-  let wrapper: ReturnType<typeof mount<typeof CalendarDialog>>;
-  let calendar: VueWrapper;
-  const datePickerButtonSubmit = ".vdpr-datepicker__button-submit";
+  describe("emit event select-date correctly", () => {
+    it("when no initial dates, select start & end date with the same date", () => {
+      const date = new Date("2024 07 23");
 
-  beforeEach(() => {
-    wrapper = mount(CalendarDialog);
-    calendar = wrapper.findComponent(Calendar);
-  });
+      const wrapper = shallowMount(CalendarDialog);
+      const calendar = wrapper.findComponent(Calendar);
 
-  it("emit select-date event & apply correct date", () => {
-    const wrapper = mount(CalendarDialog);
-    const calendar = wrapper.findComponent(Calendar);
+      calendar.vm.$emit("select-date", date);
 
-    calendar.vm.$emit("select-date", new Date("2024 07 26"));
+      const selectDateEvent = wrapper.emitted("select-date");
 
-    expect(wrapper.emitted("select-date")?.[0]).toEqual([
-      new Date("2024 07 26"),
-      new Date("2024 07 26"),
-    ]);
-
-    calendar.vm.$emit("select-date", new Date("2024 07 23"));
-
-    expect(wrapper.emitted("select-date")?.[1]).toEqual([
-      new Date("2024 07 23"),
-      new Date("2024 07 26"),
-    ]);
-  });
-
-  it("emit select-date event & apply correct date when allDays is true", () => {
-    wrapper = mount(CalendarDialog, {
-      attachTo: document.body,
-      props: {
-        switchButtonInitial: true,
-      },
+      expect(selectDateEvent).toHaveLength(1);
+      expect(selectDateEvent?.[0]).toEqual([date, date]);
     });
 
-    calendar = wrapper.findComponent(Calendar);
-    calendar.vm.$emit("select-date", new Date("2024 07 26"));
+    it("when only initial end date supplied", () => {
+      const from = new Date("2024 07 23");
+      const to = new Date("2024 07 26");
+      const initialDates: InitialDate = [null, to];
 
-    expect(wrapper.emitted("select-date")?.[0]).toEqual([
-      moment(new Date("2024 07 26")).startOf("day").toDate(),
-      moment(new Date("2024 07 26")).endOf("day").toDate(),
-    ]);
+      const wrapper = shallowMount(CalendarDialog, {
+        props: {
+          initialDates,
+        },
+      });
+      const calendar = wrapper.findComponent(Calendar);
+
+      calendar.vm.$emit("select-date", from);
+
+      const selectDateEvent = wrapper.emitted("select-date");
+
+      expect(selectDateEvent).toHaveLength(1);
+      expect(selectDateEvent?.[0]).toEqual([from, to]);
+    });
+
+    it("when only initial start date supplied", () => {
+      const from = new Date("2024 07 23");
+      const to = new Date("2024 07 26");
+      const initialDates: InitialDate = [from, null];
+
+      const wrapper = shallowMount(CalendarDialog, {
+        props: {
+          initialDates,
+        },
+      });
+      const calendar = wrapper.findComponent(Calendar);
+
+      calendar.vm.$emit("select-date", to);
+
+      const selectDateEvent = wrapper.emitted("select-date");
+
+      expect(selectDateEvent).toHaveLength(1);
+      expect(selectDateEvent?.[0]).toEqual([from, to]);
+    });
+
+    it("when from date is less than to date", () => {
+      const from = new Date("2024 07 23");
+      const to = new Date("2024 07 26");
+
+      const wrapper = shallowMount(CalendarDialog);
+      const calendar = wrapper.findComponent(Calendar);
+
+      calendar.vm.$emit("select-date", from);
+
+      const selectDateEvent = wrapper.emitted("select-date");
+
+      expect(selectDateEvent).toHaveLength(1);
+      expect(selectDateEvent?.[0]).toEqual([from, from]);
+
+      calendar.vm.$emit("select-date", to);
+
+      expect(selectDateEvent).toHaveLength(2);
+      expect(selectDateEvent?.[1]).toEqual([from, to]);
+    });
+
+    it("when to date less than from date", () => {
+      const from = new Date("2024 07 26");
+      const to = new Date("2024 07 23");
+
+      const wrapper = shallowMount(CalendarDialog);
+      const calendar = wrapper.findComponent(Calendar);
+
+      calendar.vm.$emit("select-date", from);
+
+      const selectDateEvent = wrapper.emitted("select-date");
+
+      expect(selectDateEvent).toHaveLength(1);
+      expect(selectDateEvent?.[0]).toEqual([from, from]);
+
+      calendar.vm.$emit("select-date", to);
+
+      expect(selectDateEvent).toHaveLength(2);
+      expect(selectDateEvent?.[1]).toEqual([to, from]);
+    });
+
+    it("when all days is checked", () => {
+      const date = new Date("2024 07 26");
+
+      const wrapper = shallowMount(CalendarDialog, {
+        attachTo: document.body,
+        props: {
+          switchButtonInitial: true,
+        },
+      });
+
+      const calendar = wrapper.findComponent(Calendar);
+
+      calendar.vm.$emit("select-date", date);
+
+      const selectDateEvent = wrapper.emitted("select-date");
+
+      expect(selectDateEvent).toHaveLength(1);
+      expect(selectDateEvent?.[0]).toEqual([
+        moment(date).startOf("day").toDate(),
+        moment(date).endOf("day").toDate(),
+      ]);
+    });
   });
 
   it("emit select-disabled-date event", () => {
-    const e = "select-disabled-date";
+    const date = new Date("2024 08 01");
 
-    calendar.vm.$emit(e, new Date("2024 08 01"));
-    expect(wrapper.emitted(e)?.[0][0]).toEqual(new Date("2024 08 01"));
+    const wrapper = shallowMount(CalendarDialog);
+    const calendar = wrapper.findComponent(Calendar);
+
+    calendar.vm.$emit("select-disabled-date", date);
+
+    const selectDisabledDateEvent = wrapper.emitted("select-disabled-date");
+
+    expect(selectDisabledDateEvent).toHaveLength(1);
+    expect(selectDisabledDateEvent?.[0]).toEqual([date]);
   });
 
   it("emit on-prev-calendar event", () => {
-    const e = "on-prev-calendar";
+    const wrapper = shallowMount(CalendarDialog);
+    const calendar = wrapper.findComponent(Calendar);
 
-    calendar.vm.$emit(e);
-    expect(wrapper.emitted(e)).toBeTruthy();
+    calendar.vm.$emit("on-prev-calendar");
+
+    expect(wrapper.emitted("on-prev-calendar")).toHaveLength(1);
   });
 
   it("emit on-next-calendar event", () => {
-    const e = "on-next-calendar";
+    const wrapper = shallowMount(CalendarDialog);
+    const calendar = wrapper.findComponent(Calendar);
 
-    calendar.vm.$emit(e);
-    expect(wrapper.emitted(e)).toBeTruthy();
-  });
+    calendar.vm.$emit("on-next-calendar");
 
-  it("emit on-apply when button apply clicked", async () => {
-    wrapper = mount(CalendarDialog, {
-      props: { 
-        initialDates: [
-          new Date("2024 07 26"),
-          new Date("2024 07 26"),
-        ]
-      }
-    });
-
-    const button = wrapper.find(datePickerButtonSubmit);
-
-    await button.trigger("click");
-
-    expect(wrapper.emitted("on-apply")).toBeTruthy();
+    expect(wrapper.emitted("on-next-calendar")).toHaveLength(1);
   });
 });
