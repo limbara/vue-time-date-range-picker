@@ -4,10 +4,11 @@ import vue from "@vitejs/plugin-vue";
 import { resolve } from "node:path";
 import postcssPresetEnv from "postcss-preset-env";
 import dtsPlugin from "vite-plugin-dts";
+import zipPack from "vite-plugin-zip-pack"
 
 // https://vitejs.dev/config/
 export default defineConfig((env) => ({
-  plugins: [vue(), dtsPlugin({ tsconfigPath: "./tsconfig.app.json" })],
+  plugins: [vue(), dtsPlugin({ tsconfigPath: "./tsconfig.app.json" }), zipPack()],
   resolve: {
     alias: {
       "@components": fileURLToPath(
