@@ -1,6 +1,6 @@
 # This workflow will run tests using node and then publish a package to https://registry.npmjs.org
 
-name: NPM Publish
+name: Tag Release
 
 on:
   push:
@@ -27,7 +27,7 @@ jobs:
       contents: write
     steps:
     - uses: actions/checkout@v4
-      uses: actions/setup-node@v4
+    - uses: actions/setup-node@v4
       with:
         node-version: 20
     - name: Install dependencies and build 🔧
