@@ -13,9 +13,9 @@ import ExampleLanguage from "./ExampleLanguage.vue";
 import ExampleInline from "./ExampleInline.vue";
 import ExampleIsMondayFirst from "./ExampleIsMondayFirst.vue";
 import { ref } from "vue";
-import { ModelValue } from "@components/DatePicker/types";
+import { DatePickerModelValue } from "@components/DatePicker/types";
 
-const modelValue = ref<ModelValue>();
+const modelValue = ref<DatePickerModelValue>();
 </script>
 
 <template>

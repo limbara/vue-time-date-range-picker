@@ -31,13 +31,6 @@
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo"
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "serve/**/*.ts",
-    "serve/**/*.tsx",
-    "serve/**/*.vue"
-  ],
-  "exclude": ["**/*.spec.ts"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "exclude": ["**/*.spec.ts", "serve/**/*"]
 }

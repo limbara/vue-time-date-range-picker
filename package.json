@@ -26,24 +26,25 @@
   "module": "dist/vdprDatePicker.js",
   "browser": "dist/vdprDatePicker.js",
   "unpkg": "dist/vdprDatePicker.iife.js",
+  "types": "dist/src/index.d.ts",
   "style": "dist/style.css",
   "exports": {
     ".": {
       "import": "./dist/vdprDatePicker.js",
-      "require": "./dist/vdprDatePicker.umd.cjs"
+      "require": "./dist/vdprDatePicker.umd.cjs",
+      "types": "./dist/src/index.d.ts"
     },
     "./dist/style.css": {
       "import": "./dist/style.css",
-      "require": "./dist/style.css"
+      "require": "./dist/style.css",
+      "default": "./dist/style.css"
     }
   },
   "scripts": {
     "dev": "vite -c vite.config.dev.ts",
     "clean": "rimraf ./dist",
     "prebuild": "npm run clean",
-    "build": "vue-tsc -b && npm run build:umd && npm run build:esm",
-    "build:umd": "vite build -c vite.config.umd.ts",
-    "build:esm": "vite build -c vite.config.esm.ts",
+    "build": "vue-tsc -b && vite build",
     "lint": "eslint",
     "test": "jest",
     "prepare": "husky"
@@ -84,5 +85,8 @@
   "peerDependencies": {
     "moment": "^2.27.0",
     "vue": "^3.2.25"
+  },
+  "dependencies": {
+    "vite-plugin-dts": "^4.3.0"
   }
 }

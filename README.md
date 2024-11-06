@@ -37,7 +37,7 @@ npm i vue-time-date-range-picker moment
 Usage within JS project
 
 ```javascript
-import DatePicker, { CalendarDialog } from 'vue-time-date-range-picker'
+import { DatePicker, CalendarDialog } from 'vue-time-date-range-picker'
 import 'vue-time-date-range-picker/dist/style.css'
 
 export default {
@@ -58,8 +58,10 @@ Usage from CDN
 </head>`
 <body>
    <div id="app">
-    <button type="button" @click="toggle">Toggle</button>
-    <calendardialog v-show="open" @on-apply="onApply" />
+    <div>
+      <div>v-model value is: {{ initialDates?.map(v => v.toString()) ?? 'empty' }}</div>
+      <datepicker v-model="initialDates" @date-applied="onApply" />
+    </div>
   </div>
 
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -70,23 +72,18 @@ Usage from CDN
 
     createApp({
       setup() {
-        const open = ref(false);
-
-        const toggle = () => {
-          open.value = !open.value
-        }
+        const initialDates = ref(null)
 
         const onApply = (date1, date2) => {
           console.log(date1, date2)
         }
 
         return {
-          open,
-          toggle,
+          initialDates,
           onApply,
         };
       },
-    }).component('datepicker', vdprDatePicker).component('calendardialog', vdprDatePicker.CalendarDialog).mount("#app");
+    }).component('datepicker', vdprDatePicker.DatePicker).component('calendardialog', vdprDatePicker.CalendarDialog).mount("#app");
   </script>
 </body>
 ```

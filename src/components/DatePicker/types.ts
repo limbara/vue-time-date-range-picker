@@ -5,18 +5,18 @@ import { InitialDate } from "@composables/useSelectedDates";
 import { Nullable } from "@utils/helpers";
 import { ExtractPropTypes, PropType } from "vue";
 
-type DatePickerDateInputProps = Partial<
+export type DatePickerDateInputProps = Partial<
   Pick<
     DateInputProps,
     "inputClass" | "refName" | "name" | "placeholder" | "id" | "required"
   >
 >;
 
-export type ModelValue = InitialDate | null;
+export type DatePickerModelValue = InitialDate | null;
 
 export const datePickerProps = {
   modelValue: {
-    type: Array as unknown as PropType<ModelValue>,
+    type: Array as unknown as PropType<DatePickerModelValue>,
     default: () => null,
   },
   initialDates: calendarDialogProps.initialDates,
@@ -44,7 +44,7 @@ export const datePickerProps = {
 export type DatePickerProps = ExtractPropTypes<typeof datePickerProps>;
 
 export const datePickerEmits = defineEmitOptions({
-  "update:model-value": (_modelValue: ModelValue) => true,
+  "update:model-value": (_modelValue: DatePickerModelValue) => true,
   "date-applied": (_startDate: Date, _endDate: Date) => true,
   "datepicker-opened": () => true,
   "datepicker-closed": () => true,
@@ -54,3 +54,5 @@ export const datePickerEmits = defineEmitOptions({
   "select-disabled-date": (_date: Date) => true,
   "on-reset": (_e: Event) => true,
 });
+
+export type DatePickerEmits = typeof datePickerEmits;

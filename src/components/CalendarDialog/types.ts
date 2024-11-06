@@ -19,11 +19,11 @@ export type HelperButtonShape = Readonly<
   } & FromToRange<Date>
 >;
 
-type TimeInputProps = Partial<
+export type CalendarDialogInputTimeProps = Partial<
   Pick<CalendarInputTimeProps, "inputClass" | "readonly" | "step">
 >;
 
-type DateInputProps = Partial<
+export type CalendarDialogInputDateProps = Partial<
   Pick<CalendarInputDateProps, "format" | "inputClass"> & {
     labelStarts: string;
     labelEnds: string;
@@ -65,23 +65,23 @@ export const calendarDialogProps = {
     default: () => [] as unknown as Array<HelperButtonShape>,
   },
   timeInput: {
-    type: Object as PropType<TimeInputProps>,
+    type: Object as PropType<CalendarDialogInputTimeProps>,
     default: () =>
       ({
         inputClass: null,
         readonly: false,
         step: 60,
-      } as unknown as TimeInputProps),
+      } as unknown as CalendarDialogInputTimeProps),
   },
   dateInput: {
-    type: Object as PropType<DateInputProps>,
+    type: Object as PropType<CalendarDialogInputDateProps>,
     default: () =>
       ({
         inputClass: null,
         labelStarts: "Starts",
         labelEnds: "Ends",
         format: "DD/MM/YYYY",
-      } as unknown as DateInputProps),
+      } as unknown as CalendarDialogInputDateProps),
   },
   switchButtonLabel: {
     type: String as PropType<string>,
