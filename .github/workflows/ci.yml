@@ -1,0 +1,23 @@
+name: 'ci'
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+      - dev-version-2
+
+jobs:
+  test:
+    name: CI Test ${{github.ref_name}}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run build
+      - run: npm run lint
+      - run: npm test

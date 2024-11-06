@@ -29,7 +29,7 @@ Clone the repo and run 'npm install && npm run serve' for local demo
 ## Install
 
 ```bash
-npm i vue-time-date-range-picker
+npm i vue-time-date-range-picker moment
 ```
 
 ## Usage
@@ -37,8 +37,8 @@ npm i vue-time-date-range-picker
 Usage within JS project
 
 ```javascript
-import DatePicker, { CalendarDialog } from 'vue-time-date-range-picker/dist/vdprDatePicker'
-import 'vue-time-date-range-picker/dist/vdprDatePicker.min.css'
+import { DatePicker, CalendarDialog } from 'vue-time-date-range-picker'
+import 'vue-time-date-range-picker/dist/style.css'
 
 export default {
   //...
@@ -54,22 +54,36 @@ You can use CalendarDialog Component if you want to implement your own input ele
 Usage from CDN
 ```html
 <head>
-  <link rel="stylesheet" href="https://unpkg.com/vue-time-date-range-picker@2.1.2/dist/vdprDatePicker.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/vue-time-date-range-picker@2.1.2/dist/style.css">
 </head>`
 <body>
-  <div id="app">
-    <datepicker></datepicker>
+   <div id="app">
+    <div>
+      <div>v-model value is: {{ initialDates?.map(v => v.toString()) ?? 'empty' }}</div>
+      <datepicker v-model="initialDates" @date-applied="onApply" />
+    </div>
   </div>
-  <script src="https://unpkg.com/vue"></script>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
-  <script src="https://unpkg.com/vue-time-date-range-picker@2.1.2/dist/vdprDatePicker.js"></script>
+  <script src="https://unpkg.com/vue-time-date-range-picker@2.1.2"></script>
   <script>
-  const app = Vue.createApp({
-      components: {
-        'datepicker' : vdprDatePicker.default,
-        'calendar-dialog' : vdprDatePicker.CalendarDialog
-      }
-    }).mount("#app")
+    const { createApp, ref } = Vue;
+
+    createApp({
+      setup() {
+        const initialDates = ref(null)
+
+        const onApply = (date1, date2) => {
+          console.log(date1, date2)
+        }
+
+        return {
+          initialDates,
+          onApply,
+        };
+      },
+    }).component('datepicker', vdprDatePicker.DatePicker).component('calendardialog', vdprDatePicker.CalendarDialog).mount("#app");
   </script>
 </body>
 ```
@@ -82,13 +96,14 @@ Below is props that're available in **DatePicker** Component
 
 | Prop                                  | Type          | Default           | Description                                             |
 |---------------------------------------|---------------|-------------------|---------------------------------------------------------|
+| v-model                               | [Date,Date] / null|               | v-model binding                                         |
 | initial-dates                         | [Date, Date]  |                   | Initial value for the datepicker                        |
 | inline                                | Boolean       | false             | Use datepicker inline style                             |
 | language                              | String        | en                | Languange                                               |
 | format                                | String        | DD/MM/YYYY HH:mm  | Format for display date input                           |
 | [same-date-format](#same-date-format) | Object        | refer below       | Format for display date input if start & end date same  |
 | [disabled-dates](#disabled-dates)     | Object        | refer below       | Disable certain dates                                   |
-| [available-dates](#available-dates)   | Object        | refer below       | Allow only certain dates                                   |
+| [available-dates](#available-dates)   | Object        | refer below       | Allow only certain dates                                |
 | [date-input](#date-input)             | Object        |                   | Input configuration                                     |
 | show-helper-buttons                   | Boolean       |                   | Show helper buttons                                     |
 | [helper-buttons](#helper-buttons)     | [ ]Object     |                   | Custom helper button                                    |
