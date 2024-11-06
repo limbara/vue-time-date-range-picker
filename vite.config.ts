@@ -1,6 +1,7 @@
 import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import { resolve } from "node:path";
 import postcssPresetEnv from "postcss-preset-env";
 
 // https://vitejs.dev/config/
@@ -8,8 +9,12 @@ export default defineConfig((env) => ({
   plugins: [vue()],
   resolve: {
     alias: {
-      "@components": fileURLToPath(new URL("./src/components", import.meta.url)),
-      "@composables": fileURLToPath(new URL("./src/composables", import.meta.url)),
+      "@components": fileURLToPath(
+        new URL("./src/components", import.meta.url)
+      ),
+      "@composables": fileURLToPath(
+        new URL("./src/composables", import.meta.url)
+      ),
       "@utils": fileURLToPath(new URL("./src/utils", import.meta.url)),
     },
   },
@@ -28,6 +33,12 @@ export default defineConfig((env) => ({
     devSourcemap: env.mode === "development",
   },
   build: {
+    lib: {
+      formats: ["es", "umd", "iife"],
+      entry: resolve(__dirname, "src", "index.ts"),
+      name: "vdprDatePicker",
+      fileName: "vdprDatePicker",
+    },
     emptyOutDir: false,
     sourcemap: true,
     rollupOptions: {
