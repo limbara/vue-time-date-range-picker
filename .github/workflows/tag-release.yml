@@ -1,0 +1,44 @@
+# This workflow will run tests using node and then publish a package to https://registry.npmjs.org
+
+name: NPM Publish
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Test on ${{github.ref_name}}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm test
+
+  tag-release:
+    name: Tag release on ${{github.ref_name}}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v4
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+    - name: Install dependencies and build 🔧
+      run: npm ci && npm run build
+    - name: Release on ${{github.ref_name}}
+      uses: softprops/action-gh-release@v2
+      with:
+        generate_release_notes: true
+        fail_on_unmatched_files: true
+        prerelease: false
+        draft: true
+        token: ${{ secrets.GITHUB_TOKEN }}
+        files: |
+          dist-zip/dist.zip
