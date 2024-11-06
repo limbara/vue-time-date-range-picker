@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.app.json",
+  "include": ["src/**/*", "serve/**/*.ts", "serve/**/*.tsx", "serve/**/*.vue"],
+  "exclude": ["**/*.spec.ts"],
+  "compilerOptions": {
+    "composite": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.serve.tsbuildinfo"
+  }
+}

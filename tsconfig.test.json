@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.app.json",
   "include": ["**/*.spec.ts", "src/**/*"],
-  "exclude": [],
+  "exclude": ["serve/**/*"],
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.test.tsbuildinfo"
