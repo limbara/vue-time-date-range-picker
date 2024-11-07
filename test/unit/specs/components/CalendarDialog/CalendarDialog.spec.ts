@@ -105,9 +105,7 @@ describe("Calendar Dialog", () => {
 
     expect(inputCheckbox.element).toBeChecked();
 
-    await wrapper.setProps({
-      switchButtonInitial: false,
-    });
+    await inputCheckbox.trigger('click')
 
     expect(inputCheckbox.element).not.toBeChecked();
   });
