@@ -101,31 +101,31 @@ export default class {
   }
 
   /**
-   * Check if date is before a beforeDate
+   * Check if date is before a comparingDate
    */
-  isBefore(date: Date, beforeDate: Date) {
-    return moment(date).isBefore(beforeDate);
+  isBefore(date: Date, comparingDate: Date) {
+    return moment(date).isBefore(comparingDate);
   }
 
   /**
-   * Check if date is same or before a beforeDate
+   * Check if date is same or before a comparingDate
    */
-  isSameOrBefore(date: Date, beforeDate: Date) {
-    return moment(date).isSameOrBefore(beforeDate);
+  isSameOrBefore(date: Date, comparingDate: Date) {
+    return moment(date).isSameOrBefore(comparingDate);
   }
 
   /**
-   * Check if date is after a afterDate
+   * Check if date is after a comparingDate
    */
-  isAfter(date: Date, afterDate: Date) {
-    return moment(date).isAfter(afterDate);
+  isAfter(date: Date, comparingDate: Date) {
+    return moment(date).isAfter(comparingDate);
   }
 
   /**
-   * Check if date is same or after a afterDate
+   * Check if date is same or after a comparingDate
    */
-  isSameOrAfter(date: Date, afterDate: Date) {
-    return moment(date).isSameOrAfter(afterDate);
+  isSameOrAfter(date: Date, comparingDate: Date) {
+    return moment(date).isSameOrAfter(comparingDate);
   }
 
   /**
