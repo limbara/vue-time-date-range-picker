@@ -176,9 +176,7 @@ const computedDays = computed(() =>
   })
 );
 
-const isAllDayChecked = computed(
-  () => props.switchButtonInitial || isAllDay.value
-);
+const isAllDayChecked = ref(props.switchButtonInitial || isAllDay.value);
 
 const helpers = computed(() => {
   if (!props.showHelperButtons) return [];
@@ -203,7 +201,7 @@ const unixSelectedEndDate = computed(() => {
 });
 
 const isVisibleTimeInput = computed(() => {
-  return !isAllDay.value;
+  return !isAllDayChecked.value;
 });
 
 const isVisibleButtonApply = computed(() => {
@@ -212,6 +210,8 @@ const isVisibleButtonApply = computed(() => {
 
 const onCheckChange = (e: Event) => {
   const check = (e.target as HTMLInputElement).checked;
+
+  isAllDayChecked.value = check;
 
   if (!selectedStartDate.value || !selectedEndDate.value) return;
 
@@ -292,7 +292,11 @@ const selectDate = (date: Date) => {
 
   if (isObjectDate(startDate) && isObjectDate(endDate)) {
     if (dateUtil.value.isSameDate(startDate, endDate)) {
-      endDate = date;
+      if (dateUtil.value.isAfter(date, startDate)) {
+        endDate = date;
+      } else {
+        startDate = date;
+      }
     } else {
       startDate = date;
       endDate = date;
